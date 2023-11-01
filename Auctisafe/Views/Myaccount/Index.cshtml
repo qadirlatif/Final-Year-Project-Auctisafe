@@ -1,0 +1,173 @@
+﻿@model Auctisafe.Models.signupmaster
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div class="inner-banner">
+    <div class="container">
+        <h2 class="inner-banner-title wow fadeInLeft" data-wow-duration="1.5s" data-wow-delay=".2s">
+            My account
+        </h2>
+        <nav aria-label="breadcrumb">
+            <ul id="breadcrumb" class="breadcrumb">
+                <li class="breadcrumb-item"><a href="https://www.bidout-wp.egenslab.com"> Home </a></li>
+                <li class="active">My account</li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div class="page-wrapper sec-mar">
+    <div class="container">
+        <article id="post-1408" class="post-1408 page type-page status-publish hentry">
+            <div class="inner-post">
+                <div class="woocommerce">
+                    <div class="woocommerce-notices-wrapper"></div>
+
+                    <div class="u-columns col2-set" id="customer_login">
+
+                        <div class="u-column1 col-1">
+
+                            @using (Html.BeginForm("login", "Myaccount", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <h2>Login</h2>
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="username">
+                                        Username or email address&nbsp;<span class="required">*</span>
+                                    </label>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "username" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </p>
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="password">Password&nbsp;<span class="required">*</span></label>
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "password", Type = "password" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </p>
+
+
+                                <p class="form-row">
+
+                                    <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce"
+                                           value="e24382cd07" /><input type="hidden" name="_wp_http_referer"
+                                                                       value="/my-account/" /> <button type="submit"
+                                                                                                       class="woocommerce-button button woocommerce-form-login__submit wp-element-button"
+                                                                                                       name="login" value="Log in">
+                                        Log in
+                                    </button>
+                                    <a href="/Myaccount/ForgotPassword">Forgot Password</a>
+                                </p>
+
+
+
+                            }
+
+
+                        </div>
+
+                        <div class="u-column2 col-2">
+
+                            @using (Html.BeginForm("Index", "Myaccount", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <h2>Register</h2>
+
+
+
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="reg_email">
+                                        Email address&nbsp;<span class="required">*</span>
+                                    </label>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "reg_email" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                                </p>
+
+
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="reg_password">Password&nbsp;<span class="required">*</span></label>
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "reg-password", Type = "password" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                                </p>
+
+
+
+                                <div class="show_if_seller">
+
+                                    <div class="split-row form-row-wide">
+                                        <p class="form-row form-group">
+                                            <label for="first-name">
+                                                First Name <span class="required">*</span>
+                                            </label>
+                                            @Html.EditorFor(model => model.First_name, new { htmlAttributes = new { @class = "input-text" } })
+                                            @Html.ValidationMessageFor(model => model.First_name, "", new { @class = "text-danger" })
+                                        </p>
+
+                                        <p class="form-row form-group">
+                                            <label for="last-name">Last Name <span class="required">*</span></label>
+                                            @Html.EditorFor(model => model.Last_name, new { htmlAttributes = new { @class = "input-text" } })
+                                            @Html.ValidationMessageFor(model => model.Last_name, "", new { @class = "text-danger" })
+                                        </p>
+                                    </div>
+
+
+
+
+                                    <p class="form-row form-group">
+                                        <label for="last-name">CNIC<span class="required">*</span></label>
+                                        @Html.EditorFor(model => model.CNIC, new { htmlAttributes = new { @class = "input-text" } })
+                                        @Html.ValidationMessageFor(model => model.CNIC, "", new { @class = "text-danger" })
+                                    </p>
+                                    <p class="form-row form-group">
+                                        <label for="last-name">Address <span class="required">*</span></label>
+                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "input-text" } })
+                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                    </p>
+
+                                    <p class="form-row form-group form-row-wide">
+                                        <label for="shop-phone">Phone Number<span class="required">*</span></label>
+                                        @Html.EditorFor(model => model.Phone_number, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Phone_number, "", new { @class = "text-danger" })
+                                    </p>
+
+                                </div>
+
+
+
+                                <div class="woocommerce-privacy-policy-text">
+                                    <p>
+                                        Your personal data will be used to support your experience throughout this
+                                        website, to manage access to your account, and for other purposes described
+                                        in our <a href=""
+                                                  class="woocommerce-privacy-policy-link" target="_blank">
+                                            privacy
+                                            policy
+                                        </a>.
+                                    </p>
+                                </div>
+                                <p class="woocommerce-form-row form-row">
+                                    <input type="hidden" id="woocommerce-register-nonce"
+                                           name="woocommerce-register-nonce" value="554da01833" /><input type="hidden"
+                                                                                                         name="_wp_http_referer" value="/my-account/" /> <button type="submit"
+                                                                                                                                                                 class="woocommerce-Button woocommerce-button button wp-element-button woocommerce-form-register__submit"
+                                                                                                                                                                 name="register" value="Register">
+                                        Register
+                                    </button>
+                                </p>
+
+
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </article>
+    </div> <!-- end .container -->
+</div>

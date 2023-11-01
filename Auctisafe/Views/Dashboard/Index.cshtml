@@ -1,0 +1,77 @@
+﻿@model Auctisafe.Models.Signup
+
+@{
+    ViewBag.Title = "Index";
+}
+<div>
+    <div class="inner-banner">
+        <div class="container">
+            <h2 class="inner-banner-title wow fadeInLeft" data-wow-duration="1.5s" data-wow-delay=".2s">
+                My account
+            </h2>
+            <nav aria-label="breadcrumb">
+                <ul id="breadcrumb" class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="https://www.bidout-wp.egenslab.com"> Home </a></li>
+                    <li class="active">My account</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="page-wrapper sec-mar">
+        <div class="container">
+            <article id="post-1408" class="post-1408 page type-page status-publish hentry">
+                <div class="inner-post">
+                    <div class="woocommerce">
+                        <nav class="woocommerce-MyAccount-navigation">
+                            <ul>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard is-active">
+                                    @Html.ActionLink("Dashboard", "Index")
+                                </li>
+
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account">
+                                    @Html.ActionLink("Account Details", "details")
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auctions-endpoint">
+                                    @Html.ActionLink("Create Auction", "Create_Auction")
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-watchlist">
+                                    @{
+                                        int x = Convert.ToInt32(Session["productCount"]);
+                                        @Html.ActionLink("My Auctions (" + x + ")", "myauctions");
+                                    }
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                    <a href="">Active Auction</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
+                                    <a href="">Won Auction</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-activity">
+                                    <a href="">Auction Activity</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
+                                    @Html.ActionLink("Logout", "logout")
+                                </li>
+                            </ul>
+                        </nav>
+
+
+                        <div class="woocommerce-MyAccount-content">
+                            <div class="woocommerce-notices-wrapper"></div>
+                            <p class="display-name">
+                                Hello <strong> @Html.DisplayFor(Model=>Model.First_name) @Html.DisplayFor(Model=>Model.Last_name) </strong>
+                            </p>
+
+                            <p>
+                                From your account dashboard you can view your <a href="https://www.bidout-wp.egenslab.com/my-account/orders/">recent orders</a>, manage your <a href="https://www.bidout-wp.egenslab.com/my-account/edit-address/">shipping and billing addresses</a>, and <a href="https://www.bidout-wp.egenslab.com/my-account/edit-account/">edit your password and account details</a>.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div> <!-- end .container -->
+    </div>
+
+</div>

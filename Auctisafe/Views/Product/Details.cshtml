@@ -1,0 +1,363 @@
+﻿@model Auctisafe.ViewModel.ProductDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+
+<body class="product-template-default single single-product postid-1117 logged-in wp-embed-responsive theme-bidout-wp woocommerce woocommerce-page woocommerce-no-js elementor-default elementor-kit-6 dokan-theme-bidout-wp">
+    @{
+        var fullname = Model.userdetails.First_name + Model.userdetails.Last_name;
+        string productquality = "";
+        if (Model.product.used == "yes")
+        {
+            productquality = "Used";
+        }
+        else
+        {
+            productquality = "New";
+        }
+    }
+    <div class="inner-banner">
+        <div class="container">
+            <h2 class="inner-banner-title wow fadeInLeft" data-wow-duration="1.5s" data-wow-delay=".2s">
+                @*@ViewBag.auction.name*@
+                @Model.product.name
+            </h2>
+            <nav aria-label="breadcrumb">
+                <ul id="breadcrumb" class="breadcrumb"><li class="breadcrumb-item"><a href="https://www.bidout-wp.egenslab.com"> Home </a></li><li class="active"><a href="https://www.bidout-wp.egenslab.com/shop/">Products</a></li><li class="active">@fullname</li></ul>
+            </nav>
+        </div>
+    </div>
+    <div class="shop-details-section sec-mar">
+        <div class="container">
+
+
+            <div class="woocommerce-notices-wrapper"></div><div id="product-1117" class="product type-product post-1117 status-publish first instock product_cat-accessories product_cat-electronics product_tag-bike product_tag-car has-post-thumbnail sold-individually shipping-taxable product-type-auction">
+
+                <div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style="opacity: 0; transition: opacity .25s ease-in-out;">
+                    <figure class="woocommerce-product-gallery__wrapper">
+                        <div data-thumb="" data-thumb-alt="" class="woocommerce-product-gallery__image"><a href=""><img width="1000" height="800" src="~/Images/@Model.product.image" class="" alt="" decoding="async" title="Image (8)" data-caption="" data-src="" data-large_image="" data-large_image_width="1000" data-large_image_height="800" loading="lazy" srcset="" sizes="(max-width: 1000px) 100vw, 1000px" /></a></div>
+                    </figure>
+                </div>
+
+                <div class="summary entry-summary">
+                    <h1 class="product_title entry-title">@Model.product.name</h1><div class="woocommerce-product-details__short-description">
+                        <p>Korem ipsum dolor amet, consectetur adipiscing elit. Maece nas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
+                    </div>
+                    <div class='auction-ajax-change'>
+                        <p class="auction-condition">
+                            Item condition:	<span class="curent-bid">@productquality</span>
+                        </p>
+                        <div class="auction-time" id="countdown">
+                            Time left:
+                            <div class="main-auction auction-time-countdown" data-time="7532245" data-auctionid="1117" data-format="dHMS"></div>
+                        </div>
+
+                        <p class="auction-end">
+                            Auction ends: @Model.auction.End_date <br />
+                            Timezone: UTC +5
+                        </p>
+                        @{ if (Model.auction.Auction_type_ID == 1)
+                            {
+                                if (@Model.biddingdetails.Count > 0)
+                                {
+                                    <p class="price"><span class="auction-price current-bid" data-auction-id="1117" data-bid="30556" data-status="running"><span class="current auction">Current bid:</span> <span class="woocommerce-Price-amount amount">@Model.biddingdetails[0].bidding.Amount<span class="woocommerce-Price-currencySymbol">&#036;</span></span></span></p>}
+                                else
+                                {
+                                    <p class="price"><span class="auction-price current-bid" data-auction-id="1117" data-bid="30556" data-status="running"><span class="current auction">Current bid:</span> <span class="woocommerce-Price-amount amount">@Model.product.price<span class="woocommerce-Price-currencySymbol">&#036;</span></span></span></p>
+                                }
+                            }
+                            if (Model.auction.Auction_type_ID == 3)
+                            { <p class="price"><span class="auction-price current-bid" data-auction-id="1117" data-bid="30556" data-status="running"><span class="current auction">Price:</span> <span class="woocommerce-Price-amount amount">@Model.product.price<span class="woocommerce-Price-currencySymbol">&#036;</span></span></span></p>}
+                        if (Model.auction.Auction_type_ID == 2)
+                        {<p class="price"><span class="auction-price current-bid" data-auction-id="1117" data-bid="30556" data-status="running"><span class="current auction">Price:</span> <span class="woocommerce-Price-amount amount">@Model.auction.UpdatedPrice<span class="woocommerce-Price-currencySymbol">&#036;</span></span></span></p> } }
+
+
+                        @{
+                            if (Model.auction.Auction_type_ID == 1)
+                            { <p class="reserve free" data-auction-id="1117">English Auction has been Configured</p>}
+                            else if (Model.auction.Auction_type_ID == 2)
+                            { <p class="reserve free" data-auction-id="1117">Dutch Auction has been Configured</p>}
+                            else if (Model.auction.Auction_type_ID == 3)
+                            { <p class="reserve free" data-auction-id="1117">Sealed Bid Auction has been Configured</p>}
+                            else if (Model.auction.Auction_type_ID == 4)
+                            { <p class="reserve free" data-auction-id="1117">Reverse Auction has been Confirgured</p>}
+                            else if (Model.auction.Auction_type_ID == 5)
+                            { <p class="reserve free" data-auction-id="1117">Reserve Auction has been confirgued</p>}
+                            else if (Model.auction.Auction_type_ID == 6)
+                            { <p class="reserve free" data-auction-id="1117">Forward Auction has been Confirgued</p>}
+                        }
+                        @*<p class="reserve free" data-auction-id="1117">Reserve price has been met</p>*@
+
+
+
+
+                        <form class="auction_form cart" method="post" id="biddingform">
+
+
+                            @*<input type="hidden" name="bid" value="1117" />*@
+
+                            <div class="quantity buttons_added">
+
+                                @*<input type="button" value="+" class="plus" />*@
+
+                                <input type="number" id="amount"
+                                       @*data-auction-id="1117"
+                                       value="30,561.0"
+                                       min="30,561.0"
+                                       step="any"
+                                       size="7"
+                                       title="bid"*@
+                                       class="input-text qty bid text left" />
+                                <input type="text" hidden disabled value="@Model.product.Product_ID" id="productid" />
+                                @*<input type="button" value="-" class="minus" />*@
+                            </div>
+
+                            @if (Convert.ToInt32(Session["id"]) == Model.product.User_ID)
+                            {
+                                <button type="button" class="bid_button button alt" disabled>Bid</button>
+                            }
+                            else
+                            {
+                                <button type="button" id="bidbtn" class="bid_button button alt">Bid</button>
+                            }
+
+
+                        </form>
+
+
+
+                    </div><!-- end of auction-ajax-change -->
+
+
+                    <div class="yith-wcwl-add-to-wishlist add-to-wishlist-1117  wishlist-fragment on-first-load"
+                         data-fragment-ref="1117"
+                         data-fragment-options="{&quot;base_url&quot;:&quot;&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:true,&quot;show_exists&quot;:false,&quot;product_id&quot;:1117,&quot;parent_product_id&quot;:1117,&quot;product_type&quot;:&quot;auction&quot;,&quot;show_view&quot;:true,&quot;browse_wishlist_text&quot;:&quot;Browse wishlist&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in your wishlist!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;fa-heart-o&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:&quot;after_add_to_cart&quot;,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
+
+
+
+                        <!-- COUNT TEXT -->
+
+                    </div>
+                </div>
+
+
+                <div class="woocommerce-tabs wc-tabs-wrapper">
+                    <ul class="tabs wc-tabs" role="tablist">
+                        <li class="description_tab" id="tab-title-description" role="tab" aria-controls="tab-description">
+                            <a href="#tab-description">
+                                Description
+                            </a>
+                        </li>
+                        <li class="simle_auction_history_tab" id="tab-title-simle_auction_history" role="tab" aria-controls="tab-simle_auction_history">
+                            <a href="#tab-simle_auction_history">
+                                Auction history
+                            </a>
+                        </li>
+                        <li class="reviews_tab" id="tab-title-reviews" role="tab" aria-controls="tab-reviews">
+                            <a href="#tab-reviews">
+                                Reviews (0)
+                            </a>
+                        </li>
+                        <li class="seller_tab" id="tab-title-seller" role="tab" aria-controls="tab-seller">
+                            <a href="#tab-seller">
+                                Vendor Info
+                            </a>
+                        </li>
+                        @*<li class="more_seller_product_tab" id="tab-title-more_seller_product" role="tab" aria-controls="tab-more_seller_product">
+                                <a href="#tab-more_seller_product">
+                                    More Products
+                                </a>
+                            </li>*@
+                    </ul>
+                    <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab" id="tab-description" role="tabpanel" aria-labelledby="tab-title-description">
+
+                        <h2>Description</h2>
+
+                        <h4>How can have anything you ant in life if you ?</h4>
+                        <p>If you’ve been following the crypto space, you’ve likely heard of Non-Fungible Tokens (Biddings), more popularly referred to as ‘Crypto Collectibles.’ The world of Biddings is growing rapidly. It seems there is no slowing down of these assets as they continue to go up in price. This growth comes with the opportunity for people to start new businesses to create and capture value. The market is open for players in every kind of field. Are you a collector.</p>
+                        <p>But getting your own auction site up and running has always required learning complex coding langua ges, or hiring an expensive design firm for thousands of dollars and months of work.</p>
+                        <p>Amet consectetur adipisicing elit. Maxime reprehenderit quaerat, velit rem atque vel impedit! Expensive Design.</p>
+                        <p>Consectetur adipisicing elit. Maxime reprehenderit quaerat</p>
+                        <p>Fuga magni veritatis ad temporibus atque adipisci nisi rerum&#8230;</p>
+                    </div>
+                    <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--simle_auction_history panel entry-content wc-tab" id="tab-simle_auction_history" role="tabpanel" aria-labelledby="tab-title-simle_auction_history">
+
+                        <h2>Auction History</h2>
+
+
+
+                        <table id="auction-history-table-1117" class="auction-history-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Bid</th>
+                                    <th>User</th>
+                                    <th>Auto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.biddingdetails.Count > 0)
+                                {
+                                    foreach (var biddings in Model.biddingdetails)
+                                    {
+                                        <tr>
+                                            <td class='date'>@biddings.bidding.Date</td>
+                                            @{
+                                                if (Model.auction.Auction_type_ID != 3)
+                                                {
+                                                    <td class='bid'><span class="woocommerce-Price-amount amount">@biddings.bidding.Amount</span></td>
+                                                    <td class='username'>@biddings.bidder.First_name</td>
+                                                    <td class='proxy'></td>
+
+                                                }
+                                                else
+                                                {
+                                                    <td class='bid'><span class="woocommerce-Price-amount amount">*****</span></td>
+                                                    <td class='username'>*****</td>
+                                                    <td class='proxy'></td>
+                                                }
+                                            }
+                                        </tr>
+
+                                    }
+                                }
+
+                            </tbody>
+
+
+                            <tr class="start">
+                                <td class="date">@Model.auction.Start_date</td>
+                                <td colspan="3" class="started">Auction started</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--reviews panel entry-content wc-tab" id="tab-reviews" role="tabpanel" aria-labelledby="tab-title-reviews">
+                        <div id="reviews" class="woocommerce-Reviews">
+                            <div id="comments">
+                                <h2 class="woocommerce-Reviews-title">
+                                    Reviews
+                                </h2>
+
+                                <p class="woocommerce-noreviews">There are no reviews yet.</p>
+                            </div>
+
+                            <div id="review_form_wrapper">
+                                <div id="review_form">
+                                    <div id="respond" class="comment-respond">
+                                        <span id="reply-title" class="comment-reply-title">Be the first to review &ldquo;Macbook Pro 2018&rdquo; <small><a rel="nofollow" id="cancel-comment-reply-link" href="/product/macbook-pro-2018/#respond" style="display:none;">Cancel reply</a></small></span><form action="https://www.bidout-wp.egenslab.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+                                            <div class="comment-form-rating">
+                                                <label for="rating">Your rating&nbsp;<span class="required">*</span></label><select name="rating" id="rating" required>
+                                                    <option value="">Rate&hellip;</option>
+                                                    <option value="5">Perfect</option>
+                                                    <option value="4">Good</option>
+                                                    <option value="3">Average</option>
+                                                    <option value="2">Not that bad</option>
+                                                    <option value="1">Very poor</option>
+                                                </select>
+                                            </div><p class="comment-form-comment"><label for="comment">Your review&nbsp;<span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" required></textarea></p><p class="form-submit">
+                                                <input name="submit" type="submit" id="submit" class="submit" value="Submit" /> <input type='hidden' name='comment_post_ID' value='1117' id='comment_post_ID' />
+                                                <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+                                            </p>
+                                        </form>
+                                    </div><!-- #respond -->
+                                </div>
+                            </div>
+
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--seller panel entry-content wc-tab" id="tab-seller" role="tabpanel" aria-labelledby="tab-title-seller">
+
+                        <h2>Vendor Information</h2>
+
+                        <ul class="list-unstyled">
+
+
+                            <li class="seller-name">
+                                <span>
+                                    Auctioneer:
+                                </span>
+
+                                <span class="details">
+
+                                    <a href="">@fullname</a>
+                                </span>
+                            </li>
+                            <li class="store-address">
+                                <span><b>Address:</b></span>
+                                <span class="details">
+                                    @Model.userdetails.Address
+                                </span>
+                            </li>
+
+                            <li class="clearfix">
+                                <span class="text">4.50 rating from 2 reviews</span><span class="seller-rating"><div class="star-rating" role="img" aria-label="Rated 2.50 out of 5"><span style="width:70%;">Rated <strong class="rating">4</strong> out of 5 based on <span class="rating">2</span> customer ratings</span></div></span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            </main>
+        </div>
+    </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    var btn = document.getElementById("bidbtn");
+
+    $("#bidbtn").click(function () {
+        debugger
+        var bid = document.getElementById("amount").value;
+        var productid = document.getElementById("productid").value;
+
+
+        $.ajax({
+            type: "GET",
+            data: {amount: bid, productid: productid},
+            url: '@Url.Action("bid","Product")',
+            success: function (data) {
+                alert(data);
+                location.reload();
+             },
+             error: function (xhr, status, error) {
+                 alert(xhr, status, error)
+             }
+
+        })
+    })
+
+    @*btn.addEventListener("click", function () {
+
+        debugger
+        var bid = document.getElementById("bidvalue").value;
+
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify( { amount: bid, productdetials: @Model}),
+            url: '@Url.Action("bid","Product")',
+            success: function (data) {
+                alert(data);
+            }
+
+        })
+    })*@
+
+
+</script>
+

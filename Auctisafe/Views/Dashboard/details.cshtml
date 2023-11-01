@@ -1,0 +1,109 @@
+﻿@model Auctisafe.Models.Signup
+
+@{
+    ViewBag.Title = "details";
+}
+
+
+<div class="inner-banner">
+    <div class="container">
+        <h2 class="inner-banner-title wow fadeInLeft" data-wow-duration="1.5s" data-wow-delay=".2s">
+            My account
+        </h2>
+        <nav aria-label="breadcrumb">
+            <ul id="breadcrumb" class="breadcrumb">
+                <li class="breadcrumb-item"><a href="https://www.bidout-wp.egenslab.com"> Home </a></li>
+                <li class="active">My account</li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="page-wrapper sec-mar">
+    <div class="container">
+        <article id="post-1408" class="post-1408 page type-page status-publish hentry">
+            <div class="inner-post">
+                <div class="woocommerce">
+                    <nav class="woocommerce-MyAccount-navigation">
+                        <ul>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard">
+                                @Html.ActionLink("Dashboard", "Index")
+                            </li>
+
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account is-active">
+                                @Html.ActionLink("Account Details", "details")
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auctions-endpoint">
+                                @Html.ActionLink("Create Auction", "Create_Auction")
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-watchlist">
+                                @{
+                                    int x = Convert.ToInt32(Session["productCount"]);
+                                    @Html.ActionLink("My Auctions (" + x + ")", "myauctions");
+                                }
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                <a href="">Active Auction</a>
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
+                                <a href="">Won Auction</a>
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-activity">
+                                <a href="">Auction Activity</a>
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
+                                @Html.ActionLink("Logout", "logout")
+                            </li>
+                        </ul>
+                    </nav>
+
+                    @using (Html.BeginForm("details", "Dashboard", FormMethod.Post))
+                    {
+                    <div class="woocommerce-MyAccount-content">
+                        <div class="woocommerce-notices-wrapper"></div>
+
+
+
+                        <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+                            <label for="account_first_name">First name&nbsp;<span class="required">*</span></label>
+                            @Html.EditorFor(model => model.First_name, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "username" } })
+                        </p>
+                        <p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
+                            <label for="account_last_name">Last name&nbsp;<span class="required">*</span></label>
+                            @Html.EditorFor(model => model.Last_name, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "username" } })
+
+                        </p>
+                        <div class="clear"></div>
+
+
+
+
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                            <label for="account_email">Address&nbsp;<span class="required">*</span></label>
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "username" } })
+                        </p>
+
+
+                        <div class="clear"></div>
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                            <label for="account_email">CNIC&nbsp;<span class="required">*</span></label>
+                            @Html.EditorFor(model => model.CNIC, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "username" } })
+                        </p>
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                            <label for="account_email">Phone number&nbsp;<span class="required">*</span></label>
+                            @Html.EditorFor(model => model.Phone_number, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "username" } })
+                        </p>
+                        <p>
+                            <input type="hidden" id="save-account-details-nonce" name="save-account-details-nonce" value="e5a68a0d56" /><input type="hidden" name="_wp_http_referer" value="/my-account/edit-account/" />		<button type="submit" class="woocommerce-Button button wp-element-button" name="save_account_details" value="Save changes">Save changes</button>
+                            <input type="hidden" name="action" value="save_account_details" />
+                        </p>
+
+                        
+
+                    </div>}
+                </div>
+
+            </div>
+                    
+        </article>
+    </div> <!-- end .container -->
+</div>

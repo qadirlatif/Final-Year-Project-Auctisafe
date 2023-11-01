@@ -1,0 +1,121 @@
+﻿@model IEnumerable<Auctisafe.Models.Product>
+
+@{
+    ViewBag.Title = "myauctions";
+}
+
+<div class="inner-banner">
+    <div class="container">
+        <h2 class="inner-banner-title wow fadeInLeft" data-wow-duration="1.5s" data-wow-delay=".2s">
+            My account
+        </h2>
+        <nav aria-label="breadcrumb">
+            <ul id="breadcrumb" class="breadcrumb">
+                <li class="breadcrumb-item"><a href="https://www.bidout-wp.egenslab.com"> Home </a></li>
+                <li class="active">My account</li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="page-wrapper sec-mar">
+    <div class="container">
+        <article id="post-1408" class="post-1408 page type-page status-publish hentry">
+            <div class="inner-post">
+                <div class="woocommerce">
+                    <nav class="woocommerce-MyAccount-navigation">
+                        <ul>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard">
+                                @Html.ActionLink("Dashboard", "Index")
+                            </li>
+
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account ">
+                                @Html.ActionLink("Account Details", "details")
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auctions-endpoint">
+                                @Html.ActionLink("Create Auction", "Create_Auction")
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-watchlist is-active">
+                                @{
+                                    int x = Convert.ToInt32(Session["productCount"]);
+                                    @Html.ActionLink("My Auctions (" + x + ")", "myauctions");
+                                }
+
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                <a href="">Active Auction</a>
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
+                                <a href="">Won Auction</a>
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-activity">
+                                <a href="">Auction Activity</a>
+                            </li>
+                            <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
+                                @Html.ActionLink("Logout", "logout")
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="woocommerce-MyAccount-content">
+                        <div class="woocommerce-notices-wrapper"></div><div class="woocommerce columns-4 ">
+                            <div class="products columns-4 clearfix">
+                                <div class="row gy-4">
+
+
+
+
+
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <div class="col-xl-4 col-md-6 col-sm-12">
+                                            <div class="eg-card auction-card1">
+                                                <div class="auction-img">
+                                                    <img width="300" height="200" src="~/Images/@item.image" sizes="(max-width: 600px) 100vw, 600px" />											<div class="auction-timer">
+                                                        <div class="auction-time">
+                                                            <div class="main-auction auction-time-countdown" data-time="5131972" data-auctionid="613" data-format="dHMS"></div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="auction-content">
+                                                    <a href=""><h2 class="woocommerce-loop-product__title">@item.name</h2></a>
+                                                    <p>
+                                                        <span class="price"><span class="auction-price current-bid" data-auction-id="613" data-bid="229" data-status="running"><span class="current auction">Price: </span> <span class="woocommerce-Price-amount amount">@item.price<span class="woocommerce-Price-currencySymbol"> Rs</span></span></span></span>
+                                                    </p>
+                                                    <div class="auction-card-bttm">
+
+                                                        <a href="~/Dashboard/Index/@item.Product_ID" class="button wp-element-button product_type_auction">Bid now</a>
+                                                        <div class="share-area">
+                                                            <ul class="social-icons d-flex">
+                                                                <li><a href=""><i class="bx bxl-facebook"></i></a></li>
+                                                                <li><a href=""><i class="bx bxl-twitter"></i></a></li>
+                                                                <li><a href=""><i class="bx bxl-instagram"></i></a></li>
+                                                                <li><a href=""><i class="bx bxl-pinterest"></i></a></li>
+                                                            </ul>
+                                                            <div>
+                                                                <div class="share-btn"><i class='bx bxs-share-alt'></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </article>
+    </div> <!-- end .container -->
+</div>
+
+
+
+
+
+
