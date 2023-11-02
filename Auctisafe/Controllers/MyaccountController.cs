@@ -18,6 +18,7 @@ namespace Auctisafe.Controllers
         MD5_Algo md5hashing = new MD5_Algo();
         AuctionContext db = new AuctionContext();
         // GET: Myaccount
+        [HttpGet]
         public ActionResult Index()
         {
             return View(new signupmaster());
@@ -39,6 +40,7 @@ namespace Auctisafe.Controllers
             Session["status"] = "A";
             return RedirectToAction("verification");
         }
+
         public ActionResult login(signupmaster myaccount)
         {
             
@@ -133,25 +135,7 @@ namespace Auctisafe.Controllers
                 return Content("false");
             }
         }
-        [HttpPost]
-        public ActionResult changepass(string password)
-        {
-            MD5_Algo hash = new MD5_Algo();
-            string hashedpass = hash.hashedvalue(password);
-            string targetemail = Session["email"].ToString();
-            if (targetemail != "")
-            {
-                var target = db.login.Where(x => x.Email == targetemail).FirstOrDefault();
-                target.Password = hashedpass;
-                db.Entry(target).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return Content("your password has been changed successfully!");
-            }
-            else
-            {
-                return Content("You haven't entered email! Kindly fill ");
-            }
-        }
+       
 
     }
 }

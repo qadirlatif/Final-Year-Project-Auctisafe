@@ -108,9 +108,10 @@ namespace Auctisafe.Controllers
             {
                 Random rand = new Random();
                 int productID = rand.Next(9999, 10000000);
-
+                //fridge.png
+                //541255
                 string ImageName = System.IO.Path.GetFileName(file.FileName);
-                string updatedname = productID + ImageName;
+                string updatedname = productID + ImageName;     //541255fridge.png
                 string physicalPath = Server.MapPath("~/Images/" + updatedname);
                 file.SaveAs(physicalPath);
                 Product mypro = new Product()
