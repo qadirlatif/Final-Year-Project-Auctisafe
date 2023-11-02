@@ -17,11 +17,11 @@ First Week Iteration :
   3) Auction Types Implemented => English, Dutch, Sealed Bid Auction
   4) Bidding on Auction & implemented the bidding behavior of each auction type
 
-Project Team:
+Project Team: <br>
 Co-ordinator: Dr. Aarij Mahmood Hussan <br>
-Supervisor: Dr. Abdul Ahad Abro.
-Group Members:
-Wajiha Jawwad Ali (Registration ID: 021-20-52023, Email: Wajiha.52023@iqra.edu.pk).
-Muhammad Yasir (Registration ID: 021-20-52030, Email: Muhammad.52030@iqra.edu.pk).
-Abdul Qadir (Registration ID: 021-20-52841, Email: Abdul.52841@iqra.edu.pk).
-Ibrar Ali (Registration ID: 021-20-54199, Email: Ibrar.54199@iqra.edu.pk).
+Supervisor: Dr. Abdul Ahad Abro <br>
+Group Members: <br>
+Wajiha Jawwad Ali (Registration ID: 021-20-52023, Email: Wajiha.52023@iqra.edu.pk). <br>
+Muhammad Yasir (Registration ID: 021-20-52030, Email: Muhammad.52030@iqra.edu.pk). <br>
+Abdul Qadir (Registration ID: 021-20-52841, Email: Abdul.52841@iqra.edu.pk). <br>
+Ibrar Ali (Registration ID: 021-20-54199, Email: Ibrar.54199@iqra.edu.pk). <br>
