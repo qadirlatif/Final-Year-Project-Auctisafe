@@ -18,10 +18,10 @@ First Week Iteration :
   4) Bidding on Auction & implemented the bidding behavior of each auction type
 
 Project Team:
-Co-ordinator: Dr. Aarij Mahmood Hussan
-Supervisor: Dr. Abdul Ahad Abro
+Co-ordinator: Dr. Aarij Mahmood Hussan.
+Supervisor: Dr. Abdul Ahad Abro.
 Group Members:
-Wajiha Jawwad Ali (Registration ID: 021-20-52023, Email: Wajiha.52023@iqra.edu.pk)
-Muhammad Yasir (Registration ID: 021-20-52030, Email: Muhammad.52030@iqra.edu.pk)
-Abdul Qadir (Registration ID: 021-20-52841, Email: Abdul.52841@iqra.edu.pk)
-Ibrar Ali (Registration ID: 021-20-54199, Email: Ibrar.54199@iqra.edu.pk)
+Wajiha Jawwad Ali (Registration ID: 021-20-52023, Email: Wajiha.52023@iqra.edu.pk).
+Muhammad Yasir (Registration ID: 021-20-52030, Email: Muhammad.52030@iqra.edu.pk).
+Abdul Qadir (Registration ID: 021-20-52841, Email: Abdul.52841@iqra.edu.pk).
+Ibrar Ali (Registration ID: 021-20-54199, Email: Ibrar.54199@iqra.edu.pk).
