@@ -152,6 +152,7 @@
     <Content Include="Views\Welcome\Index.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Welcome\About.cshtml" />
+    <Content Include="Views\Myaccount\ForgotPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

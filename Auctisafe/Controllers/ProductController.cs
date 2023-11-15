@@ -82,131 +82,160 @@ namespace Auctisafe.Controllers
             var model = ProductDetailsViewModel(int.Parse(productid));
             if (model.auction.Auction_type_ID == 1)
             {
-                var maxbidder = maxfinder(model.biddingdetails);
-                if (float.Parse(amount) > maxbidder.bidding.Amount && float.Parse(amount) > model.product.price)
-                {
-                    if (model.auction.End_date > DateTime.Now)
-                    {
-                        biddings bid = new biddings();
-                        Random rand = new Random();
-                        bid.Bid_ID = rand.Next(99999, 999999);
-                        bid.Product_ID = int.Parse(productid);
-                        bid.Bidder_ID = Convert.ToInt32(Session["id"]);
-                        bid.Amount = double.Parse(amount);
-                        bid.Date = DateTime.Now;
-                        
-                        db.all_biddings.Add(bid);
-                        db.SaveChanges();
-                        return Content("bid success");
-                    }
-                    else
-                    {
-                        return Content("Auction Timeout!!");
-                    }
-                }
-                else
-                {
-                    return Content("bid failed");
-                }
+                string message = EnglishAuction(model, amount, productid);
+                return Content(message);
             }
             else if (model.auction.Auction_type_ID == 3)
             {
-                if (float.Parse(amount) > model.product.price)
-                {
-                    if (model.auction.End_date > DateTime.Now)
-                    {
-                        biddings bid = new biddings();
-                        Random rand = new Random();
-                        bid.Bid_ID = rand.Next(99999, 999999);
-                        bid.Product_ID = int.Parse(productid);
-                        bid.Bidder_ID = Convert.ToInt32(Session["id"]);
-                        bid.Amount = double.Parse(amount);
-                        bid.Date = DateTime.Now;
-                        
-                        db.all_biddings.Add(bid);
-                        db.SaveChanges();
-                        return Content("Congrats! Bid Success ");
-                    }
-                    else
-                    {
-                        return Content("Auction Timeout!!");
-                    }
-                }
-                else
-                {
-                    return Content("Kindly Bid Above The Price has been set by Auctioneer");
-                }
+                string message = SealedBidAuction(model, amount, productid);
+                return Content(message);
             }
             else if (model.auction.Auction_type_ID == 2)
             {
-                if (model.status.Status == "A")
-                {
-                    if (model.auction.End_date > DateTime.Now)
-                    {
-                        if (float.Parse(amount) == model.auction.UpdatedPrice)
-                        {
-                            bid_winner biddingwinner = new bid_winner();
-                            biddings bid = new biddings();
-                            Random rand = new Random();
-                            model.status.Status = "D";
-                            db.Entry(model.status).State = System.Data.Entity.EntityState.Modified;
-                            db.SaveChanges();
-                            bid.Bid_ID = rand.Next(99999, 999999);
-                            bid.Product_ID = int.Parse(productid);
-                            bid.Bidder_ID = Convert.ToInt32(Session["id"]);
-                            bid.Amount = double.Parse(amount);
-                            bid.Date = DateTime.Now;
-                            
-                            db.all_biddings.Add(bid);
-                            db.SaveChanges();
-                            biddingwinner.Bid_ID = bid.Bid_ID;
-                            biddingwinner.Date = DateTime.Now;
-                            db.bid_winner.Add(biddingwinner);
-                            db.SaveChanges();
-                            mailer mail = new mailer();
-                            int userid = Convert.ToInt32(Session["id"]);
-                            var user = db.login.Where(x => x.User_ID == userid).FirstOrDefault();
-                            mail.Emailer(user.Email, "Congratulations!", "You won the bid on item : "+model.product.name);
-                            return Content("Congrats! You Won the bid Kindly check your email!");
-
-                        }
-                        else if (float.Parse(amount) < model.auction.UpdatedPrice)
-                        {
-                            biddings bid = new biddings();
-                            Random rand = new Random();
-                            bid.Bid_ID = rand.Next(99999, 999999);
-                            bid.Product_ID = int.Parse(productid);
-                            bid.Bidder_ID = Convert.ToInt32(Session["id"]);
-                            bid.Amount = double.Parse(amount);
-                            bid.Date = DateTime.Now;
-                            
-                            
-                            db.all_biddings.Add(bid);
-
-                            db.SaveChanges();
-                            return Content("Congrats! Bid Success ");
-
-                        }
-                        else
-                        {
-                            return Content("Kindly Bid Under The Price has been set by Auctioneer");
-                        }
-                    }
-                    else
-                    {
-                        return Content("Auction Timeout!!");
-                    }
-                }
-                else
-                {
-                    return Content("Auction Ended Sorry better luck next time!!");
-                }
+                string message =  DutchAuction(model, amount, productid);
+                return Content(message);
+            }
+            else if (model.auction.Auction_type_ID == 4)
+            {
+                string message = ReverseAuction(model, amount, productid);
+                return Content(message);
             }
             else
             {
                 return Content("auction type is different");
             }
 
+        }
+
+        //English Auction
+        public string EnglishAuction(ProductDetailsViewModel model , string amount, string productid)
+        {
+            var maxbidder = maxfinder(model.biddingdetails);
+            if (float.Parse(amount) > maxbidder.bidding.Amount && float.Parse(amount) > model.product.price)
+            {
+                if (model.auction.End_date > DateTime.Now)
+                {
+                    biddings bid = new biddings();
+                    Random rand = new Random();
+                    bid.Bid_ID = rand.Next(99999, 999999);
+                    bid.Product_ID = int.Parse(productid);
+                    bid.Bidder_ID = Convert.ToInt32(Session["id"]);
+                    bid.Amount = double.Parse(amount);
+                    bid.Date = DateTime.Now;
+
+                    db.all_biddings.Add(bid);
+                    db.SaveChanges();
+                    return "bid success";
+                }
+                else
+                {
+                    return "Auction Timeout!!";
+                }
+            }
+            else
+            {
+                return "bid failed";
+            }
+        }
+        //Dutch Auction
+        public string DutchAuction(ProductDetailsViewModel model, string amount, string productid)
+        {
+            if (model.status.Status == "A")
+            {
+                if (model.auction.End_date > DateTime.Now)
+                {
+                    if (float.Parse(amount) == model.auction.UpdatedPrice)
+                    {
+                        bid_winner biddingwinner = new bid_winner();
+                        biddings bid = new biddings();
+                        Random rand = new Random();
+                        model.status.Status = "D";
+                        db.Entry(model.status).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                        bid.Bid_ID = rand.Next(99999, 999999);
+                        bid.Product_ID = int.Parse(productid);
+                        bid.Bidder_ID = Convert.ToInt32(Session["id"]);
+                        bid.Amount = double.Parse(amount);
+                        bid.Date = DateTime.Now;
+
+                        db.all_biddings.Add(bid);
+                        db.SaveChanges();
+                        biddingwinner.Bid_ID = bid.Bid_ID;
+                        biddingwinner.Date = DateTime.Now;
+                        db.bid_winner.Add(biddingwinner);
+                        db.SaveChanges();
+                        mailer mail = new mailer();
+                        int userid = Convert.ToInt32(Session["id"]);
+                        var user = db.login.Where(x => x.User_ID == userid).FirstOrDefault();
+                        mail.Emailer(user.Email, "Congratulations!", "You won the bid on item : " + model.product.name);
+                        return "Congrats! You Won the bid Kindly check your email!";
+
+                    }
+                    else if (float.Parse(amount) < model.auction.UpdatedPrice)
+                    {
+                        biddings bid = new biddings();
+                        Random rand = new Random();
+                        bid.Bid_ID = rand.Next(99999, 999999);
+                        bid.Product_ID = int.Parse(productid);
+                        bid.Bidder_ID = Convert.ToInt32(Session["id"]);
+                        bid.Amount = double.Parse(amount);
+                        bid.Date = DateTime.Now;
+
+
+                        db.all_biddings.Add(bid);
+
+                        db.SaveChanges();
+                        return "Congrats! Bid Success ";
+
+                    }
+                    else
+                    {
+                        return "Kindly Bid Under The Price has been set by Auctioneer";
+                    }
+                }
+                else
+                {
+                    return "Auction Timeout!!";
+                }
+            }
+            else
+            {
+                return "Auction Ended Sorry better luck next time!!";
+            }
+        }
+        //Sealed Bid Auction 
+        public string SealedBidAuction(ProductDetailsViewModel model, string amount, string productid)
+        {
+            if (float.Parse(amount) > model.product.price)
+            {
+                if (model.auction.End_date > DateTime.Now)
+                {
+                    biddings bid = new biddings();
+                    Random rand = new Random();
+                    bid.Bid_ID = rand.Next(99999, 999999);
+                    bid.Product_ID = int.Parse(productid);
+                    bid.Bidder_ID = Convert.ToInt32(Session["id"]);
+                    bid.Amount = double.Parse(amount);
+                    bid.Date = DateTime.Now;
+
+                    db.all_biddings.Add(bid);
+                    db.SaveChanges();
+                    return "Congrats! Bid Success ";
+                }
+                else
+                {
+                    return "Auction Timeout!!";
+                }
+            }
+            else
+            {
+                return "Kindly Bid Above The Price has been set by Auctioneer";
+            }
+        }
+        //Reverse Auction
+        public string ReverseAuction(ProductDetailsViewModel model, string amount, string productid)
+        {
+            return "";
         }
     }
 }

@@ -121,7 +121,31 @@ namespace Auctisafe.Controllers
                 return View();
             }
         }
-        
+        [HttpGet]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ForgotPassword(string Email)
+        {
+            var user = db.login.Where(x => x.Email == Email).FirstOrDefault();
+            if (user != null)
+            {
+                mailer mail = new mailer();
+                Random rand = new Random();
+                int code = rand.Next(1, 1000000);
+                mail.Emailer(user.Email, "Your Request for Forgot Password", "this is your verification code : " + code);
+                Session["code"] = code;
+                Session["email"] = Email;
+                return Content("true");
+            }
+            else
+            {
+                return Content("false");
+            }
+
+        }
         [HttpPost]
         public ActionResult verify(int Code)
         {
@@ -135,6 +159,27 @@ namespace Auctisafe.Controllers
                 return Content("false");
             }
         }
+        [HttpPost]
+        public ActionResult changepass(string password)
+        {
+            MD5_Algo hash = new MD5_Algo();
+            string hashedpass = hash.hashedvalue(password);
+            string targetemail = Session["email"].ToString();
+            if (targetemail != "")
+            {
+                var target = db.login.Where(x => x.Email == targetemail).FirstOrDefault();
+                target.Password = hashedpass;
+                db.Entry(target).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return Content("your password has been changed successfully!");
+            }
+            else
+            {
+                return Content("You haven't entered email! Kindly fill ");
+            }
+        }
+
+       
        
 
     }
