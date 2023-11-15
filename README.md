@@ -16,6 +16,14 @@ First Week Iteration :
   2) Auction Creation.
   3) Auction Types Implemented => English, Dutch, Sealed Bid Auction
   4) Bidding on Auction & implemented the bidding behavior of each auction type
+Second Week Iteration :
+  1) Reverse Auction Implementation
+  2) Forgot Password with email send verification
+Third Week Iteration :
+  1) Windows Desktop App Configuration
+  2) automated the whole bid winning and email generating
+  3) Automation Script for detecting Bid Winner from auction which auctions are ended
+  4) Automation script for decreasse the price after every interval (dutch Auction)
 
 Project Team: <br>
 Co-ordinator: Dr. Aarij Mahmood Hussan <br>
