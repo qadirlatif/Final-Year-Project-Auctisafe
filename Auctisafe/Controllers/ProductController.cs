@@ -235,7 +235,32 @@ namespace Auctisafe.Controllers
         //Reverse Auction
         public string ReverseAuction(ProductDetailsViewModel model, string amount, string productid)
         {
-            return "";
+            var maxbidder = maxfinder(model.biddingdetails);
+            if (float.Parse(amount) < model.product.price)
+            {
+                if (model.auction.End_date > DateTime.Now)
+                {
+                    biddings bid = new biddings();
+                    Random rand = new Random();
+                    bid.Bid_ID = rand.Next(99999, 999999);
+                    bid.Product_ID = int.Parse(productid);
+                    bid.Bidder_ID = Convert.ToInt32(Session["id"]);
+                    bid.Amount = double.Parse(amount);
+                    bid.Date = DateTime.Now;
+
+                    db.all_biddings.Add(bid);
+                    db.SaveChanges();
+                    return "bid success";
+                }
+                else
+                {
+                    return "Auction Timeout!!";
+                }
+            }
+            else
+            {
+                return "bid failed";
+            }
         }
     }
 }
