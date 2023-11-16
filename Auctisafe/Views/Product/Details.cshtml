@@ -70,7 +70,7 @@
                                     <p class="price"><span class="auction-price current-bid" data-auction-id="1117" data-bid="30556" data-status="running"><span class="current auction">Current bid:</span> <span class="woocommerce-Price-amount amount">@Model.product.price<span class="woocommerce-Price-currencySymbol">&#036;</span></span></span></p>
                                 }
                             }
-                            if (Model.auction.Auction_type_ID == 3)
+                            if (Model.auction.Auction_type_ID == 3 || Model.auction.Auction_type_ID == 4)
                             { <p class="price"><span class="auction-price current-bid" data-auction-id="1117" data-bid="30556" data-status="running"><span class="current auction">Price:</span> <span class="woocommerce-Price-amount amount">@Model.product.price<span class="woocommerce-Price-currencySymbol">&#036;</span></span></span></p>}
                         if (Model.auction.Auction_type_ID == 2)
                         {<p class="price"><span class="auction-price current-bid" data-auction-id="1117" data-bid="30556" data-status="running"><span class="current auction">Price:</span> <span class="woocommerce-Price-amount amount">@Model.auction.UpdatedPrice<span class="woocommerce-Price-currencySymbol">&#036;</span></span></span></p> } }

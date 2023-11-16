@@ -83,7 +83,8 @@ namespace Auctisafe.Controllers
                 new SelectListItem(){Text="Select Auction please",Selected=true},
                 new SelectListItem() { Text = "English Auction", Value = "1" },
                new SelectListItem() { Text = "Dutch Auction", Value = "2" },
-            new SelectListItem() { Text = "Sealed Bid Auction", Value = "3" }
+            new SelectListItem() { Text = "Sealed Bid Auction", Value = "3" },
+            new SelectListItem() { Text = "Reverse Auction", Value = "4" }
         };
                 List<SelectListItem> used = new List<SelectListItem>()
             {
