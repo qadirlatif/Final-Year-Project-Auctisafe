@@ -19,7 +19,7 @@ First Week Iteration :
 Second Week Iteration :
   1) Reverse Auction Implementation
   2) Forgot Password with email send verification
-<br>
+<br> <br>
 Third Week Iteration :
   1) Windows Desktop App Configuration
   2) automated the whole bid winning and email generating
