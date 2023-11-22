@@ -34,7 +34,7 @@ namespace Auctisafe.OtherLogicModels
                 {
                     if (auction.End_date < DateTime.Now)
                     {
-                        if (auction.Auction_type_ID == 1 || auction.Auction_type_ID == 3 || auction.Auction_type_ID == 5)
+                        if (auction.Auction_type_ID == 1 || auction.Auction_type_ID == 3 || auction.Auction_type_ID == 6)
                         {
                             var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
 
@@ -57,11 +57,19 @@ namespace Auctisafe.OtherLogicModels
                         }
                         else if (auction.Auction_type_ID == 4)
                         {
-                            ReverseAuction_BidWinner(context, product);
+                            var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
+                            if (status.Status == "A")
+                            {
+                                ReverseAuction_BidWinner(context, product);
+                            }
                         }
                         else if (auction.Auction_type_ID == 5)
                         {
-                            ReserveAuction(context, product);
+                            var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
+                            if (status.Status == "A")
+                            {
+                                ReserveAuction(context, product);
+                            }
                         }
                     }
                 }

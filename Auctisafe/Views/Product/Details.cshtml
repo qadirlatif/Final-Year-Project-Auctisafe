@@ -274,7 +274,7 @@
                     <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--seller panel entry-content wc-tab" id="tab-seller" role="tabpanel" aria-labelledby="tab-title-seller">
 
                         <h2>Vendor Information</h2>
-
+                        
                         <ul class="list-unstyled">
 
 
@@ -293,12 +293,13 @@
                                 <span class="details">
                                     @Model.userdetails.Address
                                 </span>
+
                             </li>
 
                             <li class="clearfix">
                                 <span class="text">4.50 rating from 2 reviews</span><span class="seller-rating"><div class="star-rating" role="img" aria-label="Rated 2.50 out of 5"><span style="width:70%;">Rated <strong class="rating">4</strong> out of 5 based on <span class="rating">2</span> customer ratings</span></div></span>
                             </li>
-
+                            <li> Report That Auctioneer => <a href="~/Myaccount/Report?userid=@Model.userdetails.User_ID"><img src="~/image/report.png" style="width : 4%" /></a></li>
                         </ul>
                     </div>
 

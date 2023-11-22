@@ -9,6 +9,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Protocols;
 using System.Web.UI.WebControls;
 
 namespace Auctisafe.Controllers
@@ -178,9 +179,26 @@ namespace Auctisafe.Controllers
                 return Content("You haven't entered email! Kindly fill ");
             }
         }
+        [HttpGet]
+        public ActionResult Report(string userid)
+        {
+            ViewBag.userid = userid;    
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Report(report myreport)
+        {
+            Random rand = new Random();
+            myreport.Reporter_ID = Convert.ToInt32(Session["id"]);
+            myreport.date = DateTime.Now;
+            myreport.ReportID = rand.Next(1, 1000000).ToString();
+            db.Reports.Add(myreport);
+            db.SaveChanges();
+            return View();
+        }
 
-       
-       
+
+
 
     }
 }

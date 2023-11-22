@@ -20,6 +20,7 @@ namespace Auctisafe.Models
         public DbSet<biddings> all_biddings { get; set; }
         public DbSet<product_categories> categories { get; set; }
         public DbSet<payment> Payment { get; set; }
+        public DbSet<report> Reports { get; set; }
 
 
 

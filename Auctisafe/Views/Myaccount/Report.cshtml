@@ -1,0 +1,63 @@
+﻿@model Auctisafe.Models.signupmaster
+@{
+    ViewBag.Title = "Report";
+}
+
+<div class="page-wrapper sec-mar">
+    <div class="container">
+        <article id="post-1408" class="post-1408 page type-page status-publish hentry">
+            <div class="inner-post">
+                <div class="woocommerce">
+                    <div class="woocommerce-notices-wrapper"></div>
+                    <div class="">
+
+                        @using (Html.BeginForm("Report", "Myaccount", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <h2>Report User</h2>
+
+                           <input hidden type="number" name="User_ID" value="@ViewBag.userid"  />
+
+
+
+
+                            <p class="form-row form-group">
+                                <label for="last-name">Reason<span class="required">*</span></label>
+                                <input type="radio" name="Reason" value=" Prices too High" /> Prices too High <br />
+
+                                <input type="radio" name="Reason" value=" Security Issues" /> Security Issues <br />
+                                <input type="radio" name="Reason" value="Fraud" /> Fraud <br />
+                                <input type="radio" name="Reason" value="product Quality" /> product Quality <br />
+                                <input type="radio" name="Reason" value="Inappropriate behaviour" /> Inappropriate behaviour <br />
+                                <input type="radio" name="Reason" value="Other" /> Other
+                            </p>
+                                
+
+                                <p class="form-row form-group form-row-wide">
+                                    <label for="shop-phone">Write a Detailed Description<span class="required">*</span></label>
+                                    <textarea name="description" class="form-control"></textarea>
+                                </p>
+
+
+
+
+                            
+                            <p class="woocommerce-form-row form-row">
+                                <input type="hidden" id="woocommerce-register-nonce"
+                                       name="woocommerce-register-nonce" value="554da01833" /><input type="hidden"
+                                                                                                     name="_wp_http_referer" value="/my-account/" /> <button type="submit"
+                                                                                                                                                             class="woocommerce-Button woocommerce-button button wp-element-button woocommerce-form-register__submit"
+                                                                                                                                                             name="register" value="Report">
+                                    Report
+                                </button>
+                            </p>
+
+
+                        }
+
+                </div>
+            </div>
+            </article>
+    </div>
+</div>
+
