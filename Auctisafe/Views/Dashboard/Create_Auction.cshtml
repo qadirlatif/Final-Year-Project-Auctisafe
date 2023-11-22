@@ -59,84 +59,114 @@
                     @using (Html.BeginForm("Create_Auction", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
-                <div class="woocommerce-MyAccount-content">
-                    <div class="woocommerce-notices-wrapper"></div>
+                        <div class="woocommerce-MyAccount-content">
+
+                            <div class="woocommerce-notices-wrapper"></div>
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label for="account_email">Select Auction Type&nbsp;<span class="required">*</span></label>
+                                @Html.DropDownList("auction", (IEnumerable<SelectListItem>)ViewBag.auctions, new { id = "auctions" })
+                                @Html.ValidationMessageFor(model => model.Auction_type_ID, "", new { @class = "text-danger" })
+                            </p>
+
+
+                            <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+                                <label for="account_first_name">Product name&nbsp;<span class="required">*</span></label>
+                                @Html.Editor("name", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text" } })
+                                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                            </p>
+
+                            @*description for reverse auction*@
+                            <p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last" id="ReverseDiscription" style="display:none;">
+                                <label for="account_last_name">Your Requirment(Description)&nbsp;<span class="required">*</span></label>
+                                @Html.Editor("description", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text" } })
+                                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                            </p>
+
+                            <p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last" id="Discription">
+                                <label for="account_last_name">Description&nbsp;<span class="required">*</span></label>
+                                @Html.Editor("description", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text" } })
+                                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                            </p>
+
+                            <div class="clear"></div>
+
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label for="account_email">Select Category&nbsp;<span class="required">*</span></label>
+                                @Html.DropDownList("category", (IEnumerable<SelectListItem>)ViewBag.categories)
+                                @Html.ValidationMessageFor(model => model.Category_ID, "", new { @class = "text-danger" })
+                            </p>
+
+
+                            <div class="clear"></div>
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label for="account_email">Enter Price&nbsp;<span class="required">*</span></label>
+                                @Html.Editor("price", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text" } })
+                                @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+                            </p>
+
+                            @*FOR RESERVE AUCTION*@
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide" id="reserveprice" style="display:none;">
+                            <label for="account_email">Enter the Reserve Price&nbsp;<span class="required">*</span></label>
+                            @Html.Editor("reservedprice", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", Type = "number", Value = 0 } })
+                            @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+                        </p>
+
+
+                            @* for reverse auction*@
+                            @*<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide" id="reverseused" style="display:none;">
+                                <label for="account_email">You want product in Used or not?&nbsp;<span class="required">*</span></label>
+                                @Html.DropDownList("used", (IEnumerable<SelectListItem>)ViewBag.used)
+                                @Html.ValidationMessageFor(model => model.used, "", new { @class = "text-danger" })
+                            </p>*@
 
 
 
-                    <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
-                        <label for="account_first_name">Product name&nbsp;<span class="required">*</span></label>
-                        @Html.Editor("name", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text" } })
-                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-                    </p>
-                    <p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
-                        <label for="account_last_name">Description&nbsp;<span class="required">*</span></label>
-                        @Html.Editor("description", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text" } })
-                        @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-
-                    </p>
-                    <div class="clear"></div>
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide" id="otherused">
+                                <label for="account_email">Used or not?&nbsp;<span class="required">*</span></label>
+                                @Html.DropDownList("used", (IEnumerable<SelectListItem>)ViewBag.used)
+                                @Html.ValidationMessageFor(model => model.used, "", new { @class = "text-danger" })
+                            </p>
 
 
-
-
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                        <label for="account_email">Select Category&nbsp;<span class="required">*</span></label>
-                        @Html.DropDownList("category", (IEnumerable<SelectListItem>)ViewBag.categories)
-                        @Html.ValidationMessageFor(model => model.Category_ID, "", new { @class = "text-danger" })
-                    </p>
-
-
-                    <div class="clear"></div>
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                        <label for="account_email">Enter Price&nbsp;<span class="required">*</span></label>
-                        @Html.Editor("price", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text" } })
-                        @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
-                    </p>
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                        <label for="account_email">Is it Used or not?&nbsp;<span class="required">*</span></label>
-                        @Html.DropDownList("used", (IEnumerable<SelectListItem>)ViewBag.used)
-                        @Html.ValidationMessageFor(model => model.used, "", new { @class = "text-danger" })
-                    </p>
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                        <label for="account_email">Select Auction&nbsp;<span class="required">*</span></label>
-                        @Html.DropDownList("auction", (IEnumerable<SelectListItem>)ViewBag.auctions, new { id = "auctions" })
-                        @Html.ValidationMessageFor(model => model.Auction_type_ID, "", new { @class = "text-danger" })
-                    </p>
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide" id="Interval" style="display:none;">
-                        <label for="account_email">Enter Interval (in Hours)&nbsp;<span class="required">*</span></label>
-                        @Html.Editor("Interval", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", Type="number", value = 0 } })
-                        @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
-                    </p>
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide" id="decreament" style="display:none;">
-                        <label for="account_email">Enter Amount (After every Interval how many amount should be decrease from your actual price)&nbsp;<span class="required">*</span></label>
-                        @Html.Editor("decreament", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text",Type="number",  value=0 } })
-                        @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
-                    </p>
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                        <label for="account_email">Start Date&nbsp;<span class="required">*</span></label>
-                        @Html.Editor("startdate", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", Type = "date" } })
-                        @Html.ValidationMessageFor(model => model.Start_date, "", new { @class = "text-danger" })
-                    </p>
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                        <label for="account_email">End Date&nbsp;<span class="required">*</span></label>
-                        @Html.Editor("enddate", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", Type = "date" } })
-                        @Html.ValidationMessageFor(model => model.End_date, "", new { @class = "text-danger" })
-                    </p>
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                        <label for="account_email">Select Image (PNG/JPG)&nbsp;<span class="required">*</span></label>
-                        @Html.Editor("file", new { htmlAttributes = new { @class = "form-control-file", Type = "file" } })
-                        @Html.ValidationMessageFor(model => model.image, "", new { @class = "text-danger" })
-                    </p>
-
-                    <p>
-                        <input type="hidden" id="save-account-details-nonce" name="save-account-details-nonce" value="e5a68a0d56" /><input type="hidden" name="_wp_http_referer" value="/my-account/edit-account/" />		<button type="submit" class="woocommerce-Button button wp-element-button" name="save_account_details" value="Save changes">Create Auction</button>
-                        <input type="hidden" name="action" value="save_account_details" />
-                    </p>
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide" id="Interval" style="display:none;">
+                                <label for="account_email">Enter Interval (in Minutes)&nbsp;<span class="required">*</span></label>
+                                @Html.Editor("Interval", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", Type = "number", Value = 0 } })
+                                @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+                            </p>
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide" id="decreament" style="display:none;">
+                                <label for="account_email">Enter Amount (After every Interval how many amount should be decrease from your actual price)&nbsp;<span class="required">*</span></label>
+                                @Html.Editor("decreament", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", Type = "number", Value = 0 } })
+                                @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+                            </p>
 
 
 
-                </div>}
+
+
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label for="account_email">Start Date&nbsp;<span class="required">*</span></label>
+                                @Html.Editor("startdate", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", Type = "date" } })
+                                @Html.ValidationMessageFor(model => model.Start_date, "", new { @class = "text-danger" })
+                            </p>
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label for="account_email">End Date&nbsp;<span class="required">*</span></label>
+                                @Html.Editor("enddate", new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", Type = "date" } })
+                                @Html.ValidationMessageFor(model => model.End_date, "", new { @class = "text-danger" })
+                            </p>
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label for="account_email">Select Image (PNG/JPG)&nbsp;<span class="required">*</span></label>
+                                @Html.Editor("file", new { htmlAttributes = new { @class = "form-control-file", Type = "file" } })
+                                @Html.ValidationMessageFor(model => model.image, "", new { @class = "text-danger" })
+                            </p>
+
+                            <p>
+                                <input type="hidden" id="save-account-details-nonce" name="save-account-details-nonce" value="e5a68a0d56" /><input type="hidden" name="_wp_http_referer" value="/my-account/edit-account/" />		<button type="submit" class="woocommerce-Button button wp-element-button" name="save_account_details" value="Save changes">Create Auction</button>
+                                <input type="hidden" name="action" value="save_account_details" />
+                            </p>
+
+
+
+                        </div>}
                 </div>
 
             </div>
@@ -146,23 +176,50 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
 <script>
     $(document).ready(function () {
         var dropdown = $("#auctions");
 
         dropdown.on("change", function () {
-            var selectedValue = dropdown.val(); 
+            var selectedValue = dropdown.val();
             if (selectedValue == 2) {
                 $("#decreament").show();
                 $("#Interval").show();
             }
+
             else {
+
                 $("#decreament").hide();
                 $("#Interval").hide();
+            }
+
+            if (selectedValue == 4) {
+                $("#ReverseDiscription").show();
+                $("#Discription").hide();
+                //$("#reverseused").show();
+                //$("#otherused").hide();
+
+            }
+
+            else {
+                $("#ReverseDiscription").hide();
+                $("#Discription").show();
+                //$("#reverseused").hide();
+                //$("#otherused").show();
+
+            }
+
+            if (selectedValue == 5) {
+                $("#reserveprice").show();
+
+            }
+
+            else {
+                $("#reserveprice").hide();
+
             }
         });
     });
 
 </script>
-
-

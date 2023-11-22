@@ -84,7 +84,9 @@ namespace Auctisafe.Controllers
                 new SelectListItem() { Text = "English Auction", Value = "1" },
                new SelectListItem() { Text = "Dutch Auction", Value = "2" },
             new SelectListItem() { Text = "Sealed Bid Auction", Value = "3" },
-            new SelectListItem() { Text = "Reverse Auction", Value = "4" }
+            new SelectListItem() { Text = "Reverse Auction", Value = "4" },
+            new SelectListItem() { Text = "Reserve Auction", Value = "5" },
+            new SelectListItem() { Text = "Forward Auction", Value = "6" }
         };
                 List<SelectListItem> used = new List<SelectListItem>()
             {
@@ -135,6 +137,7 @@ namespace Auctisafe.Controllers
                 myauctions.Start_date = Convert.ToDateTime(Convert.ToDateTime(Request.Form["startdate"]).Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
                myauctions.End_date = Convert.ToDateTime(Convert.ToDateTime(Request.Form["enddate"]).Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
                  myauctions.increament = 0;
+                myauctions.auto_accept_amount = Convert.ToInt32(Request.Form["reservedprice"]) ;
               myauctions.decreament = Convert.ToInt32(Request.Form["decreament"]);
                 string intervalvalue = Request.Form["Interval"];
                 if (!string.IsNullOrEmpty(intervalvalue))
@@ -148,7 +151,6 @@ namespace Auctisafe.Controllers
 
 
                 }
-                myauctions.auto_accept_amount = 0;
               myauctions.keyparams = productID.ToString();
               myauctions.UpdatedPrice = Convert.ToInt32(Request.Form["price"]);
              myauctions.currentdate = DateTime.Now;

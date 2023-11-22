@@ -100,6 +100,11 @@ namespace Auctisafe.Controllers
                 string message = ReverseAuction(model, amount, productid);
                 return Content(message);
             }
+            else if(model.auction.Auction_type_ID == 5 || model.auction.Auction_type_ID == 6)
+            {
+                string message = Reserve_and_Forward_Auction(model, amount, productid);
+                return Content(message);
+            }
             else
             {
                 return Content("auction type is different");
@@ -237,6 +242,36 @@ namespace Auctisafe.Controllers
         {
             var maxbidder = maxfinder(model.biddingdetails);
             if (float.Parse(amount) < model.product.price)
+            {
+                if (model.auction.End_date > DateTime.Now)
+                {
+                    biddings bid = new biddings();
+                    Random rand = new Random();
+                    bid.Bid_ID = rand.Next(99999, 999999);
+                    bid.Product_ID = int.Parse(productid);
+                    bid.Bidder_ID = Convert.ToInt32(Session["id"]);
+                    bid.Amount = double.Parse(amount);
+                    bid.Date = DateTime.Now;
+
+                    db.all_biddings.Add(bid);
+                    db.SaveChanges();
+                    return "bid success";
+                }
+                else
+                {
+                    return "Auction Timeout!!";
+                }
+            }
+            else
+            {
+                return "bid failed";
+            }
+        }
+        //Reserve & Forward Auction
+        public string Reserve_and_Forward_Auction(ProductDetailsViewModel model, string amount, string productid)
+        {
+            var maxbidder = maxfinder(model.biddingdetails);
+            if (float.Parse(amount) > model.product.price)
             {
                 if (model.auction.End_date > DateTime.Now)
                 {

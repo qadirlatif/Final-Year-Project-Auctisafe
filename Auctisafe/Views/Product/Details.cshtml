@@ -70,7 +70,7 @@
                                     <p class="price"><span class="auction-price current-bid" data-auction-id="1117" data-bid="30556" data-status="running"><span class="current auction">Current bid:</span> <span class="woocommerce-Price-amount amount">@Model.product.price<span class="woocommerce-Price-currencySymbol">&#036;</span></span></span></p>
                                 }
                             }
-                            if (Model.auction.Auction_type_ID == 3 || Model.auction.Auction_type_ID == 4)
+                            if (Model.auction.Auction_type_ID == 3 || Model.auction.Auction_type_ID == 4 || Model.auction.Auction_type_ID == 5 || Model.auction.Auction_type_ID == 6)
                             { <p class="price"><span class="auction-price current-bid" data-auction-id="1117" data-bid="30556" data-status="running"><span class="current auction">Price:</span> <span class="woocommerce-Price-amount amount">@Model.product.price<span class="woocommerce-Price-currencySymbol">&#036;</span></span></span></p>}
                         if (Model.auction.Auction_type_ID == 2)
                         {<p class="price"><span class="auction-price current-bid" data-auction-id="1117" data-bid="30556" data-status="running"><span class="current auction">Price:</span> <span class="woocommerce-Price-amount amount">@Model.auction.UpdatedPrice<span class="woocommerce-Price-currencySymbol">&#036;</span></span></span></p> } }
@@ -208,7 +208,7 @@
                                         <tr>
                                             <td class='date'>@biddings.bidding.Date</td>
                                             @{
-                                                if (Model.auction.Auction_type_ID != 3)
+                                                if (Model.auction.Auction_type_ID != 3 || Model.auction.Auction_type_ID != 5)
                                                 {
                                                     <td class='bid'><span class="woocommerce-Price-amount amount">@biddings.bidding.Amount</span></td>
                                                     <td class='username'>@biddings.bidder.First_name</td>
