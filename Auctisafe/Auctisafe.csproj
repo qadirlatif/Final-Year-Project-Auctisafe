@@ -135,6 +135,7 @@
     <Compile Include="Models\Tax.cs" />
     <Compile Include="Models\verification.cs" />
     <Compile Include="OtherLogicModels\AuctionTimerObserver.cs" />
+    <Compile Include="OtherLogicModels\AutomatedReportsAction.cs" />
     <Compile Include="OtherLogicModels\AutomationBidWinnerDetector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />

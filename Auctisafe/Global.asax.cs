@@ -12,6 +12,7 @@ namespace Auctisafe
     {
         protected void Application_Start()
         {
+            AutomatedReportsAction.Start();
             AutomationBidWinnerDetector.Start();
             AuctionTimerObserver.Start();
             AreaRegistration.RegisterAllAreas();
