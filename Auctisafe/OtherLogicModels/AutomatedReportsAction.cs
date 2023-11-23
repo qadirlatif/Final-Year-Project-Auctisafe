@@ -14,7 +14,7 @@ namespace Auctisafe.OtherLogicModels
         public static void Start()
         {
             // Set the interval to 15 minutes (in milliseconds)
-            int interval = 1 * 60 * 1000;
+            int interval = 60 * 60 * 1000;
             emailService = new mailer();
             // Create a timer that calls the TimerCallback method once every 15 minutes
             _timer = new Timer(TimerCallback, null, 0, interval);

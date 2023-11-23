@@ -158,6 +158,7 @@
     <Content Include="Views\Welcome\About.cshtml" />
     <Content Include="Views\Myaccount\ForgotPassword.cshtml" />
     <Content Include="Views\Myaccount\Report.cshtml" />
+    <Content Include="Views\Myaccount\AccountSuspended.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

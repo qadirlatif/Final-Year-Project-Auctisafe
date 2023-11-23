@@ -2,6 +2,7 @@
 using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -54,8 +55,15 @@ namespace Auctisafe.Controllers
 
                     if (password.Equals(accounts.Password))
                     {
-                        Session["id"] = accounts.User_ID;
-                        return RedirectToAction("Index","dashboard");
+                        if (accounts.Status == "A")
+                        {
+                            Session["id"] = accounts.User_ID;
+                            return RedirectToAction("Index", "dashboard");
+                        }
+                        else
+                        {
+                            return RedirectToAction("AccountSuspended", "Myaccount");
+                        }
                     }
                     else
                     {
@@ -196,7 +204,11 @@ namespace Auctisafe.Controllers
             db.SaveChanges();
             return View();
         }
-
+        [HttpGet]
+        public ActionResult AccountSuspended()
+        {
+            return View();
+        }
 
 
 

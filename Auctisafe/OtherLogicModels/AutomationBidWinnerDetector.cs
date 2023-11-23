@@ -25,53 +25,56 @@ namespace Auctisafe.OtherLogicModels
         private static void TimerCallback(object state)
         {
             AuctionContext context = new AuctionContext();
-            var products = context.Products.ToList();
-            foreach (var product in products)
+            var allauctionstatus = context.auction_status.Where(x => x.Status == "A").ToList();
+            //var allauctions = context.auctions.Where(x=>x.End_date < DateTime.Now).ToList();
+            //var products = context.Products.ToList();
+            foreach (var targetauction in allauctionstatus)
             {
-                var allauctions = context.auctions.ToList();
-                var auction = context.auctions.FirstOrDefault(x => x.Product_ID == product.Product_ID);
+                
+                var auction = context.auctions.FirstOrDefault(x => x.Product_ID == targetauction.Product_ID && x.End_date < DateTime.Now);
                 if (auction != null)
                 {
-                    if (auction.End_date < DateTime.Now)
-                    {
+                    var product = context.Products.Where(x => x.Product_ID == auction.Product_ID).FirstOrDefault();
+                    //if (auction.End_date < DateTime.Now)
+                    //{
                         if (auction.Auction_type_ID == 1 || auction.Auction_type_ID == 3 || auction.Auction_type_ID == 6)
                         {
-                            var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
+                            //var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
 
-                            if (status.Status == "A")
-                            {
+                            //if (status.Status == "A")
+                            //{
 
                                 English_SealedBid_Auction_Bidwinner(context, product);
 
-                            }
+                            //}
                         }
                         else if (auction.Auction_type_ID == 2)
                         {
-                            var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
-                            if (status.Status == "A")
-                            {
+                            //var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
+                            //if (status.Status == "A")
+                            //{
                                 DutchAuction(context, product);
-                            }
+                            //}
 
 
                         }
                         else if (auction.Auction_type_ID == 4)
                         {
-                            var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
-                            if (status.Status == "A")
-                            {
+                            //var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
+                            //if (status.Status == "A")
+                            //{
                                 ReverseAuction_BidWinner(context, product);
-                            }
+                            //}
                         }
                         else if (auction.Auction_type_ID == 5)
                         {
-                            var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
-                            if (status.Status == "A")
-                            {
+                            //var status = context.auction_status.FirstOrDefault(x => x.Product_ID == auction.Product_ID);
+                            //if (status.Status == "A")
+                            //{
                                 ReserveAuction(context, product);
-                            }
+                            //}
                         }
-                    }
+                    //}
                 }
             }
 
