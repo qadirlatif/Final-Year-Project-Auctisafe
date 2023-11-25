@@ -23,6 +23,7 @@ namespace Auctisafe.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+
             return View(new signupmaster());
         }
         [HttpPost]
@@ -31,7 +32,7 @@ namespace Auctisafe.Controllers
             
             string returnValue = md5hashing.hashedvalue(myaccount.Password);
             Random rand = new Random();
-            Session["id"]=rand.Next(1,1000000);
+            Session["userid"]=rand.Next(1,1000000);
             Session["first name"] = myaccount.First_name;
             Session["last name"]=myaccount.Last_name;
             Session["CNIC"] = myaccount.CNIC;
@@ -67,27 +68,31 @@ namespace Auctisafe.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index");
+                        ViewBag.error = "Please Enter Correct Credentials";
+                        return View("Index");
                     }
                 }
                 else
                 {
+                    ViewBag.error = "Please Enter Correct Credentials";
 
-                    return RedirectToAction("Index");
+                    return View("Index");
                 }
             }
             catch(Exception x)
             {
-                return RedirectToAction("Index");
+                ViewBag.error = "Please Enter Correct Credentials";
+
+                return View("Index");
             }
             
         }
         public ActionResult verification()
         {
-            if (Convert.ToInt32(Session["id"]) != 0)
+            if (Convert.ToInt32(Session["userid"]) != 0)
             {
                 mailer sendmail = new mailer();
-                sendmail.Email_sender(Convert.ToString(Session["email"]), Convert.ToInt32(Session["id"]));
+                sendmail.Email_sender(Convert.ToString(Session["email"]), Convert.ToInt32(Session["userid"]));
                 return View();
             }
             else
@@ -100,11 +105,11 @@ namespace Auctisafe.Controllers
         public ActionResult verification(verification verify)
         {
             
-            if (verify.verificationcode == Convert.ToInt32(Session["id"]))
+            if (verify.verificationcode == Convert.ToInt32(Session["userid"]))
             {
                 Models.Signup accdetails = new Models.Signup()
                 {
-                    User_ID = Convert.ToInt32(Session["id"]),
+                    User_ID = Convert.ToInt32(Session["userid"]),
                     First_name = Session["first name"].ToString(),
                     Last_name = Session["last name"].ToString(),
                     CNIC = Session["CNIC"].ToString(),
@@ -113,7 +118,7 @@ namespace Auctisafe.Controllers
                 };
                 Models.Login acclogindetails = new Models.Login()
                 {
-                    User_ID = Convert.ToInt32(Session["id"]),
+                    User_ID = Convert.ToInt32(Session["userid"]),
                     Email = Session["email"].ToString(),
                     Password = Session["password"].ToString(),
                     Status = Session["status"].ToString(),
@@ -123,10 +128,12 @@ namespace Auctisafe.Controllers
                 db.SaveChanges();
                 db.login.Add(acclogindetails);
                 db.SaveChanges();
-                return RedirectToAction("index");
+                ViewBag.error = "Account Successfully Created";
+                return View("index");
             }
             else
             {
+                ViewBag.error = "Please Enter Correct Code";
                 return View();
             }
         }

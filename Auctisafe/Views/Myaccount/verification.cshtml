@@ -3,13 +3,33 @@
 @{
     ViewBag.Title = "verification";
 }
+<style>
+    .nice-select {
+        display: none;
+    }
+</style>
+@if (!string.IsNullOrEmpty(ViewBag.error))
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 
+    <script type="text/javascript">
+        function showAlert(title, text) {
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+        showAlert("Account","@ViewBag.error");
+    </script>
+}
 <h2>verification</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>verification</h4>
         <hr />

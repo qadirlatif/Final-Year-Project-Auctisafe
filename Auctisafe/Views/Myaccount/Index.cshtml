@@ -3,8 +3,45 @@
 @{
     ViewBag.Title = "Index";
 }
+<style>
+    .nice-select {
+        display: none;
+    }
+</style>
 
+@if (!string.IsNullOrEmpty(ViewBag.error) && ViewBag.error == "Account Successfully Created")
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 
+    <script type="text/javascript">
+        function showAlert(title, text) {
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        }
+        showAlert("Account","@ViewBag.error");
+    </script>
+}
+else if (!string.IsNullOrEmpty(ViewBag.error))
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+
+    <script type="text/javascript">
+        function showAlert(title, text) {
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+        showAlert("Account", "@ViewBag.error");
+    </script>
+
+}
 
 <div class="inner-banner">
     <div class="container">
@@ -32,7 +69,6 @@
                         <div class="u-column1 col-1">
 
                             <form method="" action="">
-
                             </form>
 
                             @*//Myaccount/Login*@
@@ -42,15 +78,18 @@
                                 <h2>Login</h2>
                                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                                     <label for="username">
-                                        Username or email address&nbsp;<span class="required">*</span>
+                                        Email address&nbsp;<span class="required">*</span>
                                     </label>
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "username" } })
-                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    <input type="email" required name="Email" class="woocommerce-Input woocommerce-Input--text input-text" />
+                                    @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "username" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
                                 </p>
                                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                                     <label for="password">Password&nbsp;<span class="required">*</span></label>
-                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "password", Type = "password" } })
-                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    <input type="password" required name="Password" class="woocommerce-Input woocommerce-Input--text input-text" />
+
+                                    @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "password", Type = "password" } })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
                                 </p>
 
 
@@ -75,9 +114,7 @@
 
                         <div class="u-column2 col-2">
 
-                            @using (Html.BeginForm("Index", "Myaccount", FormMethod.Post))
-                            {
-                                @Html.AntiForgeryToken()
+                            <form method="post" action="~/Myaccount/Index" id="regform">
                                 <h2>Register</h2>
 
 
@@ -86,16 +123,19 @@
                                     <label for="reg_email">
                                         Email address&nbsp;<span class="required">*</span>
                                     </label>
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "reg_email" } })
-                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    <input type="email" name="Email" required class="woocommerce-Input woocommerce-Input--text input-text" />
+                                    @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "reg_email" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
 
                                 </p>
 
 
                                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                                     <label for="reg_password">Password&nbsp;<span class="required">*</span></label>
-                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "reg-password", Type = "password" } })
-                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    <input type="password" name="Password" required class="woocommerce-Input woocommerce-Input--text input-text" />
+
+                                    @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "reg-password", Type = "password" } })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
 
                                 </p>
 
@@ -108,14 +148,18 @@
                                             <label for="first-name">
                                                 First Name <span class="required">*</span>
                                             </label>
-                                            @Html.EditorFor(model => model.First_name, new { htmlAttributes = new { @class = "input-text" } })
-                                            @Html.ValidationMessageFor(model => model.First_name, "", new { @class = "text-danger" })
+                                            <input type="text" name="First_name" required class="woocommerce-Input woocommerce-Input--text input-text" />
+
+                                            @*@Html.EditorFor(model => model.First_name, new { htmlAttributes = new { @class = "input-text" } })
+                                                @Html.ValidationMessageFor(model => model.First_name, "", new { @class = "text-danger" })*@
                                         </p>
 
                                         <p class="form-row form-group">
                                             <label for="last-name">Last Name <span class="required">*</span></label>
-                                            @Html.EditorFor(model => model.Last_name, new { htmlAttributes = new { @class = "input-text" } })
-                                            @Html.ValidationMessageFor(model => model.Last_name, "", new { @class = "text-danger" })
+                                            <input type="text" name="Last_name" required class="woocommerce-Input woocommerce-Input--text input-text" />
+
+                                            @*@Html.EditorFor(model => model.Last_name, new { htmlAttributes = new { @class = "input-text" } })
+                                                @Html.ValidationMessageFor(model => model.Last_name, "", new { @class = "text-danger" })*@
                                         </p>
                                     </div>
 
@@ -124,19 +168,25 @@
 
                                     <p class="form-row form-group">
                                         <label for="last-name">CNIC<span class="required">*</span></label>
-                                        @Html.EditorFor(model => model.CNIC, new { htmlAttributes = new { @class = "input-text" } })
-                                        @Html.ValidationMessageFor(model => model.CNIC, "", new { @class = "text-danger" })
+                                        <input type="text" name="CNIC" required class="woocommerce-Input woocommerce-Input--text input-text" />
+
+                                        @*@Html.EditorFor(model => model.CNIC, new { htmlAttributes = new { @class = "input-text" } })
+                                            @Html.ValidationMessageFor(model => model.CNIC, "", new { @class = "text-danger" })*@
                                     </p>
                                     <p class="form-row form-group">
                                         <label for="last-name">Address <span class="required">*</span></label>
-                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "input-text" } })
-                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                        <input type="text" name="Address" required class="woocommerce-Input woocommerce-Input--text input-text" />
+
+                                        @*@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "input-text" } })
+                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })*@
                                     </p>
 
                                     <p class="form-row form-group form-row-wide">
                                         <label for="shop-phone">Phone Number<span class="required">*</span></label>
-                                        @Html.EditorFor(model => model.Phone_number, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.Phone_number, "", new { @class = "text-danger" })
+                                        <input type="number" name="Phone_number" required class="woocommerce-Input woocommerce-Input--text input-text" />
+
+                                        @*@Html.EditorFor(model => model.Phone_number, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Phone_number, "", new { @class = "text-danger" })*@
                                     </p>
 
                                 </div>
@@ -154,6 +204,10 @@
                                         </a>.
                                     </p>
                                 </div>
+                                <p id="error-message"></p>
+
+                                <div class="g-recaptcha" data-sitekey="6LeuALsoAAAAACSpGqvEKDnp5ZVKZoldYsRHIOhp"></div>
+
                                 <p class="woocommerce-form-row form-row">
                                     <input type="hidden" id="woocommerce-register-nonce"
                                            name="woocommerce-register-nonce" value="554da01833" /><input type="hidden"
@@ -165,7 +219,7 @@
                                 </p>
 
 
-                            }
+                            </form>
 
                         </div>
 
@@ -176,3 +230,44 @@
         </article>
     </div> <!-- end .container -->
 </div>
+
+<script id="link" src="https://www.google.com/recaptcha/api.js?explicit&hl=en" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+<script>
+    // script.js
+    document.getElementById("regform").addEventListener("submit", function (event) {
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (recaptchaResponse.length === 0) {
+            event.preventDefault();
+            //    document.getElementById("error-message").innerText = "Please complete the CAPTCHA.";
+            showAlert("Account", "Please Complete the CAPTCHA")
+        }
+    });
+
+    // Reset the error message when the user interacts with the form again
+    document.querySelectorAll("input, textarea").forEach(function (element) {
+        element.addEventListener("input", function () {
+            document.getElementById("error-message").innerText = "";
+
+        });
+    });
+
+
+
+
+</script>
+
+
+
+
+<script type="text/javascript">
+    function showAlert(title, text) {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    }
+
+</script>
