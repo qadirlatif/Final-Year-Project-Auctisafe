@@ -21,5 +21,18 @@ namespace Auctisafe.Controllers
             }
             
         }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Myaccount");
+        }
+        public ActionResult Users()
+        {
+            return View("Users","_AdminLayout");
+        }
+        public ActionResult Auctions()
+        {
+            return View("Auctions","_AdminLayout");
+        }
     }
 }
