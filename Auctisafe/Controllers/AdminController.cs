@@ -11,7 +11,15 @@ namespace Auctisafe.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View("Index", "_AdminLayout");
+            if (Convert.ToInt32(Session["adminID"]) != 0)
+            {
+                return View("Index", "_AdminLayout");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Myaccount");
+            }
+            
         }
     }
 }

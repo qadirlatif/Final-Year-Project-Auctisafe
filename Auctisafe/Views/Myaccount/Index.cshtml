@@ -72,43 +72,44 @@ else if (!string.IsNullOrEmpty(ViewBag.error))
                             </form>
 
                             @*//Myaccount/Login*@
-                            @using (Html.BeginForm("login", "Myaccount", FormMethod.Post))
-                            {
-                                @Html.AntiForgeryToken()
-                                <h2>Login</h2>
-                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                                    <label for="username">
-                                        Email address&nbsp;<span class="required">*</span>
-                                    </label>
-                                    <input type="email" required name="Email" class="woocommerce-Input woocommerce-Input--text input-text" />
-                                    @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "username" } })
-                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
-                                </p>
-                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                                    <label for="password">Password&nbsp;<span class="required">*</span></label>
-                                    <input type="password" required name="Password" class="woocommerce-Input woocommerce-Input--text input-text" />
+                        <form action="~/Myaccount/Login" method="post" id="loginform">
+                            @*@using (Html.BeginForm("login", "Myaccount", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()*@
+                            <h2>Login</h2>
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label for="username">
+                                    Email address&nbsp;<span class="required">*</span>
+                                </label>
+                                <input type="email" required name="Email" class="woocommerce-Input woocommerce-Input--text input-text" />
+                                @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "username" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
+                            </p>
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label for="password">Password&nbsp;<span class="required">*</span></label>
+                                <input type="password" required name="Password" class="woocommerce-Input woocommerce-Input--text input-text" />
 
-                                    @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "password", Type = "password" } })
-                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
-                                </p>
+                                @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "password", Type = "password" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
+                            </p>
+                            <div class="g-recaptcha" data-sitekey="6LeuALsoAAAAACSpGqvEKDnp5ZVKZoldYsRHIOhp"></div>
+
+                            <p class="form-row">
+
+                                <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce"
+                                       value="e24382cd07" /><input type="hidden" name="_wp_http_referer"
+                                                                   value="/my-account/" /> <button type="submit"
+                                                                                                   class="woocommerce-button button woocommerce-form-login__submit wp-element-button"
+                                                                                                   name="login" value="Log in">
+                                    Log in
+                                </button>
+                                <a href="~/MyAccount/ForgotPassword">Forgot Password</a>
+                            </p>
 
 
-                                <p class="form-row">
 
-                                    <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce"
-                                           value="e24382cd07" /><input type="hidden" name="_wp_http_referer"
-                                                                       value="/my-account/" /> <button type="submit"
-                                                                                                       class="woocommerce-button button woocommerce-form-login__submit wp-element-button"
-                                                                                                       name="login" value="Log in">
-                                        Log in
-                                    </button>
-                                    <a href="~/MyAccount/ForgotPassword">Forgot Password</a>
-                                </p>
-
-
-
-                            }
-
+                            @*}*@
+                        </form>
 
                         </div>
 
@@ -234,6 +235,16 @@ else if (!string.IsNullOrEmpty(ViewBag.error))
 <script id="link" src="https://www.google.com/recaptcha/api.js?explicit&hl=en" async defer></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 <script>
+
+
+
+    function showLoadingSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'block';
+    }
+
+    function hideLoadingSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'none';
+    }
     // script.js
     document.getElementById("regform").addEventListener("submit", function (event) {
         const recaptchaResponse = grecaptcha.getResponse();
@@ -252,9 +263,23 @@ else if (!string.IsNullOrEmpty(ViewBag.error))
         });
     });
 
+    document.getElementById("loginform").addEventListener("submit", function (event) {
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (recaptchaResponse.length === 0) {
+            event.preventDefault();
+            //    document.getElementById("error-message").innerText = "Please complete the CAPTCHA.";
+            showAlert("Account", "Please Complete the CAPTCHA")
+        }
+    });
 
+    $(document).ajaxStart(function () {
+        showLoadingSpinner();
+    });
 
-
+    // Hide loader when all AJAX requests are complete
+    $(document).ajaxStop(function () {
+        hideLoadingSpinner();
+    });
 </script>
 
 

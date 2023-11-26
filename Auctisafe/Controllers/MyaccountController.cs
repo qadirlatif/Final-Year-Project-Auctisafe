@@ -58,8 +58,16 @@ namespace Auctisafe.Controllers
                     {
                         if (accounts.Status == "A")
                         {
-                            Session["id"] = accounts.User_ID;
-                            return RedirectToAction("Index", "dashboard");
+                            if (accounts.Role == "A")
+                            {
+                                Session["adminID"] = accounts.User_ID;
+                                return RedirectToAction("Index", "Admin");
+                            }
+                            else
+                            {
+                                Session["id"] = accounts.User_ID;
+                                return RedirectToAction("Index", "dashboard");
+                            }
                         }
                         else
                         {
@@ -122,6 +130,7 @@ namespace Auctisafe.Controllers
                     Email = Session["email"].ToString(),
                     Password = Session["password"].ToString(),
                     Status = Session["status"].ToString(),
+                    Role = "N"
                 };
                 Session.Clear();
                 db.signup.Add(accdetails);

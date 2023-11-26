@@ -9,6 +9,7 @@
         <link rel="pingback" href="https://www.bidout-wp.egenslab.com/xmlrpc.php">
         <link rel='dns-prefetch' href='//bidout-wp.b-cdn.net' />*@
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
     @*<link rel='dns-prefetch' href='//fonts.googleapis.com' />
@@ -17,6 +18,46 @@
         <link rel="alternate" type="application/rss+xml" title="Bidout &raquo; Comments Feed" href="https://www.bidout-wp.egenslab.com/comments/feed/" />*@
 
     <style>
+        .loading-spinner-overlay {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 9999; /* Ensure it appears above all other content */
+            background-color: rgba(0,0,0,0.5); /* Transparent black */
+        }
+
+
+        .spinner {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            top: 45%;
+            left: 46%;
+            transform: translate(-50%, -50%);
+        }
+
+        .navbar-minimize-fixed {
+            opacity: 1 !important;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+
         img.wp-smiley,
         img.emoji {
             display: inline !important;
@@ -874,9 +915,9 @@
         </style>
     </noscript>
     <meta name="generator" content="Elementor 3.11.2; features: e_dom_optimization, e_optimized_assets_loading, e_optimized_css_loading, a11y_improvements, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-auto">
-    
+
     <link rel="apple-touch-icon" href="https://bidout-wp.b-cdn.net/wp-content/uploads/2022/11/fav-icon.svg" />
-    
+
     <link rel="icon" href="~/image/AuctiSafe.png" type="image/x-icon">
     <link rel="shortcut icon" href="~/image/AuctiSafe.png" type="image/x-icon">
     <style id="wp-custom-css">
@@ -888,6 +929,10 @@
     <script src="~/App_Data/code.jquery.com_jquery-migrate-1.4.1.min.js"></script>
 </head>
 <body>
+    <div id="loadingSpinner" class="loading-spinner-overlay">
+        <div class="spinner"></div>
+    </div>
+
     <div id="progress">
         <span id="progress-value"><i class="bi bi-arrow-up-short"></i></span>
     </div>
@@ -1306,7 +1351,7 @@
     @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>*@
 
-    
+
     @*<script type="text/javascript">
 
         <script type="text/javascript">
@@ -1341,9 +1386,9 @@
     </script>
     <script src='https://bidout-wp.b-cdn.net/wp-content/plugins/woocommerce/assets/js/frontend/single-product.min.js?ver=7.4.0' id='wc-single-product-js'></script>
     <script src='https://bidout-wp.b-cdn.net/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4-wc.7.4.0' id='js-cookie-js'></script>
-    
+
     <script src='https://bidout-wp.b-cdn.net/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=7.4.0' id='woocommerce-js'></script>
-    
+
     <script src='https://bidout-wp.b-cdn.net/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=7.4.0' id='wc-cart-fragments-js'></script>
     <script src='https://bidout-wp.b-cdn.net/wp-content/themes/bidout-wp/assets/js/bootstrap.bundle.min.js?ver=1.0.0' id='bootstrap-js'></script>
     <script src='https://bidout-wp.b-cdn.net/wp-content/themes/bidout-wp/assets/js/wow.min.js?ver=1.0.0' id='wow-js'></script>
@@ -1355,6 +1400,15 @@
     <script src='https://bidout-wp.b-cdn.net/wp-content/themes/bidout-wp/assets/js/jquery.magnific-popup.min.js?ver=1.0.0' id='magnific-popup-js'></script>
 
 
-</body>>
+</body>
+<script>
+    function showLoadingSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'block';
+    }
+
+    function hideLoadingSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'none';
+    }
+</script>
 
 </html>
