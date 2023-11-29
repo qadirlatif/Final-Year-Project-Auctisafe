@@ -1,0 +1,128 @@
+﻿@model Auctisafe.ViewModel.UserdetaiandproductslViewModel
+@{
+    ViewBag.Title = "Userdetail";
+}
+
+<h3>User Detail</h3>
+<form id="updateform">
+    <div class="row">
+        <div class="col-md-4" hidden>
+            <label>ID</label>
+            <input type="text" class="form-control" value="@Model.userdetails.User_ID" name="User_ID" />
+        </div>
+        <div class="col-md-4">
+            <label>First Name</label>
+            <input type="text" class="form-control" value="@Model.userdetails.First_name" name="First_name" />
+        </div>
+        <div class="col-md-4">
+            <label>Last Name</label>
+            <input type="text" class="form-control" value="@Model.userdetails.Last_name" name="Last_name" />
+        </div>
+        <div class="col-md-4">
+            <label>Phone Number</label>
+            <input type="text" class="form-control" value="@Model.userdetails.Phone_number" name="Phone_number" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label>Address</label>
+            <input type="text" class="form-control" value="@Model.userdetails.Address" name="Address" />
+        </div>
+        <div class="col-md-4">
+            <label>CNIC</label>
+            <input type="text" class="form-control" value="@Model.userdetails.CNIC" name="CNIC" />
+        </div>
+        <div class="col-md-4">
+            <label>Address</label>
+            <input type="text" class="form-control" value="@Model.usercridentail.Email" name="Email" />
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-4">
+            <label>CNIC</label>
+            <select class="form-control" name="Status">
+                @if (Model.usercridentail.Status == "A")
+                {
+                    <option selected value="A">Activate</option>
+                    <option value="D">Deactivate</option>
+                }
+                else
+                {
+                    <option value="A">Activate</option>
+                    <option selected value="D">Deactivate</option>
+                }
+            </select>
+            @*<input type="text" class="form-control" value="@Model.usercridentail.Password" name="CNIC" />*@
+        </div>
+
+    </div>
+</form>
+<br />
+<div class="row">
+
+    <div class="col-md-4">
+        <button type="button" id="update" class="btn btn-secondary">Update</button>
+    </div>
+</div>
+
+<h3>User Auctions</h3>
+<table class="table table-striped">
+    <tr>
+        <th>Product Name</th>
+        <th>Auction Type</th>
+        <th>Auctioneer Name</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var items in Model.auctions)
+    {
+        <tr>
+            <td>@items.ProductName</td>
+            <td>@items.Auction</td>
+            <td>@items.Auctioneer_Name</td>
+            <td>@items.status</td>
+            <td>
+                <button class="btn btn-secondary btn-sm">User Details</button>
+                <button class="btn btn-secondary btn-sm">Product Details</button>
+                <button class="btn btn-secondary btn-sm">Auction Details</button>
+                <button class="btn btn-secondary btn-sm">Bidddings</button>
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+<h3>User Recent Biddings</h3>
+<table class="table table-striped">
+    <tr>
+        <th>Bidding Date</th>
+        <th>Bidding Amount</th>
+       
+    </tr>
+    @foreach (var items in Model.Biddings)
+    {
+        <tr>
+            <td>@items.Date</td>
+            <td>@items.Amount</td>
+            
+            
+        </tr>
+    }
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $("#update").click(function () {
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("UpdateUserDetail", "Admin")',
+            data: $("#updateform").serialize() ,
+            success: function (data) {
+                alert("sasd");
+            }
+        })
+    })
+</script>

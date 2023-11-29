@@ -1,7 +1,28 @@
-﻿
+﻿@model List<Auctisafe.ViewModel.AuctionListViewModel>
 @{
     ViewBag.Title = "Auctions";
 }
 
 <h2>Auctions</h2>
 
+<table class="table table-striped">
+    <tr>
+        <th>Product Name</th>
+        <th>Auction Type</th>
+        <th>Auctioneer Name</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    @foreach(var items in Model)
+            {
+                <tr>
+                    <td>@items.ProductName</td>
+                    <td>@items.Auction</td>
+                    <td>@items.Auctioneer_Name</td>
+                    <td>@items.status</td>
+                    <td>
+                        <a class="btn btn-secondary btn-sm" href="~/Admin/ProductDetails?id=@items.AuctionID">Details & Action</a>
+                    </td>
+                </tr>
+            }
+</table>

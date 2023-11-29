@@ -23,4 +23,13 @@ namespace Auctisafe.ViewModel
         public Signup bidder { get; set; }
         public Login credentails { get; set; }
     }
+    public class AuctionListViewModel
+    {
+        public int  AuctionID { get; set; }
+        public string Auctioneer_Name { get; set; }
+        public string ProductName { get; set; }
+        public int userid { get; set; }
+        public string status { get; set; }
+        public string Auction { get; set; }
+    }
 }

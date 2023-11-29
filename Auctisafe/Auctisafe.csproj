@@ -971,17 +971,17 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\feedback.cs" />
     <Compile Include="Models\Login.cs" />
-    <Compile Include="Models\mailer.cs" />
-    <Compile Include="Models\MD5 Algo.cs" />
+    <Compile Include="ViewModel\mailer.cs" />
+    <Compile Include="ViewModel\MD5 Algo.cs" />
     <Compile Include="Models\payment.cs" />
     <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductAuctionMaster.cs" />
+    <Compile Include="ViewModel\ProductAuctionMaster.cs" />
     <Compile Include="Models\product_categories.cs" />
     <Compile Include="Models\report.cs" />
     <Compile Include="Models\Signup.cs" />
-    <Compile Include="Models\signupmaster.cs" />
+    <Compile Include="ViewModel\signupmaster.cs" />
     <Compile Include="Models\Tax.cs" />
-    <Compile Include="Models\verification.cs" />
+    <Compile Include="ViewModel\verification.cs" />
     <Compile Include="OtherLogicModels\AuctionTimerObserver.cs" />
     <Compile Include="OtherLogicModels\AutomatedReportsAction.cs" />
     <Compile Include="OtherLogicModels\AutomationBidWinnerDetector.cs" />
@@ -1148,6 +1148,8 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\Auctions.cshtml" />
+    <Content Include="Views\Admin\Userdetail.cshtml" />
+    <Content Include="Views\Admin\ProductDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Auctisafe.ViewModel.userviewmodel>
 @{
     ViewBag.Title = "Users";
 }
@@ -6,7 +6,7 @@
 <h1>User & their Details</h1>
 <hr />
 <br />
-<table>
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -21,8 +21,19 @@
                 Actions
             </th>
         </tr>
-        <tr>
+        @foreach(var items in Model)
+            {
+                <tr>
 
-        </tr>
+                    <td>@items.userdetailandproduct.userdetails.First_name @items.userdetailandproduct.userdetails.Last_name</td>
+                    <td>@items.userdetailandproduct.usercridentail.Email</td>
+                    <td>@items.userdetailandproduct.userdetails.Phone_number</td>
+                    <td>@items.userdetailandproduct.usercridentail.Status</td>
+                    <td>
+                        <a type="button" href="~/Admin/Userdetail?id=@items.userdetailandproduct.userdetails.User_ID" class="btn btn-secondary btn-sm">Details & Update</a>
+                    </td>
+                </tr>
+            }
+        
     </thead>
 </table>

@@ -1,0 +1,32 @@
+﻿@model Auctisafe.ViewModel.ProductDetailsViewModel
+@{
+    ViewBag.Title = "ProductDetails";
+}
+<style>
+    p{
+        font-size: 20px;
+    }
+</style>
+<h2>Product Details</h2>
+<div class="row">
+    <div class="col-md-4">
+        <p>Product Name : <b>@Model.product.name</b></p>
+    </div>
+    <div class="col-md-8">
+        <p>Description : <b>@Model.product.description</b></p>
+    </div>
+    @*<div class="col-md-4"></div>*@
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <p>Used Status : <b>@Model.product.used</b></p>
+    </div>
+    <div class="col-md-4">
+        <p>Category : <b>@ViewBag.category</b></p>
+    </div>
+    <div class="col-md-4">
+        <p>Price : <b>@Model.product.price</b></p>
+    </div>
+
+</div>
+

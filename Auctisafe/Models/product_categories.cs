@@ -12,7 +12,7 @@ namespace Auctisafe.Models
     {
         [Key]
         public int Category_ID { get; set; }
-        public int Category_name { get; set; }
+        public string Category_name { get; set; }
 
 
     }
