@@ -960,6 +960,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311292150214_initialize.cs" />
+    <Compile Include="Migrations\202311292150214_initialize.designer.cs">
+      <DependentUpon>202311292150214_initialize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuctionContext.cs" />
     <Compile Include="Models\auctioneer_receiving_amount.cs" />
     <Compile Include="Models\Auctions.cs" />
@@ -1159,6 +1164,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202311292150214_initialize.resx">
+      <DependentUpon>202311292150214_initialize.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

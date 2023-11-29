@@ -145,8 +145,17 @@ namespace Auctisafe.Controllers
                 biddings.Add(biddingdetail);
             }
             model.biddingdetails = biddings;
-            ViewBag.category = (db.categories.Where(x => x.Category_ID == model.product.Category_ID).FirstOrDefault()).Category_name;
+            //ViewBag.category = (db.categories.Where(x => x.Category_ID == model.product.Category_ID).FirstOrDefault()).Category_name;
             return View("ProductDetails", "_AdminLayout", model);
+        }
+        [HttpGet]
+        public ActionResult DeactivateProduct(int productid)
+        {
+            var targetauction = db.auction_status.Where(x => x.Product_ID == productid).FirstOrDefault();
+            targetauction.Status = "D";
+            db.Entry(targetauction).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return Content("Product Deactivated!");
         }
     }
 }

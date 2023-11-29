@@ -83,10 +83,8 @@
             <td>@items.Auctioneer_Name</td>
             <td>@items.status</td>
             <td>
-                <button class="btn btn-secondary btn-sm">User Details</button>
-                <button class="btn btn-secondary btn-sm">Product Details</button>
-                <button class="btn btn-secondary btn-sm">Auction Details</button>
-                <button class="btn btn-secondary btn-sm">Bidddings</button>
+                <a class="btn btn-secondary btn-sm" type="button" href="~/Admin/ProductDetails?id=@items.AuctionID">Details</a>
+                
             </td>
         </tr>
     }
