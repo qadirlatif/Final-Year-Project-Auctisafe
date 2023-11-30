@@ -964,6 +964,10 @@
     <Compile Include="Migrations\202311292150214_initialize.designer.cs">
       <DependentUpon>202311292150214_initialize.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311300637593_initialize1.cs" />
+    <Compile Include="Migrations\202311300637593_initialize1.designer.cs">
+      <DependentUpon>202311300637593_initialize1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuctionContext.cs" />
     <Compile Include="Models\auctioneer_receiving_amount.cs" />
@@ -1168,6 +1172,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202311292150214_initialize.resx">
       <DependentUpon>202311292150214_initialize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311300637593_initialize1.resx">
+      <DependentUpon>202311300637593_initialize1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

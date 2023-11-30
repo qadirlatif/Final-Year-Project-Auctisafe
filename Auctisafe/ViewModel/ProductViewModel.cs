@@ -11,6 +11,7 @@ namespace Auctisafe.ViewModel
     }
     public class ProductDetailsViewModel
     {
+        public Signup AuctioneerDetail { get; set; }
         public Product product { get; set; }
         public Signup userdetails { get; set; }
         public Auction_status status { get; set; }

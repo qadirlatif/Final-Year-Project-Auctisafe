@@ -134,6 +134,7 @@ namespace Auctisafe.Controllers
             model.product = db.Products.Where(x => x.Product_ID == id).FirstOrDefault();
             model.auction = db.auctions.Where(x => x.Product_ID == id).FirstOrDefault();
             model.status = db.auction_status.Where(x => x.Product_ID == id).FirstOrDefault();
+            model.AuctioneerDetail = db.signup.Where(x => x.User_ID == model.product.User_ID).FirstOrDefault();
             var bidding = db.all_biddings.Where(x => x.Product_ID == id).ToList();
             List<BidAndBidder> biddings = new List<BidAndBidder>();
             foreach (var bid in bidding)
@@ -152,10 +153,44 @@ namespace Auctisafe.Controllers
         public ActionResult DeactivateProduct(int productid)
         {
             var targetauction = db.auction_status.Where(x => x.Product_ID == productid).FirstOrDefault();
+            var product = db.Products.Where(x => x.Product_ID == productid).FirstOrDefault();
             targetauction.Status = "D";
             db.Entry(targetauction).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
+            EmailForAuction(product.User_ID, "Auction Deactivation", "Your Auction " + product.name + " has been deactivated by auctisafe");
             return Content("Product Deactivated!");
+        }
+        [HttpGet]
+        public ActionResult ActivateProduct(int productid)
+        {
+            var targetauction = db.auction_status.Where(x => x.Product_ID == productid).FirstOrDefault();
+            var product = db.Products.Where(x => x.Product_ID == productid).FirstOrDefault();
+            targetauction.Status = "A";
+            db.Entry(targetauction).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            EmailForAuction(product.User_ID, "Auction Activation", "Your Auction "+product.name + " has been Activated by auctisafe");
+            return Content("Product Deactivated!");
+        }
+        public void EmailForAuction(int id, string subject, string body)
+        {
+            mailer mail = new mailer();
+            var user = db.login.Where(x => x.User_ID == id).FirstOrDefault();
+            mail.Emailer(user.Email, subject, body);
+
+        }
+        [HttpGet]
+        public ActionResult RollBackBid(int id)
+        {
+            var targetbid = db.all_biddings.Where(x => x.Bid_ID == id).FirstOrDefault();
+            db.all_biddings.Remove(targetbid);
+            db.SaveChanges();
+            var product = db.Products.Where(x => x.Product_ID == targetbid.Product_ID).FirstOrDefault();
+            var userlogin = db.login.Where(x => x.User_ID == targetbid.Bidder_ID).FirstOrDefault();
+            var usersinup = db.signup.Where(x => x.User_ID == targetbid.Bidder_ID).FirstOrDefault();
+            mailer mail= new mailer();
+            mail.Emailer(userlogin.Email, "Unnormal Bid Rollback", "Dear "+usersinup.First_name+ " "+ usersinup.Last_name +", your bid on item "+product.name +" has been rollback because system detects some unnormal things whcih have done by your side. Thank You");
+
+            return Content("Bid has been rollback");
         }
     }
 }
