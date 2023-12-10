@@ -1156,6 +1156,7 @@
     <Content Include="Views\Admin\Userdetail.cshtml" />
     <Content Include="Views\Admin\ProductDetails.cshtml" />
     <Content Include="Views\Admin\PendingAccounts.cshtml" />
+    <Content Include="Views\Admin\Announcement.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

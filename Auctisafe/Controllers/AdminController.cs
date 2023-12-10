@@ -206,5 +206,19 @@ namespace Auctisafe.Controllers
             }
             return View(model);
         }
+        [HttpGet]
+        public ActionResult Announcement(string message = "", string subject = "")
+        {
+            if (message != "")
+            {
+                var users = db.login.ToList();
+                mailer mail = new mailer();
+                foreach (var user in users)
+                {
+                    mail.Emailer(user.Email, subject, message);
+                }
+            }
+            return View("Announcement" , "_AdminLayout");
+        }
     }
 }
