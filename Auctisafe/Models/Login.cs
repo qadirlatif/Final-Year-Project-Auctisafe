@@ -11,8 +11,9 @@ namespace Auctisafe.Models
     public class Login
     {
         public int User_ID { get; set; }
+        public int ID { get; set; }
 
-        [Key]
+
         public string Email { get; set; }
         public string Password { get; set; }
         public string Status { get; set; }

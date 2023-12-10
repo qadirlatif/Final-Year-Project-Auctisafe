@@ -10,7 +10,8 @@ namespace Auctisafe.Models
     [Table("auctions")]
     public class Auctions
     {
-        
+        public int ID { get; set; }
+
         public int Product_ID { get; set; }
         public int Auction_type_ID { get; set; }
         public DateTime Start_date { get; set; }
@@ -21,7 +22,6 @@ namespace Auctisafe.Models
         public int IntervalinHours { get; set; }
         public int UpdatedPrice { get; set; }
         public DateTime currentdate { get; set; }
-        [Key]
 
         public string keyparams { get; set; }
 

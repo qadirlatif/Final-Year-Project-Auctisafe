@@ -10,8 +10,9 @@ namespace Auctisafe.Models
     [Table("Bid_winner")]
     public class bid_winner
     {
+        public int ID { get; set; }
+
         public int Bid_ID { get; set; }
-        [Key]
 
         public DateTime Date { get; set; }
     }

@@ -125,7 +125,7 @@ namespace Auctisafe.Controllers
             targetuserdetail.Last_name = model.Last_name;
             db.Entry(targetuserdetail).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
-            return Content("asdas");
+            return Content("Account Updated");
         }
         [HttpGet]
         public ActionResult ProductDetails(int id)
@@ -191,6 +191,20 @@ namespace Auctisafe.Controllers
             mail.Emailer(userlogin.Email, "Unnormal Bid Rollback", "Dear "+usersinup.First_name+ " "+ usersinup.Last_name +", your bid on item "+product.name +" has been rollback because system detects some unnormal things whcih have done by your side. Thank You");
 
             return Content("Bid has been rollback");
+        }
+        [HttpGet]
+        public ActionResult PendingAccounts()
+        {
+            List<userviewmodel> model = new List<userviewmodel>();
+            var targetuser = db.login.Where(x => x.Status == "P").ToList();
+            foreach(var users in targetuser)
+            {
+                userviewmodel usermodel = new userviewmodel();
+                usermodel.userdetailandproduct.usercridentail = users;
+                usermodel.userdetailandproduct.userdetails = db.signup.Where(x => x.User_ID == users.User_ID).FirstOrDefault();
+                model.Add(usermodel);
+            }
+            return View(model);
         }
     }
 }

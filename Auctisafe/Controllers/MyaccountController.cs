@@ -40,7 +40,7 @@ namespace Auctisafe.Controllers
             Session["phone"] = myaccount.Phone_number;
             Session["email"] = myaccount.Email;
             Session["password"]=  returnValue.ToString();
-            Session["status"] = "A";
+            Session["status"] = "P";
             return RedirectToAction("verification");
         }
 
@@ -137,7 +137,7 @@ namespace Auctisafe.Controllers
                 db.SaveChanges();
                 db.login.Add(acclogindetails);
                 db.SaveChanges();
-                ViewBag.error = "Account Successfully Created";
+                ViewBag.error = "Account Successfully Created, Now Your Account Status Is Pending, Currently Main Options Like Create Auction, Bidding etc are Blocked, When Your Account Activate You will Recieved Email On Registered Email.";
                 return View("index");
             }
             else

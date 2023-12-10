@@ -10,7 +10,8 @@ namespace Auctisafe.Models
     [Table("Auction_fees")]
     public class auction_fees
     {
-        [Key]
+        public int ID { get; set; }
+
         public int Bid_ID { get; set; }
         public int Auction_fee_rate { get; set; }
         public DateTime date { get; set; }

@@ -10,7 +10,8 @@ namespace Auctisafe.Models
     [Table("Feedback")]
     public class feedback
     {
-        [Key]
+        public int ID { get; set; }
+
         public int Bidder_ID { get; set; }
         public int Auction_ID { get; set; }
         public string description { get; set; }

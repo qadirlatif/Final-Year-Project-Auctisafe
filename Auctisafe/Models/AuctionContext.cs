@@ -21,14 +21,7 @@ namespace Auctisafe.Models
         public DbSet<product_categories> categories { get; set; }
         public DbSet<payment> Payment { get; set; }
         public DbSet<report> Reports { get; set; }
-
-
-
-        public System.Data.Entity.DbSet<Auctisafe.Models.signupmaster> tests { get; set; }
-        public System.Data.Entity.DbSet<Auctisafe.Models.verification> verify { get; set; }
-
-        public System.Data.Entity.DbSet<Auctisafe.Models.Product> Products { get; set; }
-
-        public System.Data.Entity.DbSet<Auctisafe.Models.ProductAuctionMaster> ProductAuctionMasters { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Tax> Tax { get; set; }
     }
 }

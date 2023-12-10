@@ -10,7 +10,8 @@ namespace Auctisafe.Models
     [Table("Categories")]
     public class product_categories
     {
-        [Key]
+        public int ID { get; set; }
+
         public int Category_ID { get; set; }
         public string Category_name { get; set; }
 

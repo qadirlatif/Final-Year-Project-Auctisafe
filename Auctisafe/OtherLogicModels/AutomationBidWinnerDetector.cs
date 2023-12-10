@@ -216,7 +216,7 @@ namespace Auctisafe.OtherLogicModels
             target.Status = "D";
             context.SaveChanges();
             var bidwinner = new bid_winner();
-            if (bidwinner != null)
+            if (winner != null)
             {
 
 

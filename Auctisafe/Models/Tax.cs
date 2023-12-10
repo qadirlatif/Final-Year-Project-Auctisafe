@@ -10,7 +10,8 @@ namespace Auctisafe.Models
     [Table("Tax_on_Auction")]
     public class Tax
     {
-        [Key]
+        public int ID { get; set; }
+
         public int Bid_ID { get; set; }
         public int Tax_rate { get; set; }
         public DateTime Date { get; set; }

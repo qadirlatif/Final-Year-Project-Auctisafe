@@ -13,7 +13,7 @@ namespace Auctisafe.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202311292150214_initialize"; }
+            get { return "202312101014448_initialize"; }
         }
         
         string IMigrationMetadata.Source

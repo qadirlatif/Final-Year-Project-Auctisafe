@@ -11,9 +11,8 @@ namespace Auctisafe.Models
     
     public class Signup
     {
-        
+        public int ID { get; set; }
         public int User_ID { get; set; }
-        [Key]
         public string First_name { get; set; }
         public string Last_name { get; set; }
         public int Phone_number { get; set; }

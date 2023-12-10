@@ -10,7 +10,8 @@ namespace Auctisafe.Models
     [Table("Payment")]
     public class payment
     {
-        [Key]
+        public int ID { get; set; }
+
         public int Bid_ID { get; set; }
         public int Bid_Amount { get; set; }
         public DateTime date { get; set; }

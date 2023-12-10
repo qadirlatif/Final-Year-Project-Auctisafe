@@ -10,7 +10,8 @@ namespace Auctisafe.Models
     [Table("Auction_Types")]
     public class Auction_types
     {
-        [Key]
+        public int ID { get; set; }
+
         public int Auction_type_ID { get; set; }
         public string Auction_name { get; set; }
     }

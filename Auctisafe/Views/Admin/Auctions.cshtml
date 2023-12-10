@@ -2,27 +2,34 @@
 @{
     ViewBag.Title = "Auctions";
 }
+    <h2>Products & their Details</h2>
+<hr />
+<br />
 
-<h2>Auctions</h2>
-
-<table class="table table-striped">
-    <tr>
-        <th>Product Name</th>
-        <th>Auction Type</th>
-        <th>Auctioneer Name</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-    @foreach(var items in Model)
-            {
-                <tr>
-                    <td>@items.ProductName</td>
-                    <td>@items.Auction</td>
-                    <td>@items.Auctioneer_Name</td>
-                    <td>@items.status</td>
-                    <td>
-                        <a class="btn btn-secondary btn-sm" href="~/Admin/ProductDetails?id=@items.AuctionID">Details & Action</a>
-                    </td>
-                </tr>
-            }
+<div class="card">
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Auction Type</th>
+            <th>Auctioneer Name</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var items in Model)
+        {
+            <tr>
+                <td>@items.ProductName</td>
+                <td>@items.Auction</td>
+                <td>@items.Auctioneer_Name</td>
+                <td>@items.status</td>
+                <td>
+                    <a class="btn btn-secondary btn-sm" href="~/Admin/ProductDetails?id=@items.AuctionID">Details & Action</a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+</div>

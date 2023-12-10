@@ -10,7 +10,8 @@ namespace Auctisafe.Models
     [Table("Auctioneer_recieving_Amount")]
     public class auctioneer_receiving_amount
     {
-        [Key]
+        public int ID { get; set; }
+
         public int Bid_ID { get; set; }
         public float Final_Amount { get; set; }
     }
