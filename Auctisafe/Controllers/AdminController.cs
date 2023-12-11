@@ -114,6 +114,11 @@ namespace Auctisafe.Controllers
                 mail.Emailer(targetuser.Email, "Account Activate", "Your Account has been Activated By Auctisafe");
 
             }
+            else if(targetuser.Status == "P" && model.Status == "A")
+            {
+                mailer mail = new mailer();
+                mail.Emailer(targetuser.Email,"Account Request", "Congrats! Your pending Account successfully Accepted Now You can Create Auction, bidding and other etc.");
+            }
             targetuser.Status = model.Status;
             db.Entry(targetuser).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
@@ -193,20 +198,6 @@ namespace Auctisafe.Controllers
             return Content("Bid has been rollback");
         }
         [HttpGet]
-        public ActionResult PendingAccounts()
-        {
-            List<userviewmodel> model = new List<userviewmodel>();
-            var targetuser = db.login.Where(x => x.Status == "P").ToList();
-            foreach (var users in targetuser)
-            {
-                userviewmodel usermodel = new userviewmodel();
-                usermodel.userdetailandproduct.usercridentail = users;
-                usermodel.userdetailandproduct.userdetails = db.signup.Where(x => x.User_ID == users.User_ID).FirstOrDefault();
-                model.Add(usermodel);
-            }
-            return View(model);
-        }
-        [HttpGet]
         public ActionResult Announcement(string message = "", string subject = "")
         {
             if (message != "")
@@ -218,6 +209,58 @@ namespace Auctisafe.Controllers
                 mail.Emailer(recipients, subject, message);
             }
             return View("Announcement", "_AdminLayout");
+        }
+        [HttpGet]
+        public ActionResult PendingAccounts()
+        {
+            List<userviewmodel> model = new List<userviewmodel>();
+            var targetuser = db.login.Where(x => x.Status == "P").ToList();
+            foreach (var users in targetuser)
+            {
+                UserdetaiandproductslViewModel usermodel = new UserdetaiandproductslViewModel();
+                usermodel.usercridentail = db.login.Where(x => x.User_ID == users.User_ID).FirstOrDefault();
+                usermodel.userdetails = db.signup.Where(x => x.User_ID == users.User_ID).FirstOrDefault();
+                model.Add(new userviewmodel { userdetailandproduct = usermodel });
+            }
+            return View("PendingAccounts", "_AdminLayout", model);
+        }
+
+
+        public ActionResult Reporting()
+        {
+
+            List<UserReportViewModel> model = new List<UserReportViewModel>();
+            var allreport = db.Reports.ToList();
+            foreach (var report in allreport)
+            {
+                UserReportViewModel reportdetail = new UserReportViewModel();
+                reportdetail.userreport = db.Reports.Where(x => x.ReportID == report.ReportID).FirstOrDefault();
+                reportdetail.reporterdetail = db.signup.Where(x => x.User_ID == report.Reporter_ID).FirstOrDefault(); //REPORTER
+                //reportdetail.reportproduct = db.Products.Where(x => x.Product_ID == report.prod).FirstOrDefault(); //PRODUCT
+                reportdetail.againstdetail = db.signup.Where(x => x.User_ID == report.User_ID).FirstOrDefault();
+                model.Add(reportdetail);
+            }
+
+            return View("Reporting", "_AdminLayout", model);
+        }
+
+        [HttpGet]
+        public ActionResult RejectReport(int id = 0)
+        {
+            var report = db.Reports.Where(x=>x.ReportID == id.ToString()).FirstOrDefault();
+            db.Reports.Remove(report);
+            db.SaveChanges();
+            return Content("Report rejected & Deleted From DB");
+        }
+        [HttpGet]
+        public ActionResult BlockUser(int id = 0)
+        {
+            var targetuser = db.login.Where(x => x.User_ID == id).FirstOrDefault();
+            targetuser.Status = "D";
+            db.SaveChanges();
+            mailer mail = new mailer();
+            mail.Emailer(targetuser.Email, "Account Suspending", "Your Account Has been Suspended by Auctisafe Kindly Contact to Auctisafe For Activate via Email");
+            return Content("Reported User Blocked");
         }
     }
 }

@@ -69,9 +69,16 @@ namespace Auctisafe.Controllers
                                 return RedirectToAction("Index", "dashboard");
                             }
                         }
-                        else
+                        else if(accounts.Status == "P")
                         {
-                            return RedirectToAction("AccountSuspended", "Myaccount");
+                            ViewBag.error = "Your Account is currently In Pending, First Admin will approve then you will be able to create auction , bidding etc, when admin activate your account you will receive email on registered mail. Thank You";
+                            return View("Index");
+                        }
+                        else 
+                        {
+                            ViewBag.error = "Your Account is currently suspended Please Contact Admin";
+                            return View("Index");
+                            //return RedirectToAction("AccountSuspended", "Myaccount");
                         }
                     }
                     else

@@ -984,6 +984,7 @@
     <Compile Include="Models\product_categories.cs" />
     <Compile Include="Models\report.cs" />
     <Compile Include="Models\Signup.cs" />
+    <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\signupmaster.cs" />
     <Compile Include="Models\Tax.cs" />
     <Compile Include="ViewModel\verification.cs" />
@@ -1157,6 +1158,7 @@
     <Content Include="Views\Admin\ProductDetails.cshtml" />
     <Content Include="Views\Admin\PendingAccounts.cshtml" />
     <Content Include="Views\Admin\Announcement.cshtml" />
+    <Content Include="Views\Admin\Reporting.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
