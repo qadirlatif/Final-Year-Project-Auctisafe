@@ -3,14 +3,15 @@
     ViewBag.Title = "Announcement";
 }
 
-<h2>Announcement</h2>
-<div class="card">
+<h4>Announcement (Email Will Sent to All Registered Users)</h4>
+<div class="card" style="padding: 10px">
     <form method="get">
         <label>Message</label>
         <textarea name="message" id="message" class=" form-control"></textarea>
+        <br />
         <label>Subject</label>
-        <input type="text" name="subject" />
-        <button type="submit">Send to Everyone </button>
+        <input class="form-control" type="text" name="subject" /><br />
+        <button class="btn btn-secondary" type="submit">Announce</button>
 
     </form>
 </div>

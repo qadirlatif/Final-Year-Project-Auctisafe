@@ -22,7 +22,7 @@ namespace Auctisafe.Controllers
             {
                 return RedirectToAction("Index", "Myaccount");
             }
-            
+
         }
         public ActionResult Logout()
         {
@@ -50,7 +50,7 @@ namespace Auctisafe.Controllers
                     model.Add(new userviewmodel { userdetailandproduct = productsviewmodel });
                 }
             }
-            return View("Users","_AdminLayout", model);
+            return View("Users", "_AdminLayout", model);
         }
         public ActionResult Auctions()
         {
@@ -70,7 +70,7 @@ namespace Auctisafe.Controllers
                 productdetail.status = (db.auction_status.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault()).Status;
                 model.Add(productdetail);
             }
-            return View("Auctions","_AdminLayout", model);
+            return View("Auctions", "_AdminLayout", model);
         }
         [HttpGet]
         public ActionResult Userdetail(int id)
@@ -80,7 +80,7 @@ namespace Auctisafe.Controllers
             var target = db.signup.Where(x => x.User_ID == id).FirstOrDefault();
             var products = db.Products.Where(x => x.User_ID == id).ToList();
             List<AuctionListViewModel> allauctions = new List<AuctionListViewModel>();
-            foreach(var product in products)
+            foreach (var product in products)
             {
                 AuctionListViewModel targetauction = new AuctionListViewModel();
                 var auction = db.auctions.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
@@ -103,7 +103,7 @@ namespace Auctisafe.Controllers
         {
             var targetuser = db.login.Where(x => x.User_ID == model.User_ID).FirstOrDefault();
             targetuser.Email = model.Email;
-            if(targetuser.Status == "A" && model.Status == "D")
+            if (targetuser.Status == "A" && model.Status == "D")
             {
                 mailer mail = new mailer();
                 mail.Emailer(targetuser.Email, "Account Suspending", "Your Account has been Suspended By Auctisafe");
@@ -168,7 +168,7 @@ namespace Auctisafe.Controllers
             targetauction.Status = "A";
             db.Entry(targetauction).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
-            EmailForAuction(product.User_ID, "Auction Activation", "Your Auction "+product.name + " has been Activated by auctisafe");
+            EmailForAuction(product.User_ID, "Auction Activation", "Your Auction " + product.name + " has been Activated by auctisafe");
             return Content("Product Deactivated!");
         }
         public void EmailForAuction(int id, string subject, string body)
@@ -187,8 +187,8 @@ namespace Auctisafe.Controllers
             var product = db.Products.Where(x => x.Product_ID == targetbid.Product_ID).FirstOrDefault();
             var userlogin = db.login.Where(x => x.User_ID == targetbid.Bidder_ID).FirstOrDefault();
             var usersinup = db.signup.Where(x => x.User_ID == targetbid.Bidder_ID).FirstOrDefault();
-            mailer mail= new mailer();
-            mail.Emailer(userlogin.Email, "Unnormal Bid Rollback", "Dear "+usersinup.First_name+ " "+ usersinup.Last_name +", your bid on item "+product.name +" has been rollback because system detects some unnormal things whcih have done by your side. Thank You");
+            mailer mail = new mailer();
+            mail.Emailer(userlogin.Email, "Unnormal Bid Rollback", "Dear " + usersinup.First_name + " " + usersinup.Last_name + ", your bid on item " + product.name + " has been rollback because system detects some unnormal things whcih have done by your side. Thank You");
 
             return Content("Bid has been rollback");
         }
@@ -197,7 +197,7 @@ namespace Auctisafe.Controllers
         {
             List<userviewmodel> model = new List<userviewmodel>();
             var targetuser = db.login.Where(x => x.Status == "P").ToList();
-            foreach(var users in targetuser)
+            foreach (var users in targetuser)
             {
                 userviewmodel usermodel = new userviewmodel();
                 usermodel.userdetailandproduct.usercridentail = users;
@@ -211,14 +211,13 @@ namespace Auctisafe.Controllers
         {
             if (message != "")
             {
-                var users = db.login.ToList();
+                var users = db.login.Select(x => x.Email).ToList();
+                string recipients = string.Join(",", users);
+
                 mailer mail = new mailer();
-                foreach (var user in users)
-                {
-                    mail.Emailer(user.Email, subject, message);
-                }
+                mail.Emailer(recipients, subject, message);
             }
-            return View("Announcement" , "_AdminLayout");
+            return View("Announcement", "_AdminLayout");
         }
     }
 }
