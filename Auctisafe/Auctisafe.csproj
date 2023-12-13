@@ -976,6 +976,7 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\feedback.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="OtherLogicModels\UnnormalBidIdentifier.cs" />
     <Compile Include="ViewModel\mailer.cs" />
     <Compile Include="ViewModel\MD5 Algo.cs" />
     <Compile Include="Models\payment.cs" />

@@ -15,6 +15,7 @@ namespace Auctisafe
             AutomatedReportsAction.Start();
             AutomationBidWinnerDetector.Start();
             AuctionTimerObserver.Start();
+            UnnormalBidIdentifier.Start();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
