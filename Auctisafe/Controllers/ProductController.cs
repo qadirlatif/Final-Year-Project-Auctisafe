@@ -12,6 +12,13 @@ namespace Auctisafe.Controllers
 {
     public class ProductController : Controller
     {
+        DateTime utcNow = DateTime.UtcNow;
+
+        // Find the Pakistan Standard Time zone
+        TimeZoneInfo pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
+
+        // Convert the UTC time to Pakistan time
+
         // GET: Product
         AuctionContext db = new AuctionContext();
         public ProductDetailsViewModel ProductDetailsViewModel(int id)
@@ -111,6 +118,12 @@ namespace Auctisafe.Controllers
             }
 
         }
+        public DateTime DateNow()
+        {
+            DateTime pakistanTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, pakistanTimeZone);
+
+            return pakistanTime;
+        }
 
         //English Auction
         public string EnglishAuction(ProductDetailsViewModel model , string amount, string productid)
@@ -118,7 +131,7 @@ namespace Auctisafe.Controllers
             var maxbidder = maxfinder(model.biddingdetails);
             if (float.Parse(amount) > maxbidder.bidding.Amount && float.Parse(amount) > model.product.price)
             {
-                if (model.auction.End_date > DateTime.Now)
+                if (model.auction.End_date > DateNow())
                 {
                     biddings bid = new biddings();
                     Random rand = new Random();
@@ -126,7 +139,7 @@ namespace Auctisafe.Controllers
                     bid.Product_ID = int.Parse(productid);
                     bid.Bidder_ID = Convert.ToInt32(Session["id"]);
                     bid.Amount = double.Parse(amount);
-                    bid.Date = DateTime.Now;
+                    bid.Date = DateNow();
 
                     db.all_biddings.Add(bid);
                     db.SaveChanges();
@@ -147,7 +160,7 @@ namespace Auctisafe.Controllers
         {
             if (model.status.Status == "A")
             {
-                if (model.auction.End_date > DateTime.Now)
+                if (model.auction.End_date > DateNow())
                 {
                     if (float.Parse(amount) == model.auction.UpdatedPrice)
                     {
@@ -161,12 +174,12 @@ namespace Auctisafe.Controllers
                         bid.Product_ID = int.Parse(productid);
                         bid.Bidder_ID = Convert.ToInt32(Session["id"]);
                         bid.Amount = double.Parse(amount);
-                        bid.Date = DateTime.Now;
+                        bid.Date = DateNow();
 
                         db.all_biddings.Add(bid);
                         db.SaveChanges();
                         biddingwinner.Bid_ID = bid.Bid_ID;
-                        biddingwinner.Date = DateTime.Now;
+                        biddingwinner.Date = DateNow();
                         db.bid_winner.Add(biddingwinner);
                         db.SaveChanges();
                         mailer mail = new mailer();
@@ -184,7 +197,7 @@ namespace Auctisafe.Controllers
                         bid.Product_ID = int.Parse(productid);
                         bid.Bidder_ID = Convert.ToInt32(Session["id"]);
                         bid.Amount = double.Parse(amount);
-                        bid.Date = DateTime.Now;
+                        bid.Date = DateNow();
 
 
                         db.all_biddings.Add(bid);
@@ -213,7 +226,7 @@ namespace Auctisafe.Controllers
         {
             if (float.Parse(amount) > model.product.price)
             {
-                if (model.auction.End_date > DateTime.Now)
+                if (model.auction.End_date > DateNow())
                 {
                     biddings bid = new biddings();
                     Random rand = new Random();
@@ -221,7 +234,7 @@ namespace Auctisafe.Controllers
                     bid.Product_ID = int.Parse(productid);
                     bid.Bidder_ID = Convert.ToInt32(Session["id"]);
                     bid.Amount = double.Parse(amount);
-                    bid.Date = DateTime.Now;
+                    bid.Date = DateNow();
 
                     db.all_biddings.Add(bid);
                     db.SaveChanges();
@@ -243,7 +256,7 @@ namespace Auctisafe.Controllers
             var maxbidder = maxfinder(model.biddingdetails);
             if (float.Parse(amount) < model.product.price)
             {
-                if (model.auction.End_date > DateTime.Now)
+                if (model.auction.End_date > DateNow())
                 {
                     biddings bid = new biddings();
                     Random rand = new Random();
@@ -251,7 +264,7 @@ namespace Auctisafe.Controllers
                     bid.Product_ID = int.Parse(productid);
                     bid.Bidder_ID = Convert.ToInt32(Session["id"]);
                     bid.Amount = double.Parse(amount);
-                    bid.Date = DateTime.Now;
+                    bid.Date = DateNow();
 
                     db.all_biddings.Add(bid);
                     db.SaveChanges();
@@ -273,7 +286,7 @@ namespace Auctisafe.Controllers
             var maxbidder = maxfinder(model.biddingdetails);
             if (float.Parse(amount) > model.product.price)
             {
-                if (model.auction.End_date > DateTime.Now)
+                if (model.auction.End_date > DateNow())
                 {
                     biddings bid = new biddings();
                     Random rand = new Random();
@@ -281,7 +294,7 @@ namespace Auctisafe.Controllers
                     bid.Product_ID = int.Parse(productid);
                     bid.Bidder_ID = Convert.ToInt32(Session["id"]);
                     bid.Amount = double.Parse(amount);
-                    bid.Date = DateTime.Now;
+                    bid.Date = DateNow();
 
                     db.all_biddings.Add(bid);
                     db.SaveChanges();

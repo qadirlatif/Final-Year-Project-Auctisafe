@@ -92,7 +92,7 @@ else if (!string.IsNullOrEmpty(ViewBag.error))
                                 @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "woocommerce-Input woocommerce-Input--text input-text", @id = "password", Type = "password" } })
             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
                             </p>
-                            <div class="g-recaptcha" data-sitekey="6LfFPCMpAAAAAJZy2ihQaiK5xhqWAoRF_e63STHW"></div>
+                            @*<div class="g-recaptcha" data-sitekey="6LfFPCMpAAAAAJZy2ihQaiK5xhqWAoRF_e63STHW"></div>*@
 
                             <p class="form-row">
 
@@ -263,14 +263,14 @@ else if (!string.IsNullOrEmpty(ViewBag.error))
         });
     });
 
-    document.getElementById("loginform").addEventListener("submit", function (event) {
-        const recaptchaResponse = grecaptcha.getResponse();
-        if (recaptchaResponse.length === 0) {
-            event.preventDefault();
-            //    document.getElementById("error-message").innerText = "Please complete the CAPTCHA.";
-            showAlert("Account", "Please Complete the CAPTCHA")
-        }
-    });
+    //document.getElementById("loginform").addEventListener("submit", function (event) {
+    //    const recaptchaResponse = grecaptcha.getResponse();
+    //    if (recaptchaResponse.length === 0) {
+    //        event.preventDefault();
+    //        //    document.getElementById("error-message").innerText = "Please complete the CAPTCHA.";
+    //        showAlert("Account", "Please Complete the CAPTCHA")
+    //    }
+    //});
 
     $(document).ajaxStart(function () {
         showLoadingSpinner();

@@ -208,17 +208,19 @@
                                         <tr>
                                             <td class='date'>@biddings.bidding.Date</td>
                                             @{
-                                                if (Model.auction.Auction_type_ID != 3 || Model.auction.Auction_type_ID != 5)
+                                                if (Model.auction.Auction_type_ID == 3 || Model.auction.Auction_type_ID == 6)
                                                 {
-                                                    <td class='bid'><span class="woocommerce-Price-amount amount">@biddings.bidding.Amount</span></td>
-                                                    <td class='username'>@biddings.bidder.First_name</td>
+
+                                                    <td class='bid'><span class="woocommerce-Price-amount amount">*****</span></td>
+                                                    <td class='username'>*****</td>
                                                     <td class='proxy'></td>
+
 
                                                 }
                                                 else
                                                 {
-                                                    <td class='bid'><span class="woocommerce-Price-amount amount">*****</span></td>
-                                                    <td class='username'>*****</td>
+                                                    <td class='bid'><span class="woocommerce-Price-amount amount">@biddings.bidding.Amount</span></td>
+                                                    <td class='username'>@biddings.bidder.First_name</td>
                                                     <td class='proxy'></td>
                                                 }
                                             }
