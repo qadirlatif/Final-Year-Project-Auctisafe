@@ -194,9 +194,24 @@ namespace Auctisafe.Controllers
         }
         public ActionResult logout()
         {
-
             Session.Clear();
             return RedirectToAction("Index", "Myaccount");
+        }
+        [HttpGet]
+        public ActionResult PendingPayments()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult ReceivePayments()
+        {
+            
+            return View();
+        }
+        [HttpGet]
+        public ActionResult SendTRX(string TRXID = "")
+        {
+            return Content("TRX ID Submitted");
         }
     }
 }

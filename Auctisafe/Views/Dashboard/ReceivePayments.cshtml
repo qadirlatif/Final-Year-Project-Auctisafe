@@ -1,7 +1,7 @@
 ﻿@model Auctisafe.Models.Signup
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Pending Payments";
 }
 <div>
     <div class="inner-banner">
@@ -25,7 +25,7 @@
                     <div class="woocommerce">
                         <nav class="woocommerce-MyAccount-navigation">
                             <ul>
-                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard is-active">
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard ">
                                     @Html.ActionLink("Dashboard", "Index")
                                 </li>
 
@@ -41,10 +41,10 @@
                                         @Html.ActionLink("My Auctions (" + x + ")", "myauctions");
                                     }
                                 </li>
-                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction ">
                                     <a href="~/Dashboard/PendingPayments">Pending Payments (Have to Pay)</a>
                                 </li>
-                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction is-active">
                                     <a href="~/Dashboard/ReceivePayments">Pending Payments (Have to Receive)</a>
                                 </li>
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-activity">
@@ -60,7 +60,7 @@
                         <div class="woocommerce-MyAccount-content">
                             <div class="woocommerce-notices-wrapper"></div>
                             <p class="display-name">
-                                Hello <strong> @Html.DisplayFor(Model=>Model.First_name) @Html.DisplayFor(Model=>Model.Last_name) </strong>
+                                Hello <strong> @Html.DisplayFor(Model => Model.First_name) @Html.DisplayFor(Model => Model.Last_name) </strong>
                             </p>
 
                             <p>

@@ -964,6 +964,14 @@
     <Compile Include="Migrations\202312101014448_initialize.designer.cs">
       <DependentUpon>202312101014448_initialize.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202312191922000_initialize1.cs" />
+    <Compile Include="Migrations\202312191922000_initialize1.designer.cs">
+      <DependentUpon>202312191922000_initialize1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202312191924450_initialize2.cs" />
+    <Compile Include="Migrations\202312191924450_initialize2.designer.cs">
+      <DependentUpon>202312191924450_initialize2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuctionContext.cs" />
     <Compile Include="Models\auctioneer_receiving_amount.cs" />
@@ -1160,6 +1168,8 @@
     <Content Include="Views\Admin\PendingAccounts.cshtml" />
     <Content Include="Views\Admin\Announcement.cshtml" />
     <Content Include="Views\Admin\Reporting.cshtml" />
+    <Content Include="Views\Dashboard\PendingPayments.cshtml" />
+    <Content Include="Views\Dashboard\ReceivePayments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1173,6 +1183,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202312101014448_initialize.resx">
       <DependentUpon>202312101014448_initialize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312191922000_initialize1.resx">
+      <DependentUpon>202312191922000_initialize1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312191924450_initialize2.resx">
+      <DependentUpon>202312191924450_initialize2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

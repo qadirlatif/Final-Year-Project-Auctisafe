@@ -132,6 +132,20 @@ namespace Auctisafe.OtherLogicModels
                     emailService.Emailer(winner.credentails.Email, "Congratulations! You Won the Dutch Auction", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + ", you won the Dutch auction for the item named: " + product.name);
                 }
             }
+
+            if (bidwinner != null)
+            {
+                var bidding = context.all_biddings.Where(x => x.Bid_ID == bidwinner.Bid_ID).FirstOrDefault();
+                payment pendingpayment = new payment();
+                pendingpayment.Bid_ID = bidwinner.Bid_ID;
+                pendingpayment.date = DateTime.Now;
+                pendingpayment.DueDate = pendingpayment.date.AddDays(3);
+                pendingpayment.Bid_Amount = (float)(bidding.Amount);
+                context.Payment.Add(pendingpayment);
+                context.SaveChanges();
+            }
+
+
         }
 
 

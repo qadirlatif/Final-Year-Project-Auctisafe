@@ -1,7 +1,7 @@
 ﻿@model Auctisafe.Models.Signup
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Pending Payments";
 }
 <div>
     <div class="inner-banner">
@@ -25,7 +25,7 @@
                     <div class="woocommerce">
                         <nav class="woocommerce-MyAccount-navigation">
                             <ul>
-                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard is-active">
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard ">
                                     @Html.ActionLink("Dashboard", "Index")
                                 </li>
 
@@ -41,7 +41,7 @@
                                         @Html.ActionLink("My Auctions (" + x + ")", "myauctions");
                                     }
                                 </li>
-                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction is-active">
                                     <a href="~/Dashboard/PendingPayments">Pending Payments (Have to Pay)</a>
                                 </li>
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
@@ -59,13 +59,42 @@
 
                         <div class="woocommerce-MyAccount-content">
                             <div class="woocommerce-notices-wrapper"></div>
-                            <p class="display-name">
-                                Hello <strong> @Html.DisplayFor(Model=>Model.First_name) @Html.DisplayFor(Model=>Model.Last_name) </strong>
+                            <p>
+                                Pending Payments will Appear here, which have to pay by your Side.
                             </p>
 
-                            <p>
-                                From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.
-                            </p>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Product name</th>
+                                        <th>Amount Have to Pay</th>
+                                        <th>Transaction ID</th>
+
+                                        <th>Account Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Mobile</td>
+                                        <td>320000</td>
+                                        <td>
+                                            <input type="text" class="form-control" name="trxID" id="trxid" />
+                                            <br /> <button type="button" class="btn btn-primary btn-sm" id="submit">submit</button>
+                                        </td>
+                                        <td>
+                                            <div class="context-menu-container" id="context-menu-items">
+                                                <ul>
+                                                    <li>Menu Item 1</li>
+                                                    <li>Menu Item 2</li>
+                                                    <li>Menu Item 3</li>
+                                                    ...
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
 
                         </div>
                     </div>
@@ -75,3 +104,17 @@
     </div>
 
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+    $("#submit").click(function () {
+        var trxid = $("#trxid").val();
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("SendTRX","Dashboard")',
+            data: {TRXID :  trxid},
+            success: function (data) {
+                alert(data);
+            }
+        })
+    })
+</script>
