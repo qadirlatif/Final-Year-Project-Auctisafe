@@ -12,8 +12,10 @@ namespace Auctisafe.Models
     {
         public int ID { get; set; }
 
-        public int Bid_ID { get; set; }
-        public int Auction_fee_rate { get; set; }
+        public int productID { get; set; }
+        public float Auctionfees { get; set; }
         public DateTime date { get; set; }
+        public int WinnerID { get; set; }
+        public int AuctioneerID { get; set; }
     }
 }

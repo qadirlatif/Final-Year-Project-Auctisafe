@@ -262,5 +262,20 @@ namespace Auctisafe.Controllers
             mail.Emailer(targetuser.Email, "Account Suspending", "Your Account Has been Suspended by Auctisafe Kindly Contact to Auctisafe For Activate via Email");
             return Content("Reported User Blocked");
         }
+        [HttpGet]
+        public ActionResult Transactions()
+        {
+            List<TransactionViewmodel> model = new List<TransactionViewmodel>();
+            var transactions =db.transactions.ToList();
+            foreach (var item in transactions)
+            {
+                model.Add(new TransactionViewmodel
+                {
+                    transaction = item,
+                    pay = db.Payment.Where(x => x.ProductID == item.ProductID).FirstOrDefault()
+                }) ;
+            }
+            return View("Transactions","_AdminLayout",model);
+        }
     }
 }

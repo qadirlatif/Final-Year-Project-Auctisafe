@@ -972,6 +972,18 @@
     <Compile Include="Migrations\202312191924450_initialize2.designer.cs">
       <DependentUpon>202312191924450_initialize2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202312201834411_initialize3.cs" />
+    <Compile Include="Migrations\202312201834411_initialize3.designer.cs">
+      <DependentUpon>202312201834411_initialize3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202312201839121_initialize4.cs" />
+    <Compile Include="Migrations\202312201839121_initialize4.designer.cs">
+      <DependentUpon>202312201839121_initialize4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202312201859576_initialize5.cs" />
+    <Compile Include="Migrations\202312201859576_initialize5.designer.cs">
+      <DependentUpon>202312201859576_initialize5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuctionContext.cs" />
     <Compile Include="Models\auctioneer_receiving_amount.cs" />
@@ -984,6 +996,7 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\feedback.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Transaction.cs" />
     <Compile Include="OtherLogicModels\UnnormalBidIdentifier.cs" />
     <Compile Include="ViewModel\mailer.cs" />
     <Compile Include="ViewModel\MD5 Algo.cs" />
@@ -1170,6 +1183,7 @@
     <Content Include="Views\Admin\Reporting.cshtml" />
     <Content Include="Views\Dashboard\PendingPayments.cshtml" />
     <Content Include="Views\Dashboard\ReceivePayments.cshtml" />
+    <Content Include="Views\Admin\Transactions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1189,6 +1203,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202312191924450_initialize2.resx">
       <DependentUpon>202312191924450_initialize2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312201834411_initialize3.resx">
+      <DependentUpon>202312201834411_initialize3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312201839121_initialize4.resx">
+      <DependentUpon>202312201839121_initialize4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312201859576_initialize5.resx">
+      <DependentUpon>202312201859576_initialize5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

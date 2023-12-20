@@ -23,5 +23,7 @@ namespace Auctisafe.Models
         public DbSet<report> Reports { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Tax> Tax { get; set; }
+
+        public DbSet<Transaction> transactions { get; set; }
     }
 }

@@ -12,9 +12,11 @@ namespace Auctisafe.Models
     {
         public int ID { get; set; }
 
-        public int Bid_ID { get; set; }
-        public int Tax_rate { get; set; }
+        public int productID { get; set; }
+        public float TaxAmount { get; set; }
         public DateTime Date { get; set; }
+        public int WinnerID { get; set; }
+        public int AuctioneerID { get; set; }
 
     }
 }

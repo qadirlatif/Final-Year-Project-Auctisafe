@@ -1,4 +1,5 @@
 ﻿using Auctisafe.Models;
+using Auctisafe.ViewModel;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
@@ -133,12 +134,12 @@ namespace Auctisafe.Controllers
                 Auctions myauctions = new Auctions();
 
                 myauctions.Auction_type_ID = Convert.ToInt32(Request.Form["auction"]);
-                  myauctions.Product_ID = productID;
+                myauctions.Product_ID = productID;
                 myauctions.Start_date = Convert.ToDateTime(Convert.ToDateTime(Request.Form["startdate"]).Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-               myauctions.End_date = Convert.ToDateTime(Convert.ToDateTime(Request.Form["enddate"]).Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-                 myauctions.increament = 0;
-                myauctions.auto_accept_amount = Convert.ToInt32(Request.Form["reservedprice"]) ;
-              myauctions.decreament = Convert.ToInt32(Request.Form["decreament"]);
+                myauctions.End_date = Convert.ToDateTime(Convert.ToDateTime(Request.Form["enddate"]).Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+                myauctions.increament = 0;
+                myauctions.auto_accept_amount = Convert.ToInt32(Request.Form["reservedprice"]);
+                myauctions.decreament = Convert.ToInt32(Request.Form["decreament"]);
                 string intervalvalue = Request.Form["Interval"];
                 if (!string.IsNullOrEmpty(intervalvalue))
                 {
@@ -151,12 +152,12 @@ namespace Auctisafe.Controllers
 
 
                 }
-              myauctions.keyparams = productID.ToString();
-              myauctions.UpdatedPrice = Convert.ToInt32(Request.Form["price"]);
-             myauctions.currentdate = DateTime.Now;
-                    
+                myauctions.keyparams = productID.ToString();
+                myauctions.UpdatedPrice = Convert.ToInt32(Request.Form["price"]);
+                myauctions.currentdate = DateTime.Now;
 
-                
+
+
                 db.auctions.Add(myauctions);
                 db.SaveChanges();
                 Auction_status mystatus = new Auction_status()
@@ -200,17 +201,74 @@ namespace Auctisafe.Controllers
         [HttpGet]
         public ActionResult PendingPayments()
         {
-            return View();
+            List<PendingPaymentViewModel> model = new List<PendingPaymentViewModel>();
+            if (Convert.ToInt32(Session["id"]) != 0)
+            {
+                int id = Convert.ToInt32(Session["id"]);
+                var pendingPayments = db.Payment.Where(x => x.WinnerID == id).ToList();
+                foreach (var item in pendingPayments)
+                {
+                    var trx = db.transactions.Where(x => x.ProductID == item.ProductID).FirstOrDefault();
+                    bool check = false;
+                    if (trx != null)
+                    {
+                        check = true;
+                    }
+                    else
+                    {
+                        check = false;
+                    }
+                    model.Add(new PendingPaymentViewModel
+                    {
+                        isReceived = check ? "yes" : "no",
+                        product = db.Products.Where(x => x.Product_ID == item.ProductID).FirstOrDefault(),
+                        Amount = item.Bid_Amount
+                    });
+
+                }
+                return View(model);
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Myaccount");
+            }
         }
         [HttpGet]
         public ActionResult ReceivePayments()
         {
-            
-            return View();
+            List<ReceivePaymentVewmodel> model = new List<ReceivePaymentVewmodel>();
+            if (Convert.ToInt32(Session["id"]) != 0)
+            {
+                int id = Convert.ToInt32(Session["id"]);
+                var receivepayments = db.auctioneer_recieving_amount.Where(x => x.AuctioneerID == id).ToList();
+                foreach(var item in receivepayments)
+                {
+                    model.Add(new ReceivePaymentVewmodel
+                    {
+                        totalamount = db.Payment.Where(x=>x.ProductID == item.productID).FirstOrDefault().Bid_Amount,
+                        Products = db.Products.Where(x=>x.Product_ID == item.productID).FirstOrDefault(),
+                        netamount = item.TotalAmount,
+                        fees = db.auction_fees.Where(x=>x.productID == item.productID).FirstOrDefault().Auctionfees,
+                        tax = db.Tax.Where(x=>x.productID == item.productID).FirstOrDefault().TaxAmount
+                    });
+                }
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Myaccount");
+            }
+
         }
         [HttpGet]
-        public ActionResult SendTRX(string TRXID = "")
+        public ActionResult SendTRX(string TRXID = "", string ProductID = "")
         {
+            Transaction transaction = new Transaction();
+            transaction.ProductID = int.Parse(ProductID);
+            transaction.TransactionID = TRXID;
+            db.transactions.Add(transaction);
+            db.SaveChanges();
             return Content("TRX ID Submitted");
         }
     }

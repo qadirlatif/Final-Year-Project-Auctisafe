@@ -1,4 +1,4 @@
-﻿@model Auctisafe.Models.Signup
+﻿@model List<Auctisafe.ViewModel.PendingPaymentViewModel>
 
 @{
     ViewBag.Title = "Pending Payments";
@@ -74,24 +74,36 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Mobile</td>
-                                        <td>320000</td>
-                                        <td>
-                                            <input type="text" class="form-control" name="trxID" id="trxid" />
-                                            <br /> <button type="button" class="btn btn-primary btn-sm" id="submit">submit</button>
-                                        </td>
-                                        <td>
-                                            <div class="context-menu-container" id="context-menu-items">
-                                                <ul>
-                                                    <li>Menu Item 1</li>
-                                                    <li>Menu Item 2</li>
-                                                    <li>Menu Item 3</li>
-                                                    ...
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td hidden id="proid">@item.product.Product_ID</td>
+                                            <td>@item.product.name</td>
+                                            <td>@item.Amount</td>
+                                            <td>
+                                                <div style="display: flex">
+                                                    @if (item.isReceived == "no")
+                                                    {
+                                                        <input type="text" class="form-control" name="trxID" id="trxid" />
+                                                        <button type="button" class="btn btn-secondary btn-sm" id="submit">submit</button>}
+                                                    else
+                                                    {
+                                                        <span>TRX Sent, You will receive Payment Confirmation via Email </span>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="context-menu-container" id="context-menu-items">
+                                                    <ul>
+                                                        <li>Account Title : Auctisafe</li>
+                                                        <li>IBAN : xxxxxxxxxxxxxxxxx</li>
+                                                        <li>Account number : xxxxxx</li>
+
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
 
                             </table>
@@ -108,12 +120,14 @@
 <script>
     $("#submit").click(function () {
         var trxid = $("#trxid").val();
+        var productid = $("#proid").text();
         $.ajax({
             type: "get",
             url: '@Url.Action("SendTRX","Dashboard")',
-            data: {TRXID :  trxid},
+            data: { TRXID: trxid, ProductID: productid },
             success: function (data) {
                 alert(data);
+                location.reload();
             }
         })
     })

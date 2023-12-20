@@ -23,4 +23,24 @@ namespace Auctisafe.ViewModel
         public Login usercridentail { get; set; }
         public Signup userdetails { get; set; }
     }
+    public class PendingPaymentViewModel
+    {
+        public Product product { get; set; }
+        public float Amount { get; set; }
+        public string isReceived { get; set; }
+    }
+    public class ReceivePaymentVewmodel
+    {
+        public Product  Products{ get; set; }
+        public float totalamount { get; set; }
+        public float tax { get; set; }
+        public float fees { get; set; }
+        public float netamount { get; set; }
+  
+    }
+    public class TransactionViewmodel
+    {
+        public Transaction transaction { get; set; }
+        public payment pay { get; set; }
+    }
 }

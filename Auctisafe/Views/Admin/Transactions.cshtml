@@ -1,0 +1,36 @@
+﻿@model List<Auctisafe.ViewModel.TransactionViewmodel>
+@{
+    ViewBag.Title = "Transactions";
+}
+
+<h2>Transactions</h2>
+
+<br />
+<div class="card" style="padding: 10px">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.transaction.TransactionID</td>
+                    <td>@item.pay.Bid_Amount</td>
+                    <td>
+                        <a type="button" href="~/Admin/Userdetail?id=@item.pay.WinnerID" class="btn btn-secondary btn-sm">Winner Details</a>
+                        <a type="button" href="~/Admin/Userdetail?id=@item.pay.AuctioneerID" class="btn btn-success btn-sm">Auctioneer Details</a>
+                        <a class="btn btn-secondary btn-sm" href="~/Admin/ProductDetails?id=@item.pay.ProductID">Product Details</a>
+
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

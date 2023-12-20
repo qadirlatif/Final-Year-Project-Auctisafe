@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Remoting.Contexts;
 using System.Threading;
 using System.Web;
 
@@ -120,7 +122,7 @@ namespace Auctisafe.OtherLogicModels
 
             var bidwinner = new bid_winner();
 
-            if (bidwinner != null)
+            if (winner != null)
             {
                 bidwinner.Bid_ID = winner.bidding.Bid_ID;
                 bidwinner.Date = DateTime.Now;
@@ -133,21 +135,50 @@ namespace Auctisafe.OtherLogicModels
                 }
             }
 
-            if (bidwinner != null)
+            if (winner != null)
             {
-                var bidding = context.all_biddings.Where(x => x.Bid_ID == bidwinner.Bid_ID).FirstOrDefault();
-                payment pendingpayment = new payment();
-                pendingpayment.Bid_ID = bidwinner.Bid_ID;
-                pendingpayment.date = DateTime.Now;
-                pendingpayment.DueDate = pendingpayment.date.AddDays(3);
-                pendingpayment.Bid_Amount = (float)(bidding.Amount);
-                context.Payment.Add(pendingpayment);
-                context.SaveChanges();
+                paymentgenerator(context, winner, product);  
             }
 
 
         }
-
+        public static void paymentgenerator(AuctionContext context, BidAndBidder winner, Product product)
+        {
+            payment pendingpayment = new payment();
+            pendingpayment.WinnerID = winner.bidding.Bidder_ID;
+            pendingpayment.date = DateTime.Now;
+            pendingpayment.ProductID = product.Product_ID;
+            pendingpayment.AuctioneerID = product.User_ID;
+            pendingpayment.DueDate = pendingpayment.date.AddDays(3);
+            pendingpayment.Bid_Amount = (float)(winner.bidding.Amount);
+            context.Payment.Add(pendingpayment);
+            context.SaveChanges();
+            var auctionfee = pendingpayment.Bid_Amount * 0.05;
+            var tax = pendingpayment.Bid_Amount * 0.1;
+            auction_fees fee = new auction_fees();
+            fee.productID = product.Product_ID;
+            fee.AuctioneerID = product.User_ID;
+            fee.WinnerID = winner.bidding.Bidder_ID;
+            fee.Auctionfees = (float)(auctionfee);
+            fee.date = DateTime.Now;
+            context.auction_fees.Add(fee);
+            context.SaveChanges();
+            Tax auctax = new Tax();
+            auctax.productID = product.Product_ID;
+            auctax.WinnerID = winner.bidder.User_ID;
+            auctax.AuctioneerID = product.User_ID;
+            auctax.TaxAmount = (float)tax;
+            auctax.Date = DateTime.Now;
+            context.Tax.Add(auctax);
+            context.SaveChanges();
+            auctioneer_receiving_amount receive = new auctioneer_receiving_amount();
+            receive.AuctioneerID = product.User_ID;
+            receive.productID = product.Product_ID;
+            receive.WinnerID = winner.bidder.User_ID;
+            receive.TotalAmount = (float)(winner.bidding.Amount - auctionfee - tax);
+            context.auctioneer_recieving_amount.Add(receive);
+            context.SaveChanges();
+        }
 
 
         public static void ReverseAuction_BidWinner(AuctionContext context, Product product)
@@ -188,7 +219,7 @@ namespace Auctisafe.OtherLogicModels
 
             var bidwinner = new bid_winner();
 
-            if (bidwinner != null)
+            if (winner != null)
             {
                 bidwinner.Bid_ID = winner.bidding.Bid_ID;
                 bidwinner.Date = DateTime.Now;
@@ -242,6 +273,11 @@ namespace Auctisafe.OtherLogicModels
                 {
                     emailService.Emailer(winner.credentails.Email, "Congratulations! You Wins the BID", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + " you wins the bid on item named: " + product.name);
                 }
+            }
+            if(winner != null)
+            {
+                paymentgenerator(context, winner, product);
+
             }
         }
         public static void ReserveAuction(AuctionContext context, Product product)

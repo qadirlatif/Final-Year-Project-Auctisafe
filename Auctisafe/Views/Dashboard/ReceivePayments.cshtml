@@ -1,4 +1,4 @@
-﻿@model Auctisafe.Models.Signup
+﻿@model List<Auctisafe.ViewModel.ReceivePaymentVewmodel>
 
 @{
     ViewBag.Title = "Pending Payments";
@@ -60,12 +60,40 @@
                         <div class="woocommerce-MyAccount-content">
                             <div class="woocommerce-notices-wrapper"></div>
                             <p class="display-name">
-                                Hello <strong> @Html.DisplayFor(Model => Model.First_name) @Html.DisplayFor(Model => Model.Last_name) </strong>
+
                             </p>
 
                             <p>
-                                From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.
+                                Receive Payments will Appear here,
+
                             </p>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Product name</th>
+                                        <th>Total Amount</th>
+                                        <th>Tax</th>
+                                        <th>Auction Fees</th>
+                                        <th>Net Amount (you will receive)</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td hidden id="proid">@item.Products.Product_ID</td>
+                                            <td>@item.Products.name</td>
+                                            <td>@item.totalamount</td>
+                                            <td>@item.tax</td>
+                                            <td>@item.fees</td>
+                                            <td>@item.netamount</td>
+                                            
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
 
                         </div>
                     </div>
