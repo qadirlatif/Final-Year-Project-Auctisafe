@@ -231,6 +231,10 @@ namespace Auctisafe.OtherLogicModels
                     emailService.Emailer(winner.credentails.Email, "Congratulations! You Won the Reverse Auction", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + " you won the reverse auction for the item named: " + product.name);
                 }
             }
+            if (winner != null)
+            {
+                paymentgenerator(context, winner, product);
+            }
         }
 
 
@@ -331,6 +335,10 @@ namespace Auctisafe.OtherLogicModels
                     {
                         emailService.Emailer(winner.credentails.Email, "Congratulations! You Won the Reserve Auction", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + ", you won the Reserve auction for the item named: " + product.name);
                     }
+                }
+                if (winner != null)
+                {
+                    paymentgenerator(context, winner, product);
                 }
 
             }
