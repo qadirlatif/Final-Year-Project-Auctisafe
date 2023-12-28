@@ -10,7 +10,7 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>Transaction ID</th>
+                <th>Transaction Reciept</th>
                 <th>Amount</th>
                 <th>Action</th>
             </tr>
@@ -19,13 +19,14 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.transaction.TransactionID</td>
+                    <td><a href="~/Admin/DownloadImage?image=@item.transaction.TransactionImage" >Download Image</a></td>
                     <td>@item.pay.Bid_Amount</td>
                     <td>
                         <a type="button" href="~/Admin/Userdetail?id=@item.pay.WinnerID" class="btn btn-secondary btn-sm">Winner Details</a>
                         <a type="button" href="~/Admin/Userdetail?id=@item.pay.AuctioneerID" class="btn btn-success btn-sm">Auctioneer Details</a>
                         <a class="btn btn-secondary btn-sm" href="~/Admin/ProductDetails?id=@item.pay.ProductID">Product Details</a>
-
+                        <a class="btn btn-secondary btn-sm" href="~/Admin/Approve?id=@item.transaction.ID" >Approve Payment</a>
+                        <a class="btn btn-danger btn-sm" href="~/Admin/Reject?id=@item.transaction.ID">Reject Payment</a>
 
                     </td>
                 </tr>
@@ -34,3 +35,5 @@
 
     </table>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+

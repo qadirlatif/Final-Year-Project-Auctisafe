@@ -10,7 +10,7 @@ namespace Auctisafe.Models
     public class Transaction
     {
         public int ID { get; set; }
-        public string TransactionID { get; set; }
+        public string TransactionImage { get; set; }
         public int ProductID { get; set; }
     }
 }

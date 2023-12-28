@@ -277,5 +277,47 @@ namespace Auctisafe.Controllers
             }
             return View("Transactions","_AdminLayout",model);
         }
+        public ActionResult DownloadImage(string image)
+        {
+            // Fetch the image path from the server based on the ID
+            string imagePath = "/Images/" + image;
+            if (imagePath != null)
+            {
+                // Serve the image for download
+                return File(imagePath, "image/jpeg", "downloaded_image.jpg");
+            }
+            else
+            {
+                // Handle not found or other cases
+                return HttpNotFound();
+            }
+        }
+        [HttpGet]
+        public ActionResult Approve(int id = 0)
+        {
+            var transaction = db.transactions.Where(x => x.ID == id).FirstOrDefault();
+            var payment = db.Payment.Where(x => x.ProductID == transaction.ProductID).FirstOrDefault() ;
+            var winner = db.login.Where(x => x.User_ID == payment.WinnerID).FirstOrDefault();
+            var winnerdetails = db.signup.Where(x => x.User_ID == winner.User_ID).FirstOrDefault();
+            var auctioneer = db.login.Where(x => x.User_ID == payment.AuctioneerID).FirstOrDefault();
+            var product = db.Products.Where(x => x.Product_ID == transaction.ProductID).FirstOrDefault();
+            mailer mail = new mailer();
+            mail.Emailer(winner.Email, "Payment Confirmation", "Your Payment of Product : "+product.name + " Has been pproved You will Recieve Your Desired Product In few Days, In your dashboard there is a section named 'Product/Payment Confirmation' Kindly Fill this form when you recieve your product and also give honest response about the quality of product etc.");
+            mail.Emailer(auctioneer.Email, "Payment Confirmation", "We have recieved Payment of Product : " + product.name + ", Kindly Deliver the product to Winner Name: "+winnerdetails.First_name + " " +winnerdetails.Last_name +", Phone : "+winnerdetails.Phone_number+" in upcoming 3 days other wise late fee will deduct from your receiving amount, In your dashboard there is a section named 'Product/Payment Confirmation' Kindly Fill this form when you  handover product to winner.");
+            return RedirectToAction("Transactions","Admin");
+        }
+        [HttpGet]
+        public ActionResult Reject(int id = 0)
+        {
+            var transaction = db.transactions.Where(x => x.ID == id).FirstOrDefault();
+            var payment = db.Payment.Where(x => x.ProductID == transaction.ProductID).FirstOrDefault();
+            var winner = db.login.Where(x => x.User_ID == payment.WinnerID).FirstOrDefault();
+            var product = db.Products.Where(x => x.Product_ID == transaction.ProductID).FirstOrDefault();
+            mailer mail = new mailer();
+            mail.Emailer(winner.Email, "Payment Rejection", "Your Payment of Product : " + product.name + " Has been Rejected, Kindly Send Receipt Image Again through your dashboard ASAP. ");
+            db.transactions.Remove(transaction);
+            db.SaveChanges();
+            return RedirectToAction("Transactions", "Admin");
+        }
     }
 }

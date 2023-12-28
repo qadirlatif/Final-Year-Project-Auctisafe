@@ -84,8 +84,9 @@
                                                 <div style="display: flex">
                                                     @if (item.isReceived == "no")
                                                     {
-                                                        <input type="text" class="form-control" name="trxID" id="trxid" />
-                                                        <button type="button" class="btn btn-secondary btn-sm" id="submit">submit</button>}
+                                                        <input type="file" id="imageInput"/>
+                                                        @*<input type="text" class="form-control" name="trxID" id="trxid" />*@
+                                                        <button type="button" onclick="uploadImage()" class="btn btn-secondary btn-sm" id="submit">submit</button>}
                                                     else
                                                     {
                                                         <span>TRX Sent, You will receive Payment Confirmation via Email </span>
@@ -117,7 +118,7 @@
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script>
+@*<script>
     $("#submit").click(function () {
         var trxid = $("#trxid").val();
         var productid = $("#proid").text();
@@ -131,4 +132,27 @@
             }
         })
     })
+</script>*@
+<script>
+    function uploadImage() {
+        var formData = new FormData();
+        var fileInput = document.getElementById('imageInput');
+        formData.append('image', fileInput.files[0]);
+        formData.append('ProductID', $("#proid").text());
+
+        $.ajax({
+            url: '/Dashboard/SendTRX',  // Replace with the actual controller and action method
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log('Image uploaded successfully:', data);
+            },
+            error: function (error) {
+                console.error('Error uploading image:', error);
+            }
+        });
+    }
+
 </script>

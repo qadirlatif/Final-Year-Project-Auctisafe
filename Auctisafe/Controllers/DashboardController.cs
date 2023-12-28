@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Migrations.History;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -261,12 +262,17 @@ namespace Auctisafe.Controllers
             }
 
         }
-        [HttpGet]
-        public ActionResult SendTRX(string TRXID = "", string ProductID = "")
+        [HttpPost]
+        public ActionResult SendTRX(HttpPostedFileBase image , string ProductID = "")
         {
+
+            string filename = Path.GetFileName(image.FileName);
+            string updatedname = filename + ProductID;
+            string physicalPath = Server.MapPath("~/Images/"+updatedname);
+            image.SaveAs(physicalPath);
             Transaction transaction = new Transaction();
             transaction.ProductID = int.Parse(ProductID);
-            transaction.TransactionID = TRXID;
+            transaction.TransactionImage = updatedname;
             db.transactions.Add(transaction);
             db.SaveChanges();
             return Content("TRX ID Submitted");
