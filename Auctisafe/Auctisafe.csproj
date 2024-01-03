@@ -992,7 +992,28 @@
     <Compile Include="Migrations\202312280519261_initialize7.designer.cs">
       <DependentUpon>202312280519261_initialize7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401031904599_initlaize.cs" />
+    <Compile Include="Migrations\202401031904599_initlaize.designer.cs">
+      <DependentUpon>202401031904599_initlaize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401031911101_initlaize1.cs" />
+    <Compile Include="Migrations\202401031911101_initlaize1.designer.cs">
+      <DependentUpon>202401031911101_initlaize1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401031954593_initialize8.cs" />
+    <Compile Include="Migrations\202401031954593_initialize8.designer.cs">
+      <DependentUpon>202401031954593_initialize8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401031955548_initialize9.cs" />
+    <Compile Include="Migrations\202401031955548_initialize9.designer.cs">
+      <DependentUpon>202401031955548_initialize9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401032010536_initialize10.cs" />
+    <Compile Include="Migrations\202401032010536_initialize10.designer.cs">
+      <DependentUpon>202401032010536_initialize10.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Agreement.cs" />
     <Compile Include="Models\AuctionContext.cs" />
     <Compile Include="Models\auctioneer_receiving_amount.cs" />
     <Compile Include="Models\Auctions.cs" />
@@ -1005,7 +1026,9 @@
     <Compile Include="Models\feedback.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Models\UserPaymentCredential.cs" />
     <Compile Include="OtherLogicModels\UnnormalBidIdentifier.cs" />
+    <Compile Include="ViewModel\AgreemtnViewModel.cs" />
     <Compile Include="ViewModel\mailer.cs" />
     <Compile Include="ViewModel\MD5 Algo.cs" />
     <Compile Include="Models\payment.cs" />
@@ -1192,6 +1215,8 @@
     <Content Include="Views\Dashboard\PendingPayments.cshtml" />
     <Content Include="Views\Dashboard\ReceivePayments.cshtml" />
     <Content Include="Views\Admin\Transactions.cshtml" />
+    <Content Include="Views\Dashboard\PaymentCredentials.cshtml" />
+    <Content Include="Views\Dashboard\Agreement.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1200,6 +1225,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Agreements\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
@@ -1226,6 +1252,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202312280519261_initialize7.resx">
       <DependentUpon>202312280519261_initialize7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401031904599_initlaize.resx">
+      <DependentUpon>202401031904599_initlaize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401031911101_initlaize1.resx">
+      <DependentUpon>202401031911101_initlaize1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401031954593_initialize8.resx">
+      <DependentUpon>202401031954593_initialize8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401031955548_initialize9.resx">
+      <DependentUpon>202401031955548_initialize9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401032010536_initialize10.resx">
+      <DependentUpon>202401032010536_initialize10.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

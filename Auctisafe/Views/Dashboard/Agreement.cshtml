@@ -1,5 +1,9 @@
-﻿@model Auctisafe.Models.Signup
+﻿@model List<Auctisafe.ViewModel.AgreemtnViewModel>
+@{
+    ViewBag.Title = "Agreement";
+}
 
+<h2>Agreement</h2>
 @{
     ViewBag.Title = "Index";
 }
@@ -62,17 +66,59 @@
                         </nav>
 
 
-                        <div class="woocommerce-MyAccount-content">
+                        <div class="woocommerce-myaccount-content">
                             <div class="woocommerce-notices-wrapper"></div>
-                            <p class="display-name">
-                                Hello <strong> @Html.DisplayFor(Model=>Model.First_name) @Html.DisplayFor(Model=>Model.Last_name) </strong>
-                            </p>
+
 
                             <p>
-                                From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.
+                                Read & Sign the agreement properly, you will not be able to edit it
+
                             </p>
 
                         </div>
+
+                        <table style="width: 100%">
+                            <thead class="table table-striped">
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Upload Signed Agreement</th>
+                                    <th>Download Agreement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int index = 0;
+                                }
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        <form id="agree_@index">
+                                        <td hidden>@item.ProductID</td>
+                                        <td>@item.ProductName</td>
+                                        <td>
+                                            <input type="number" value="@item.ProductID" name="productid" hidden />
+                                            @if (item.AgreementName == "" || item.AgreementName == null)
+                                            {
+                                                <input type="file" name="file" class="form-control" />
+                                                <br />
+                                                <button type="button" class="btn btn-secondary agree" id="@index">Send Agreement</button>
+                                            }
+                                            else
+                                            {
+                                                <span>Agreement Already Submitted</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="~/Agreement/ProductAgreement" class="">click Here</a>
+                                        </td>
+                                        </form>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </article>
@@ -80,3 +126,35 @@
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(".agree").click(function () {
+        alert("asdasd")
+        debugger
+        var id = $(this).attr("id")
+        var formData = new FormData($('#agree_'+id)[0]);
+
+        $.ajax({
+            url: '/Dashboard/SendAgreement',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data == "Record Saved") {
+                    hideLoadingSpinner();
+                    showAlert("Rental Property", data);
+                }
+                else {
+                    hideLoadingSpinner();
+                    showAlertnoreload("Rental Property", data);
+                }
+            },
+            error: function (error) {
+                hideLoadingSpinner();
+                showAlertnoreload("Rental Property", error);
+            }
+        });
+    })
+</script>

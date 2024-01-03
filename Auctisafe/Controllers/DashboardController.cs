@@ -8,6 +8,8 @@ using System.Data.Entity.Migrations.History;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
@@ -243,15 +245,15 @@ namespace Auctisafe.Controllers
             {
                 int id = Convert.ToInt32(Session["id"]);
                 var receivepayments = db.auctioneer_recieving_amount.Where(x => x.AuctioneerID == id).ToList();
-                foreach(var item in receivepayments)
+                foreach (var item in receivepayments)
                 {
                     model.Add(new ReceivePaymentVewmodel
                     {
-                        totalamount = db.Payment.Where(x=>x.ProductID == item.productID).FirstOrDefault().Bid_Amount,
-                        Products = db.Products.Where(x=>x.Product_ID == item.productID).FirstOrDefault(),
+                        totalamount = db.Payment.Where(x => x.ProductID == item.productID).FirstOrDefault().Bid_Amount,
+                        Products = db.Products.Where(x => x.Product_ID == item.productID).FirstOrDefault(),
                         netamount = item.TotalAmount,
-                        fees = db.auction_fees.Where(x=>x.productID == item.productID).FirstOrDefault().Auctionfees,
-                        tax = db.Tax.Where(x=>x.productID == item.productID).FirstOrDefault().TaxAmount
+                        fees = db.auction_fees.Where(x => x.productID == item.productID).FirstOrDefault().Auctionfees,
+                        tax = db.Tax.Where(x => x.productID == item.productID).FirstOrDefault().TaxAmount
                     });
                 }
                 return View(model);
@@ -263,12 +265,12 @@ namespace Auctisafe.Controllers
 
         }
         [HttpPost]
-        public ActionResult SendTRX(HttpPostedFileBase image , string ProductID = "")
+        public ActionResult SendTRX(HttpPostedFileBase image, string ProductID = "")
         {
 
             string filename = Path.GetFileName(image.FileName);
             string updatedname = filename + ProductID;
-            string physicalPath = Server.MapPath("~/Images/"+updatedname);
+            string physicalPath = Server.MapPath("~/Images/" + updatedname);
             image.SaveAs(physicalPath);
             Transaction transaction = new Transaction();
             transaction.ProductID = int.Parse(ProductID);
@@ -276,6 +278,86 @@ namespace Auctisafe.Controllers
             db.transactions.Add(transaction);
             db.SaveChanges();
             return Content("TRX ID Submitted");
+        }
+        [HttpGet]
+        public ActionResult PaymentCredentials()
+        {
+            int id = Convert.ToInt32(Session["id"]);
+            if (id != 0)
+            {
+                var targetcredential = db.UserPaymentcreditials.Where(x => x.UserID == id).FirstOrDefault();
+                if (targetcredential != null)
+                {
+                    return View(targetcredential);
+                }
+                else
+                {
+
+                    return View(new UserPaymentCredential());
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Myaccount");
+            }
+        }
+        [HttpPost]
+        public ActionResult PaymentCredentials(UserPaymentCredential model)
+        {
+            if (model.ID == 0)
+            {
+                model.UserID = Convert.ToInt32(Session["id"]);
+                db.UserPaymentcreditials.Add(model);
+                db.SaveChanges();
+            }
+            else
+            {
+                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            return View(model);
+        }
+        [HttpGet]
+        public ActionResult Agreement()
+        {
+            var id = Convert.ToInt32(Session["id"]);
+            if (id != 0)
+            {
+                List<AgreemtnViewModel> model = new List<AgreemtnViewModel>();
+                var DueAgreement = db.Agreements.Where(x => x.UserID == id).ToList();
+                foreach (var item in DueAgreement)
+                {
+                    var targetprod = db.Products.Where(x => x.Product_ID == item.ProductID).FirstOrDefault();
+                    model.Add(new AgreemtnViewModel
+                    {
+                        ProductID = targetprod.Product_ID,
+                        ProductName = targetprod.name,
+                        AgreementName = item.AgreementName
+                    });
+                }
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Myaccount");
+            }
+        }
+        [HttpPost]
+        public ActionResult SendAgreement()
+        {
+            var productid = Convert.ToInt32( Request.Form["productid"]);
+            var userid = Convert.ToInt32(Session["id"]);
+            var file = Request.Files["file"];
+            string Filename = System.IO.Path.GetFileName(file.FileName);
+            string updatedname = productid.ToString() + userid.ToString() + Filename;
+            string physicalPath = Server.MapPath("~/Agreements/" + updatedname);
+            file.SaveAs(physicalPath);
+            var target = db.Agreements.Where(x => x.ProductID == productid && x.UserID == userid).FirstOrDefault();
+            target.AgreementName = updatedname;
+            db.Entry(target).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return Content("Agreement Sent successfully");
         }
     }
 }
