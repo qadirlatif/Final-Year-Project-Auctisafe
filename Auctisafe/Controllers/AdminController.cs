@@ -348,8 +348,8 @@ namespace Auctisafe.Controllers
                 model.Add(new AgreementViewModel
                 {
                     productdetails = prod,
-                    AuctioneerAgreement = db.Agreements.Where(x =>prod.User_ID == x.UserID).FirstOrDefault(),
-                    winnerAgreement = db.Agreements.Where(x=>x.UserID !=  prod.User_ID).FirstOrDefault()
+                    AuctioneerAgreement = db.Agreements.Where(x =>prod.User_ID == x.UserID && x.ProductID == prod.Product_ID).FirstOrDefault(),
+                    winnerAgreement = db.Agreements.Where(x=>x.UserID !=  prod.User_ID && x.ProductID == prod.Product_ID).FirstOrDefault()
                 }) ;
             }
             return View("AuctionAgreement","_AdminLayout",model);
