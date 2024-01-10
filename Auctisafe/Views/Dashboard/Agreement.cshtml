@@ -110,7 +110,7 @@
                                             }
                                         </td>
                                         <td>
-                                            <a href="~/Agreement/ProductAgreement" class="">click Here</a>
+                                            <a href="~/Agreements/Agreement.docx" class="">click Here</a>
                                         </td>
                                         </form>
                                     </tr>
@@ -130,7 +130,7 @@
 
 <script>
     $(".agree").click(function () {
-        alert("asdasd")
+        showLoadingSpinner();
         debugger
         var id = $(this).attr("id")
         var formData = new FormData($('#agree_'+id)[0]);
@@ -142,18 +142,13 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                if (data == "Record Saved") {
-                    hideLoadingSpinner();
-                    showAlert("Rental Property", data);
-                }
-                else {
-                    hideLoadingSpinner();
-                    showAlertnoreload("Rental Property", data);
-                }
+                alert(data)
+                location.reload();
             },
             error: function (error) {
                 hideLoadingSpinner();
-                showAlertnoreload("Rental Property", error);
+                alert(error)
+
             }
         });
     })

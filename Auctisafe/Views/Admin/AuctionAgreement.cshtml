@@ -1,0 +1,48 @@
+﻿@model List<Auctisafe.ViewModel.AgreementViewModel>
+@{
+    ViewBag.Title = "AuctionAgreement";
+}
+
+<h2>Auction Agreements</h2>
+<div class="row">
+    <div class="col-lg-12 table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Winner Agreement</th>
+                    <th>Auctioneer Agreement</th>
+                    <th>Close Auction</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.productdetails.name</td>
+                    <td>
+                        @if (item.winnerAgreement.AgreementName == "" || item.winnerAgreement.AgreementName == null)
+                        {
+                            <span>Agreement Note yet Received</span>
+                        }
+                        else
+                        {
+                            <a href="~/Agreements/@item.winnerAgreement.AgreementName">Click here to Download</a>
+                        }
+                    </td>
+                    <td>
+                        @if (item.AuctioneerAgreement.AgreementName == "" || item.AuctioneerAgreement.AgreementName == null)
+                        {
+                            <span>Agreement Note yet Received</span>
+                        }
+                        else
+                        {
+                            <a href="~/Agreements/@item.AuctioneerAgreement.AgreementName">Click here to Download</a>
+                        }
+                    </td>
+                    <td><a href="~/Admin/CloseAuction?prodid=@item.productdetails.Product_ID"  class="btn btn-secondary closeauction" id="@item.productdetails.Product_ID">Close Auction</a></td>
+                </tr>
+            }
+        </table>
+
+    </div>
+</div>

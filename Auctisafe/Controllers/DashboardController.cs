@@ -267,17 +267,23 @@ namespace Auctisafe.Controllers
         [HttpPost]
         public ActionResult SendTRX(HttpPostedFileBase image, string ProductID = "")
         {
-
-            string filename = Path.GetFileName(image.FileName);
-            string updatedname = filename + ProductID;
-            string physicalPath = Server.MapPath("~/Images/" + updatedname);
-            image.SaveAs(physicalPath);
-            Transaction transaction = new Transaction();
-            transaction.ProductID = int.Parse(ProductID);
-            transaction.TransactionImage = updatedname;
-            db.transactions.Add(transaction);
-            db.SaveChanges();
-            return Content("TRX ID Submitted");
+            if (image != null)
+            {
+                string filename = Path.GetFileName(image.FileName);
+                string updatedname = filename + ProductID;
+                string physicalPath = Server.MapPath("~/Images/" + updatedname);
+                image.SaveAs(physicalPath);
+                Transaction transaction = new Transaction();
+                transaction.ProductID = int.Parse(ProductID);
+                transaction.TransactionImage = updatedname;
+                db.transactions.Add(transaction);
+                db.SaveChanges();
+                return Content("TRX ID Submitted");
+            }
+            else
+            {
+                return Content("Please Input File");
+            }
         }
         [HttpGet]
         public ActionResult PaymentCredentials()

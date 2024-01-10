@@ -77,16 +77,16 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td hidden id="proid">@item.product.Product_ID</td>
+                                            <td hidden class="proid">@item.product.Product_ID</td>
                                             <td>@item.product.name</td>
                                             <td>@item.Amount</td>
                                             <td>
                                                 <div style="display: flex">
                                                     @if (item.isReceived == "no")
                                                     {
-                                                        <input type="file" id="imageInput"/>
+                                                        <input type="file" id="imageInput_@item.product.Product_ID"/>
                                                         @*<input type="text" class="form-control" name="trxID" id="trxid" />*@
-                                                        <button type="button" onclick="uploadImage()" class="btn btn-secondary btn-sm" id="submit">submit</button>}
+                                                        <button type="button" class="btn btn-secondary btn-sm send" id="@item.product.Product_ID">submit</button>}
                                                     else
                                                     {
                                                         <span>TRX Sent, You will receive Payment Confirmation via Email </span>
@@ -134,11 +134,13 @@
     })
 </script>*@
 <script>
-    function uploadImage() {
+    $(".send").click(function () {
+        showLoadingSpinner();
+        var id = $(this).attr("id");
         var formData = new FormData();
-        var fileInput = document.getElementById('imageInput');
+        var fileInput = document.getElementById('imageInput_' + id);
         formData.append('image', fileInput.files[0]);
-        formData.append('ProductID', $("#proid").text());
+        formData.append('ProductID', id);
 
         $.ajax({
             url: '/Dashboard/SendTRX',  // Replace with the actual controller and action method
@@ -147,12 +149,15 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                console.log('Image uploaded successfully:', data);
+                alert(data);
+                location.reload();
             },
             error: function (error) {
-                console.error('Error uploading image:', error);
+                alert(error)
+                location.reload();
+
             }
         });
-    }
+    })
 
 </script>

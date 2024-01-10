@@ -1028,6 +1028,7 @@
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\UserPaymentCredential.cs" />
     <Compile Include="OtherLogicModels\UnnormalBidIdentifier.cs" />
+    <Compile Include="ViewModel\AgreementViewModel.cs" />
     <Compile Include="ViewModel\AgreemtnViewModel.cs" />
     <Compile Include="ViewModel\mailer.cs" />
     <Compile Include="ViewModel\MD5 Algo.cs" />
@@ -1185,6 +1186,7 @@
     <Content Include="Content\template\vendors\typicons\typicons.eot" />
     <Content Include="Content\template\vendors\typicons\typicons.ttf" />
     <Content Include="Content\template\vendors\typicons\typicons.woff" />
+    <Content Include="Agreements\Agreement.docx" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -1217,6 +1219,7 @@
     <Content Include="Views\Admin\Transactions.cshtml" />
     <Content Include="Views\Dashboard\PaymentCredentials.cshtml" />
     <Content Include="Views\Dashboard\Agreement.cshtml" />
+    <Content Include="Views\Admin\AuctionAgreement.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1225,7 +1228,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Agreements\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>

@@ -269,11 +269,15 @@ namespace Auctisafe.Controllers
             var transactions =db.transactions.ToList();
             foreach (var item in transactions)
             {
-                model.Add(new TransactionViewmodel
+                var auctionstatus = db.auction_status.Where(x => x.Product_ID == item.ProductID).FirstOrDefault();
+                if (auctionstatus.Status == "D")
                 {
-                    transaction = item,
-                    pay = db.Payment.Where(x => x.ProductID == item.ProductID).FirstOrDefault()
-                }) ;
+                    model.Add(new TransactionViewmodel
+                    {
+                        transaction = item,
+                        pay = db.Payment.Where(x => x.ProductID == item.ProductID).FirstOrDefault()
+                    });
+                }
             }
             return View("Transactions","_AdminLayout",model);
         }
@@ -302,8 +306,22 @@ namespace Auctisafe.Controllers
             var auctioneer = db.login.Where(x => x.User_ID == payment.AuctioneerID).FirstOrDefault();
             var product = db.Products.Where(x => x.Product_ID == transaction.ProductID).FirstOrDefault();
             mailer mail = new mailer();
-            mail.Emailer(winner.Email, "Payment Confirmation", "Your Payment of Product : "+product.name + " Has been pproved You will Recieve Your Desired Product In few Days, In your dashboard there is a section named 'Product/Payment Confirmation' Kindly Fill this form when you recieve your product and also give honest response about the quality of product etc.");
-            mail.Emailer(auctioneer.Email, "Payment Confirmation", "We have recieved Payment of Product : " + product.name + ", Kindly Deliver the product to Winner Name: "+winnerdetails.First_name + " " +winnerdetails.Last_name +", Phone : "+winnerdetails.Phone_number+" in upcoming 3 days other wise late fee will deduct from your receiving amount, In your dashboard there is a section named 'Product/Payment Confirmation' Kindly Fill this form when you  handover product to winner.");
+            mail.Emailer(winner.Email, "Payment Confirmation", "Your Payment of Product : "+product.name + " Has been pproved You will Recieve Your Desired Product In few Days, In your dashboard there is a section named 'receiver/deliver Agreement' Kindly Fill this form when you recieve your product and also give honest response about the quality of product etc.");
+            mail.Emailer(auctioneer.Email, "Payment Confirmation", "We have recieved Payment of Product : " + product.name + ", Kindly Deliver the product to Winner Name: "+winnerdetails.First_name + " " +winnerdetails.Last_name +", Phone : "+winnerdetails.Phone_number+" in upcoming 3 days other wise late fee will deduct from your receiving amount, In your dashboard there is a section named 'receiver/deliver Agreemnt' Kindly Fill this form when you  handover product to winner.");
+            Agreement winneragreement = new Agreement();
+            winneragreement.ProductID= transaction.ProductID;
+            winneragreement.UserID = winner.User_ID;
+            db.Agreements.Add(winneragreement);
+            db.SaveChanges();
+            Agreement Auctoneeragreement = new Agreement();
+            Auctoneeragreement.ProductID = transaction.ProductID;
+            Auctoneeragreement.UserID = auctioneer.User_ID;
+            db.Agreements.Add(Auctoneeragreement);
+            db.SaveChanges();
+            var auctionstatus = db.auction_status.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
+            auctionstatus.Status = "P";
+            db.Entry(auctionstatus).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
             return RedirectToAction("Transactions","Admin");
         }
         [HttpGet]
@@ -318,6 +336,37 @@ namespace Auctisafe.Controllers
             db.transactions.Remove(transaction);
             db.SaveChanges();
             return RedirectToAction("Transactions", "Admin");
+        }
+        [HttpGet]
+        public ActionResult AuctionAgreement()
+        {
+            List<AgreementViewModel> model = new List<AgreementViewModel>();
+            var productsstatus = db.auction_status.Where(x => x.Status == "P").ToList();
+            foreach(var item in productsstatus)
+            {
+                var prod = db.Products.Where(x => x.Product_ID == item.Product_ID).FirstOrDefault();
+                model.Add(new AgreementViewModel
+                {
+                    productdetails = prod,
+                    AuctioneerAgreement = db.Agreements.Where(x =>prod.User_ID == x.UserID).FirstOrDefault(),
+                    winnerAgreement = db.Agreements.Where(x=>x.UserID !=  prod.User_ID).FirstOrDefault()
+                }) ;
+            }
+            return View("AuctionAgreement","_AdminLayout",model);
+
+        }
+        [HttpGet]
+        public ActionResult CloseAuction(int prodid)
+        {
+            var aucstatus = db.auction_status.Where(x => x.Product_ID == prodid).FirstOrDefault();
+            aucstatus.Status = "C";
+            db.Entry(aucstatus).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            var product = db.Products.Where(x => x.Product_ID == aucstatus.Product_ID).FirstOrDefault();
+            var user = db.login.Where(x => x.User_ID == product.User_ID).FirstOrDefault();
+            mailer mail = new mailer();
+            mail.Emailer(user.Email, "Auction Close Acknowledgment", "Your Auction Named : " + product.name + " has been successfully closed and your amount has been successfully deposited to your account please check, and thanks forr choosing us.");
+            return RedirectToAction("AuctionAgreement","Admin");
         }
     }
 }
