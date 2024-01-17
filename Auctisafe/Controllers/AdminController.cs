@@ -52,12 +52,32 @@ namespace Auctisafe.Controllers
             }
             return View("Users", "_AdminLayout", model);
         }
-        public ActionResult Auctions()
+
+        public ActionResult Auctions(int id = 0)
         {
+
             List<AuctionListViewModel> model = new List<AuctionListViewModel>();
-            var products = db.Products.ToList();
-            foreach (var product in products)
+            if (id == 0)
             {
+                var products = db.Products.ToList();
+                foreach (var product in products)
+                {
+                    AuctionListViewModel productdetail = new AuctionListViewModel();
+                    productdetail.AuctionID = product.Product_ID;
+                    var auction = db.auctions.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
+                    productdetail.Auction = (db.auction_Types.Where(x => x.Auction_type_ID == auction.Auction_type_ID).FirstOrDefault()).Auction_name;
+                    var targetuser = db.signup.Where(x => x.User_ID == product.User_ID).FirstOrDefault();
+                    productdetail.Auctioneer_Name = targetuser.First_name + " " + targetuser.Last_name;
+                    productdetail.ProductName = product.name;
+                    //productdetail.statusstatus = db.auction_status.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
+                    productdetail.userid = product.User_ID;
+                    productdetail.status = (db.auction_status.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault()).Status;
+                    model.Add(productdetail);
+                }
+            }
+            else
+            {
+                var product = db.Products.Where(x => x.Product_ID == id).FirstOrDefault();
                 AuctionListViewModel productdetail = new AuctionListViewModel();
                 productdetail.AuctionID = product.Product_ID;
                 var auction = db.auctions.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
@@ -114,10 +134,10 @@ namespace Auctisafe.Controllers
                 mail.Emailer(targetuser.Email, "Account Activate", "Your Account has been Activated By Auctisafe");
 
             }
-            else if(targetuser.Status == "P" && model.Status == "A")
+            else if (targetuser.Status == "P" && model.Status == "A")
             {
                 mailer mail = new mailer();
-                mail.Emailer(targetuser.Email,"Account Request", "Congrats! Your pending Account successfully Accepted Now You can Create Auction, bidding and other etc.");
+                mail.Emailer(targetuser.Email, "Account Request", "Congrats! Your pending Account successfully Accepted Now You can Create Auction, bidding and other etc.");
             }
             targetuser.Status = model.Status;
             db.Entry(targetuser).State = System.Data.Entity.EntityState.Modified;
@@ -247,7 +267,7 @@ namespace Auctisafe.Controllers
         [HttpGet]
         public ActionResult RejectReport(int id = 0)
         {
-            var report = db.Reports.Where(x=>x.ReportID == id.ToString()).FirstOrDefault();
+            var report = db.Reports.Where(x => x.ReportID == id.ToString()).FirstOrDefault();
             db.Reports.Remove(report);
             db.SaveChanges();
             return Content("Report rejected & Deleted From DB");
@@ -266,7 +286,7 @@ namespace Auctisafe.Controllers
         public ActionResult Transactions()
         {
             List<TransactionViewmodel> model = new List<TransactionViewmodel>();
-            var transactions =db.transactions.ToList();
+            var transactions = db.transactions.ToList();
             foreach (var item in transactions)
             {
                 var auctionstatus = db.auction_status.Where(x => x.Product_ID == item.ProductID).FirstOrDefault();
@@ -279,7 +299,7 @@ namespace Auctisafe.Controllers
                     });
                 }
             }
-            return View("Transactions","_AdminLayout",model);
+            return View("Transactions", "_AdminLayout", model);
         }
         public ActionResult DownloadImage(string image)
         {
@@ -300,16 +320,16 @@ namespace Auctisafe.Controllers
         public ActionResult Approve(int id = 0)
         {
             var transaction = db.transactions.Where(x => x.ID == id).FirstOrDefault();
-            var payment = db.Payment.Where(x => x.ProductID == transaction.ProductID).FirstOrDefault() ;
+            var payment = db.Payment.Where(x => x.ProductID == transaction.ProductID).FirstOrDefault();
             var winner = db.login.Where(x => x.User_ID == payment.WinnerID).FirstOrDefault();
             var winnerdetails = db.signup.Where(x => x.User_ID == winner.User_ID).FirstOrDefault();
             var auctioneer = db.login.Where(x => x.User_ID == payment.AuctioneerID).FirstOrDefault();
             var product = db.Products.Where(x => x.Product_ID == transaction.ProductID).FirstOrDefault();
             mailer mail = new mailer();
-            mail.Emailer(winner.Email, "Payment Confirmation", "Your Payment of Product : "+product.name + " Has been pproved You will Recieve Your Desired Product In few Days, In your dashboard there is a section named 'receiver/deliver Agreement' Kindly Fill this form when you recieve your product and also give honest response about the quality of product etc.");
-            mail.Emailer(auctioneer.Email, "Payment Confirmation", "We have recieved Payment of Product : " + product.name + ", Kindly Deliver the product to Winner Name: "+winnerdetails.First_name + " " +winnerdetails.Last_name +", Phone : "+winnerdetails.Phone_number+" in upcoming 3 days other wise late fee will deduct from your receiving amount, In your dashboard there is a section named 'receiver/deliver Agreemnt' Kindly Fill this form when you  handover product to winner.");
+            mail.Emailer(winner.Email, "Payment Confirmation", "Your Payment of Product : " + product.name + " Has been pproved You will Recieve Your Desired Product In few Days, In your dashboard there is a section named 'receiver/deliver Agreement' Kindly Fill this form when you recieve your product and also give honest response about the quality of product etc.");
+            mail.Emailer(auctioneer.Email, "Payment Confirmation", "We have recieved Payment of Product : " + product.name + ", Kindly Deliver the product to Winner Name: " + winnerdetails.First_name + " " + winnerdetails.Last_name + ", Phone : " + winnerdetails.Phone_number + " in upcoming 3 days other wise late fee will deduct from your receiving amount, In your dashboard there is a section named 'receiver/deliver Agreemnt' Kindly Fill this form when you  handover product to winner.");
             Agreement winneragreement = new Agreement();
-            winneragreement.ProductID= transaction.ProductID;
+            winneragreement.ProductID = transaction.ProductID;
             winneragreement.UserID = winner.User_ID;
             db.Agreements.Add(winneragreement);
             db.SaveChanges();
@@ -323,7 +343,7 @@ namespace Auctisafe.Controllers
             auctionstatus.Status = "P";
             db.Entry(auctionstatus).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Transactions","Admin");
+            return RedirectToAction("Transactions", "Admin");
         }
         [HttpGet]
         public ActionResult Reject(int id = 0)
@@ -343,17 +363,17 @@ namespace Auctisafe.Controllers
         {
             List<AgreementViewModel> model = new List<AgreementViewModel>();
             var productsstatus = db.auction_status.Where(x => x.Status == "P").ToList();
-            foreach(var item in productsstatus)
+            foreach (var item in productsstatus)
             {
                 var prod = db.Products.Where(x => x.Product_ID == item.Product_ID).FirstOrDefault();
                 model.Add(new AgreementViewModel
                 {
                     productdetails = prod,
-                    AuctioneerAgreement = db.Agreements.Where(x =>prod.User_ID == x.UserID && x.ProductID == prod.Product_ID).FirstOrDefault(),
-                    winnerAgreement = db.Agreements.Where(x=>x.UserID !=  prod.User_ID && x.ProductID == prod.Product_ID).FirstOrDefault()
-                }) ;
+                    AuctioneerAgreement = db.Agreements.Where(x => prod.User_ID == x.UserID && x.ProductID == prod.Product_ID).FirstOrDefault(),
+                    winnerAgreement = db.Agreements.Where(x => x.UserID != prod.User_ID && x.ProductID == prod.Product_ID).FirstOrDefault()
+                });
             }
-            return View("AuctionAgreement","_AdminLayout",model);
+            return View("AuctionAgreement", "_AdminLayout", model);
 
         }
         [HttpGet]
@@ -367,7 +387,7 @@ namespace Auctisafe.Controllers
             var user = db.login.Where(x => x.User_ID == product.User_ID).FirstOrDefault();
             mailer mail = new mailer();
             mail.Emailer(user.Email, "Auction Close Acknowledgment", "Your Auction Named : " + product.name + " has been successfully closed and your amount has been successfully deposited to your account please check, and thanks forr choosing us.");
-            return RedirectToAction("AuctionAgreement","Admin");
+            return RedirectToAction("AuctionAgreement", "Admin");
         }
     }
 }
