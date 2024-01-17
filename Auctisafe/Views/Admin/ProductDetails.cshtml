@@ -60,7 +60,7 @@
             <p style="font-size: 18px">Used Status : <b>@Model.product.used</b></p>
             <p style="font-size: 18px">Price : <b>@Model.product.price</b></p>
             <p style="font-size: 18px">Description : <b>@Model.product.description</b></p>
-
+            <p style="font-size: 18px">Product Status : <b>@Model.status.Status</b></p>
 
         </div>
         <div class="col-md-5">
@@ -68,10 +68,64 @@
 
         </div>
     </div>
-    
+
 </div>
 <br />
-<div class="card" style="padding: 10px ">
+ 
+<div class="card" style="padding: 10px">
+    <h3>Auction Status Tracking</h3>
+</div>
+<br />
+<div class="card">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Prodcut ID</th>
+                    <th>Product Name</th>
+                    <th>Product Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.product.Product_ID</td>
+                    <td>@Model.product.name</td>
+                    <td>
+                        @if (Model.status.Status == "A")
+                        {
+                            <p style="font-size: 18px">Product Is Activated, Bidding in process</p>
+                        }
+                        @*Deactive*@
+                        else if (Model.status.Status == "D")
+                        {
+                            <p style="font-size: 18px">Product Is Deavtivated By AuctiSafe</p>
+                        }
+                        @*agreement*@
+                        else if (Model.status.Status == "C")
+                        {
+                            <p style="font-size: 18px">Auction is Close</p>
+                        }
+                        else if (Model.status.Status == "P")
+                        {
+                            <p style="font-size: 18px">Payment Recived, Agreement Pending</p>
+                        }
+                        else if (Model.status.Status == "W")
+                        {
+                            <p style="font-size: 18px">Bid Winner Dectected, Payment Pending</p>
+                        }
+                        else
+                        {
+                            <p style="font-size: 18px"> Sorry </p>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+        <br />
+ </div>
+<br />
+<div class="card" style="padding: 10px">
     <h3>Auction Details</h3>
 </div>
 <br />

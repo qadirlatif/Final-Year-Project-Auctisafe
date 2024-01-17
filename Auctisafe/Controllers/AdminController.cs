@@ -270,7 +270,7 @@ namespace Auctisafe.Controllers
             foreach (var item in transactions)
             {
                 var auctionstatus = db.auction_status.Where(x => x.Product_ID == item.ProductID).FirstOrDefault();
-                if (auctionstatus.Status == "D")
+                if (auctionstatus.Status == "W")
                 {
                     model.Add(new TransactionViewmodel
                     {
@@ -319,6 +319,7 @@ namespace Auctisafe.Controllers
             db.Agreements.Add(Auctoneeragreement);
             db.SaveChanges();
             var auctionstatus = db.auction_status.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
+            //payment RECIVE AGREEMENT PENDING
             auctionstatus.Status = "P";
             db.Entry(auctionstatus).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();

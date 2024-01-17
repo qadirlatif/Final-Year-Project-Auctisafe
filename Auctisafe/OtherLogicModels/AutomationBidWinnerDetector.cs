@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.Remoting.Contexts;
 using System.Threading;
 using System.Web;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Auctisafe.OtherLogicModels
 {
@@ -88,6 +89,7 @@ namespace Auctisafe.OtherLogicModels
             var bidders = new List<BidAndBidder>();
             var biddings = context.all_biddings.Where(x => x.Product_ID == product.Product_ID).ToList();
             var auction = context.auctions.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
+            var auctioner = context.login.Where(x => x.User_ID == product.User_ID).FirstOrDefault();
             var bidder = new Signup();
 
             double initialBidAmount = product.price;
@@ -116,7 +118,7 @@ namespace Auctisafe.OtherLogicModels
             }
 
             var target = context.auction_status.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
-            target.Status = "D"; // You might want to update the status based on your requirements
+            target.Status = "W"; // You might want to update the status based on your requirements
             context.Entry(target).State = EntityState.Modified;
             context.SaveChanges();
 
@@ -131,7 +133,8 @@ namespace Auctisafe.OtherLogicModels
 
                 if (winner != null)
                 {
-                    emailService.Emailer(winner.credentails.Email, "Congratulations! You Won the Dutch Auction", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + ", you won the Dutch auction for the item named: " + product.name);
+                    emailService.Emailer(auctioner.Email, "Your Product Bid Winner Dectected", "Dear, Your Product Bid Winner is Detected And your product tracking id is" + product.Product_ID + "in case of Any issue Use this ID");
+                    emailService.Emailer(winner.credentails.Email, "Congratulations! You Won the Dutch Auction", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + ", you won the Dutch auction for the item named: " + product.name+ "and Your product tracking ID is" + product.Product_ID);
                 }
             }
 
@@ -185,6 +188,7 @@ namespace Auctisafe.OtherLogicModels
         {
             var bidders = new List<BidAndBidder>();
             var biddings = context.all_biddings.Where(x => x.Product_ID == product.Product_ID).ToList();
+            var auctioner = context.login.Where(x => x.User_ID == product.User_ID).FirstOrDefault();
             var bidder = new Signup();
 
             foreach (var bids in biddings)
@@ -213,7 +217,7 @@ namespace Auctisafe.OtherLogicModels
             }
 
             var target = context.auction_status.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
-            target.Status = "D";
+            target.Status = "W";
             context.Entry(target).State = EntityState.Modified;
             context.SaveChanges();
 
@@ -228,7 +232,8 @@ namespace Auctisafe.OtherLogicModels
 
                 if (winner != null)
                 {
-                    emailService.Emailer(winner.credentails.Email, "Congratulations! You Won the Reverse Auction", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + " you won the reverse auction for the item named: " + product.name);
+                    emailService.Emailer(auctioner.Email, "Your Product Bid Winner Dectected", "Dear, Your Product Bid Winner is Detected And your product tracking id is" + product.Product_ID + "in case of Any issue Use this ID");
+                    emailService.Emailer(winner.credentails.Email, "Congratulations! You Won the Reverse Auction", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + " you won the reverse auction for the item named: " + product.name+ "and Your product tracking ID is" + product.Product_ID);
                 }
             }
             if (winner != null)
@@ -242,6 +247,7 @@ namespace Auctisafe.OtherLogicModels
         {
             var bidders = new List<BidAndBidder>();
             var biddings = context.all_biddings.Where(x => x.Product_ID == product.Product_ID).ToList();
+            var auctioner = context.login.Where(x => x.User_ID == product.User_ID).FirstOrDefault();
             var bidder = new Signup();
             foreach (var bids in biddings)
             {
@@ -262,7 +268,7 @@ namespace Auctisafe.OtherLogicModels
                 }
             }
             var target = context.auction_status.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
-            target.Status = "D";
+            target.Status = "W";
             context.SaveChanges();
             var bidwinner = new bid_winner();
             if (winner != null)
@@ -275,7 +281,8 @@ namespace Auctisafe.OtherLogicModels
                 context.SaveChanges();
                 if (winner != null)
                 {
-                    emailService.Emailer(winner.credentails.Email, "Congratulations! You Wins the BID", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + " you wins the bid on item named: " + product.name);
+                    emailService.Emailer(auctioner.Email, "Your Product Bid Winner Dectected", "Dear, Your Product Bid Winner is Detected And your product tracking id is" + product.Product_ID + "in case of Any issue Use this ID");
+                    emailService.Emailer(winner.credentails.Email, "Congratulations! You Wins the BID", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + " you wins the bid on item named: " + product.name+ "and Your product tracking ID is" + product.Product_ID);
                 }
             }
             if(winner != null)
@@ -289,6 +296,7 @@ namespace Auctisafe.OtherLogicModels
             var bidders = new List<BidAndBidder>();
             var biddings = context.all_biddings.Where(x => x.Product_ID == product.Product_ID).ToList();
             var auction = context.auctions.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
+            var auctioner = context.login.Where(x => x.User_ID == product.User_ID).FirstOrDefault();
             var bidder = new Signup();
 
             double initialBidAmount = product.price;
@@ -318,7 +326,7 @@ namespace Auctisafe.OtherLogicModels
             if (currentBidAmount >= reservePrice)
             {
                 var target = context.auction_status.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
-                target.Status = "D";
+                target.Status = "W";
                 context.Entry(target).State = EntityState.Modified;
                 context.SaveChanges();
 
@@ -333,7 +341,8 @@ namespace Auctisafe.OtherLogicModels
 
                     if (winner != null)
                     {
-                        emailService.Emailer(winner.credentails.Email, "Congratulations! You Won the Reserve Auction", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + ", you won the Reserve auction for the item named: " + product.name);
+                        emailService.Emailer(auctioner.Email,"Your Product Bid Winner Dectected" ,"Dear, Your Product Bid Winner is Detected And your product tracking id is" + product.Product_ID + "in case of Any issue Use this ID");
+                        emailService.Emailer(winner.credentails.Email, "Congratulations! You Won the Reserve Auction", "Dear " + winner.bidder.First_name + " " + winner.bidder.Last_name + ", you won the Reserve auction for the item named: " + product.name+ "and Your product tracking ID is"+product.Product_ID);
                     }
                 }
                 if (winner != null)
