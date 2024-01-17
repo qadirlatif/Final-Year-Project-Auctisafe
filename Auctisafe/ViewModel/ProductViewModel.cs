@@ -33,4 +33,10 @@ namespace Auctisafe.ViewModel
         public string status { get; set; }
         public string Auction { get; set; }
     }
+    public class producttrackerviewmodel
+    {
+        public string Name { get; set; }
+        public int productid { get; set; }
+        public string Status { get; set; }
+    }
 }

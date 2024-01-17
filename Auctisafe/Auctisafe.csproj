@@ -1220,6 +1220,7 @@
     <Content Include="Views\Dashboard\PaymentCredentials.cshtml" />
     <Content Include="Views\Dashboard\Agreement.cshtml" />
     <Content Include="Views\Admin\AuctionAgreement.cshtml" />
+    <Content Include="Views\Dashboard\tracking.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

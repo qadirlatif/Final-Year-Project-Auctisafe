@@ -1,4 +1,4 @@
-﻿@model Auctisafe.Models.Signup
+﻿@model List<Auctisafe.ViewModel.producttrackerviewmodel>
 
 @{
     ViewBag.Title = "Index";
@@ -25,7 +25,7 @@
                     <div class="woocommerce">
                         <nav class="woocommerce-MyAccount-navigation">
                             <ul>
-                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard is-active">
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard ">
                                     @Html.ActionLink("Dashboard", "Index")
                                 </li>
 
@@ -52,7 +52,7 @@
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
                                     <a href="~/Dashboard/Agreement">Recieve / Deliver Agreement</a>
                                 </li>
-                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction is-active">
                                     <a href="~/Dashboard/tracking">Product Tracking</a>
                                 </li>
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-activity">
@@ -67,13 +67,25 @@
 
                         <div class="woocommerce-MyAccount-content">
                             <div class="woocommerce-notices-wrapper"></div>
-                            <p class="display-name">
-                                Hello <strong> @Html.DisplayFor(Model=>Model.First_name) @Html.DisplayFor(Model=>Model.Last_name) </strong>
-                            </p>
-
-                            <p>
-                                From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.
-                            </p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product ID</th>
+                                        <th>Product Name</th>
+                                        <th>Product Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.productid</td>
+                    <td>@item.Name</td>
+                    <td>@item.Status</td>
+                </tr>
+            }
+                                </tbody>
+                            </table>
 
                         </div>
                     </div>

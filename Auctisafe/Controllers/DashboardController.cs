@@ -365,5 +365,37 @@ namespace Auctisafe.Controllers
             db.SaveChanges();
             return Content("Agreement Sent successfully");
         }
+
+        [HttpGet]
+        public ActionResult tracking()
+        {
+            var id = Convert.ToInt32(Session["id"]);
+            List<producttrackerviewmodel> Model = new List<producttrackerviewmodel>();
+            var bidwinners = db.bid_winner.ToList();
+            List<int> allproductid = new List<int>();
+            foreach(var item in bidwinners)
+            {
+                var targetbidding = db.all_biddings.Where(x => x.Bid_ID == item.Bid_ID).FirstOrDefault();
+                if (targetbidding != null)
+                {
+                    if (targetbidding.Bidder_ID == id)
+                    {
+                        allproductid.Add(targetbidding.Product_ID);
+                    }
+                }
+            }
+            foreach(var item in allproductid)
+            {
+                var targetproduct = db.Products.Where(x => x.Product_ID == item).FirstOrDefault();
+                var status = db.auction_status.Where(x => x.Product_ID == item).FirstOrDefault();
+                Model.Add(new producttrackerviewmodel
+                {
+                    Name = targetproduct.name,
+                    productid = item,
+                    Status = status.Status == "A"?"Auctioning..." : status.Status == "W"? "Your Payment Pending..." : status.Status == "D"?"Auction Deactivated..." : status.Status == "P" ? "Payment Recieved, Auction Delivery to you and waiting for agreement " : "Auction Edned Successfully"
+                });
+            }
+            return View(Model);
+        }
     }
 }
