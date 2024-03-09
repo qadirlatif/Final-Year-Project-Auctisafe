@@ -25,7 +25,7 @@
                     <div class="woocommerce">
                         <nav class="woocommerce-MyAccount-navigation">
                             <ul>
-                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard ">
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard is-active">
                                     @Html.ActionLink("Dashboard", "Index")
                                 </li>
 
@@ -35,17 +35,27 @@
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auctions-endpoint">
                                     @Html.ActionLink("Create Auction", "Create_Auction")
                                 </li>
+
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-watchlist">
                                     @{
                                         int x = Convert.ToInt32(Session["productCount"]);
                                         @Html.ActionLink("My Auctions (" + x + ")", "myauctions");
                                     }
                                 </li>
-                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction ">
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                    <a href="~/Dashboard/PaymentCredentials">Payment Credentials</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
                                     <a href="~/Dashboard/PendingPayments">Pending Payments (Have to Pay)</a>
                                 </li>
-                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction is-active">
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
                                     <a href="~/Dashboard/ReceivePayments">Pending Payments (Have to Receive)</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
+                                    <a href="~/Dashboard/Agreement">Recieve / Deliver Agreement</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                    <a href="~/Dashboard/tracking">Product Tracking</a>
                                 </li>
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-activity">
                                     <a href="">Auction Activity</a>

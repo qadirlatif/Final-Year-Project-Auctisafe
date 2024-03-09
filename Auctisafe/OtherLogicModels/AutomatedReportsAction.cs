@@ -22,17 +22,26 @@ namespace Auctisafe.OtherLogicModels
 
         private static void TimerCallback(object state)
         {
+            //code set that distinct reports and also after deactivating delete all reports
+
             AuctionContext db=new AuctionContext();
             var users = db.login.Where(x=>x.Status == "A").ToList();
             foreach(var user in users)
             {
-                int counts = db.Reports.Where(x => x.User_ID == user.User_ID).Distinct().Count();
+                var targetreports = db.Reports.Where(x => x.User_ID == user.User_ID).ToList();
+                var reports = targetreports.Select(x => x.Reporter_ID).ToList();
+                var counts = reports.Distinct().Count();
                 if(counts >= 3)
                 {
                     user.Status = "D";
                     db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                     emailService.Emailer(user.Email, "Account Suspending", "Auctisafe Recieved many reports against you so temporary your account as been suspended");
                     db.SaveChanges();
+                    foreach(var item in targetreports)
+                    {
+                        db.Reports.Remove(item);
+                        db.SaveChanges();
+                    }
                 }
             }
 

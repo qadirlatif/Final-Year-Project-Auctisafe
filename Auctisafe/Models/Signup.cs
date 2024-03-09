@@ -18,9 +18,6 @@ namespace Auctisafe.Models
         public int Phone_number { get; set; }
         public string CNIC { get; set; }
         public string Address { get; set; }
-        
-
-
     }
     
 }

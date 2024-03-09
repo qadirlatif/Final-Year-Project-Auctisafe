@@ -24,7 +24,7 @@ namespace Auctisafe.Models
                 mail.IsBodyHtml = true;
                 mail.Priority = MailPriority.High;
                 SmtpClient client = new SmtpClient();
-                client.Credentials = new System.Net.NetworkCredential("Auctisafe@gmail.com", "dongmqkgbgzlblve");
+                client.Credentials = new System.Net.NetworkCredential("Auctisafe@gmail.com", "tabrdadvkubkwiuf");
                 client.Port = 587;
                 client.Host = "smtp.gmail.com";
                 client.EnableSsl = true;
@@ -52,7 +52,7 @@ namespace Auctisafe.Models
                 mail.IsBodyHtml = true;
                 mail.Priority = MailPriority.High;
                 SmtpClient client = new SmtpClient();
-                client.Credentials = new System.Net.NetworkCredential("Auctisafe@gmail.com", "dongmqkgbgzlblve");
+                client.Credentials = new System.Net.NetworkCredential("Auctisafe@gmail.com", "tabrdadvkubkwiuf");
                 client.Port = 587;
                 client.Host = "smtp.gmail.com";
                 client.EnableSsl = true;

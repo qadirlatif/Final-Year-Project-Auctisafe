@@ -36,7 +36,9 @@
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account">
                                     @Html.ActionLink("Account Details", "details")
                                 </li>
-
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auctions-endpoint">
+                                    @Html.ActionLink("Create Auction", "Create_Auction")
+                                </li>
 
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-watchlist">
                                     @{
@@ -55,6 +57,9 @@
                                 </li>
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
                                     <a href="~/Dashboard/Agreement">Recieve / Deliver Agreement</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                    <a href="~/Dashboard/tracking">Product Tracking</a>
                                 </li>
                                 <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-activity">
                                     <a href="">Auction Activity</a>

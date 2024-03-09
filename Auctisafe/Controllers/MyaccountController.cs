@@ -29,19 +29,30 @@ namespace Auctisafe.Controllers
         [HttpPost]
         public ActionResult Index(signupmaster myaccount)
         {
+            //Validation for avoiding same email accounts
+            var target = db.login.Where(x => x.Email == myaccount.Email).FirstOrDefault();
+            if (target == null)
+            {
+                string returnValue = md5hashing.hashedvalue(myaccount.Password);
+                Random rand = new Random();
+                Session["userid"] = rand.Next(1, 1000000);
+                Session["first name"] = myaccount.First_name;
+                Session["last name"] = myaccount.Last_name;
+                Session["CNIC"] = myaccount.CNIC;
+                Session["address"] = myaccount.Address;
+                Session["phone"] = myaccount.Phone_number;
+                Session["email"] = myaccount.Email;
+                Session["password"] = returnValue.ToString();
+                Session["status"] = "P";
+                return RedirectToAction("verification");
+            }
+            else
+            {
+                ViewBag.error = "Entered Email Already Registered!";
+                return View();
+            }
+
             
-            string returnValue = md5hashing.hashedvalue(myaccount.Password);
-            Random rand = new Random();
-            Session["userid"]=rand.Next(1,1000000);
-            Session["first name"] = myaccount.First_name;
-            Session["last name"]=myaccount.Last_name;
-            Session["CNIC"] = myaccount.CNIC;
-            Session["address"]=myaccount.Address;
-            Session["phone"] = myaccount.Phone_number;
-            Session["email"] = myaccount.Email;
-            Session["password"]=  returnValue.ToString();
-            Session["status"] = "P";
-            return RedirectToAction("verification");
         }
 
         public ActionResult login(signupmaster myaccount)
