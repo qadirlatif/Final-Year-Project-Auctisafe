@@ -32,6 +32,12 @@ namespace Auctisafe.Controllers
 
         }
         [HttpGet]
+        public ActionResult BrowseProduct()
+        {
+
+            return View();
+        }
+        [HttpGet]
         public ActionResult About()
         {
             return View();

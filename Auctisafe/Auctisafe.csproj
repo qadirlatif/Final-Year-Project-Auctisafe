@@ -1221,6 +1221,7 @@
     <Content Include="Views\Dashboard\Agreement.cshtml" />
     <Content Include="Views\Admin\AuctionAgreement.cshtml" />
     <Content Include="Views\Dashboard\tracking.cshtml" />
+    <Content Include="Views\Welcome\BrowseProduct.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
