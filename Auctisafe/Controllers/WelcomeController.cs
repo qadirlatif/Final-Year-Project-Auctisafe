@@ -32,10 +32,29 @@ namespace Auctisafe.Controllers
 
         }
         [HttpGet]
-        public ActionResult BrowseProduct()
+        public ActionResult BrowseProduct(string name = "")
         {
-
-            return View();
+            List<Product> products = new List<Product>();
+            if (name == "")
+            {
+                products = db.Products.ToList();
+            }
+            else
+            {
+                products = db.Products.Where(x => x.name.ToLower().Contains(name.ToLower())).ToList();
+            }
+            var finalproducts = new List<Product>();
+            foreach(var product in products)
+            {
+                var status = db.auction_status.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
+                var auction = db.auctions.Where(x => x.Product_ID == product.Product_ID).FirstOrDefault();
+                if(status.Status == "A" && auction.End_date > DateTime.Now)
+                {
+                    finalproducts.Add(product);
+                }
+                
+            }
+            return View(finalproducts);
         }
         [HttpGet]
         public ActionResult About()
